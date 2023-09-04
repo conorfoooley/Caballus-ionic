@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Horse Ownership Transfer Confirmation</h2>
+<div mat-dialog-content>
+    <p>{{ summary.invitationFrom.label }} has initiated a horse ownership transfer on the Caballus app for the following horse:</p>
+    <div class="horse-details">
+        <ul>
+            <li> <span class="label">Barn Name</span>: {{ summary.commonName }} </li>
+            <li> <span class="label">Registered Name</span>: {{ summary.registeredName }} </li>
+            <li> <span class="label">Breed</span>: {{ HorseBreed.toString(summary.breed) }} </li>
+            <li> <span class="label">Registration Number</span>: {{ summary.registrationNumber }} </li>
+            <li> <span class="label">Weight (lbs)</span>: {{kgToLbs(summary.weightKilograms) | number
+                : '1.0-0'}} </li>
+            <li> <span class="label">Height (hands)</span>:{{meterToHands(summary.heightMeters) | number
+                : '1.0-1'}}</li>
+        </ul>
+    </div>
+    <p>If you accept then you will be listed as the horse owner, and the horse will be added to your Horse List inventory.</p>
+</div>
+<div mat-dialog-actions align="center">
+    <button class="cancel-btn" mat-stroked-button (click)="cancelTransfer()">Cancel Transfer</button>
+    <button class="accept-btn" mat-flat-button color="primary" (click)="acceptTransfer()">
+        Accept Transfer
+    </button>
+</div>

@@ -1,0 +1,146 @@
+header {
+  background-color: #f87f31;
+  display: flex;
+  color: white;
+}
+
+h1 {
+  width: 85%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.page-container {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.back-arrow {
+  margin-left: 15px;
+  margin-top: 10px;
+  width: 5%;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.mat-card-content {
+  font-size: 16px;
+}
+
+.float-label {
+  margin-right: 20px;
+  color: rgba(0, 0, 0, 0.54);
+
+}
+
+.card {
+  background-color: rgb(226, 226, 226);
+  padding: 20px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  span {
+    margin-top: 0;
+    font-size: 1.4rem;
+  }
+}
+
+form {
+  height: calc(100% - 100px);
+
+  .form-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .coupon-code-input {
+      padding: 10px;
+      border: unset;
+      border-bottom: 1px solid;
+      margin-bottom: 10px;
+    }
+
+    mat-label {
+      width: 300px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    .mat-mdc-form-field,
+    mat-radio-group {
+      width: 80%;
+      margin-left: 10px;
+    }
+
+    ::ng-deep .mat-mdc-form-field-infix {
+      margin-top: 0 !important;
+
+    }
+
+    .mat-radio-button {
+      margin-right: 10px;
+    }
+
+    .stripe-card {
+      border-bottom: 0.55px solid rgba(0, 0, 0, 0.405);
+      height: 45px;
+      width: 100%;
+    }
+  }
+}
+
+.cardholder {
+  text-align: center;
+  // grid-template-columns: repeat(, 50%);
+}
+
+.card-info {
+  text-align: center;
+}
+
+.confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+.continue-btn {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .back-btn {
+    margin-right: 20px;
+  }
+
+  .large-round {
+    font-size: 1.5em;
+    min-width: 80px;
+    height: 50px;
+    border-radius: 25px;
+    background: #f78031;
+    color: #fff;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card-header {
+    span {
+      font-size: 1.3rem;
+    }
+  }
+
+  form {
+    height: calc(100% - 93px);
+  }
+}

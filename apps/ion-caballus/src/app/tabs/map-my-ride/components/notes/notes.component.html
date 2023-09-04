@@ -1,0 +1,24 @@
+<mat-card appearance="outlined" class="card-wrapper" (click)="showNotesModal()">
+    <form [formGroup]="form">
+        
+        <mat-card-header>
+            <mat-card-title class="form-group-header title-border">
+                <div class="row">
+                    <div class="card-title">Notes:</div>
+                    <div class="text-length">{{ getTextLength() }} / {{ maxChars }}</div>
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <textarea
+                matInput
+                readonly
+                required
+                formControlName="notes"
+                placeholder="Comments"
+                [maxlength]="maxChars"
+            ></textarea>
+        </mat-card-content>
+    </form>
+</mat-card>

@@ -1,0 +1,218 @@
+<ion-content>
+    <app-profile-header title="Ride History" [parentBack]="true" (goBack)="goBack()">
+    </app-profile-header>
+    <div *ngIf="ride$ | async">
+        <ng-container
+            [ngTemplateOutlet]="horseRide"
+            [ngTemplateOutletContext]="{
+                ride: ride$ | async,
+                horseNames: horseNames$ | async,
+                horseId: horseId$ | async
+            }"
+        >
+        </ng-container>
+    </div>
+</ion-content>
+<ng-template #horseRide let-ride="ride" let-horseNames="horseNames" let-horseId="horseId">
+    <ion-grid class="ion-text-center padding-0 ride-picture">
+        <caballus-map
+            [ride]="ride$ | async"
+            class="app-map-wrapper"
+            [fitBounds]="true"
+        ></caballus-map>
+    </ion-grid>
+
+    <ion-grid class="ion-text-center padding-0 status-bar">
+        <ion-row>
+            <ion-col class="duration">
+                <p class="margin-0"><b>Duration</b></p>
+                <h4>
+                    {{ (totalMinutes$ | async)[horseId] }}
+                </h4>
+            </ion-col>
+            <ion-col class="distance">
+                <p class="margin-0"><b>Distance</b> (Miles)</p>
+                <h4>
+                    {{ kilometersToMiles(ride?.distanceKilometers) | number : '1.2-2' }}
+                </h4>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <mat-card appearance="outlined" class="card" *ngIf="ride">
+        <mat-card-content class="card-content">
+            <ion-list lines="none">
+                <ion-item>
+                    <ion-label>
+                        <h3>Ride Date</h3>
+                        <p>{{ ride.startDateTime | date : 'MM/dd/yy' }}</p>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <h3>Horses On Ride</h3>
+                        <p>{{ horseNames }}</p>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <h3>Category</h3>
+                        <p>{{ RideCategory.toString(ride.category) }}</p>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap">
+                        <h3>Location</h3>
+                        <p>{{ ride.name || 'Unknown' }}</p>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="card-wrapper" *ngIf="ride">
+        <mat-card-header class="header">
+            <mat-card-title class="title-border">Notes</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="elevation-gain" *ngIf="ride">
+            <ng-container>
+                <span class="gain-css">
+                    <p>{{ ride.notes || 'No notes' }}</p>
+                </span>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Media -->
+    <app-ride-media-upload
+        [ride]="ride"
+        [rideMedia]="ride.medias"
+        [doesUserHaveActiveSubscription]="true"
+        [isCurrentRide]="false"
+    ></app-ride-media-upload>
+
+    <app-ride-analytics [ride]="ride"></app-ride-analytics>
+
+    <mat-card appearance="outlined" *ngIf="viaShare" class="card m20 horse-slider">
+        <div class="view-btn">
+            <img
+                class="tab-image"
+                src="../../../../../assets/icons/ArrowLeftBtn.svg"
+                (click)="onPreviousGaitProfile()"
+            />
+        </div>
+        <div class="view-btn horse-header">
+            {{ ride.horseIdentities[selectedHorse$ | async]?.label }}
+        </div>
+        <div class="view-btn">
+            <img
+                class="tab-image"
+                src="../../../../../assets/icons/ArrowRightBtn.svg"
+                (click)="onNextGaitProfile()"
+            />
+        </div>
+    </mat-card>
+
+    <div *ngFor="let h of ride.horseIdentities; let i = index">
+        <mat-card appearance="outlined" class="card m20" [hidden]="(selectedHorse$ | async) !== i">
+            <mat-card-header>
+                <div class="gait-header card-header">
+                    <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+                        Ride Totals
+                    </div>
+                    <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.PROFILE">
+                        Gait Profile
+                    </div>
+                    <ion-segment
+                        (ionChange)="selectTab($event.target)"
+                        [(ngModel)]="gaitProfileType"
+                    >
+                        <ion-segment-button class="icons" [value]="GaitDetailTab.PROFILE">
+                            <mat-icon> insert_chart_outlined</mat-icon>
+                        </ion-segment-button>
+                        <ion-segment-button class="icons" [value]="GaitDetailTab.RIDE">
+                            <mat-icon>grid_on</mat-icon>
+                        </ion-segment-button>
+                    </ion-segment>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div [hidden]="!(gaitProfileType === GaitDetailTab.PROFILE)">
+                    <div class="graph-label">
+                        <div class="x">Minutes</div>
+                        <div class="y">Miles</div>
+                    </div>
+                    <canvas [id]="'barChart_' + h._id"></canvas>
+                </div>
+                <div *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+                    <ion-row>
+                        <ion-col></ion-col>
+                        <ion-col class="gait-label"> Duration (mm:ss)</ion-col>
+                        <ion-col class="gait-label"> Distance (miles)</ion-col>
+                    </ion-row>
+                    <ion-row class="row">
+                        <ion-col class="col gait-label">Gait Totals</ion-col>
+                    </ion-row>
+                    <div *ngFor="let m of Gait.members">
+                        <ion-row
+                            class="row"
+                            *ngIf="Gait.None !== m && (formattedTimes$ | async)[h._id]"
+                        >
+                            <ion-col class="col">{{ Gait.toString(m) }}</ion-col>
+                            <ion-col class="col">{{ (formattedTimes$ | async)[h._id][m] }}</ion-col>
+                            <ion-col class="col">{{
+                                kilometersToMiles((gaitKilometersStats$ | async)[h._id][m])
+                                    | number : '1.2-2'
+                            }}</ion-col>
+                        </ion-row>
+                    </div>
+                    <div class="gait-border"></div>
+                    <ion-row class="row">
+                        <ion-col class="col gait-label">Total</ion-col>
+                        <ion-col class="col">{{ (totalMinutes$ | async)[h._id] }}</ion-col>
+                        <ion-col class="col">{{
+                            kilometersToMiles((ride$ | async)?.distanceKilometers)
+                                | number : '1.2-2'
+                        }}</ion-col>
+                    </ion-row>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- <mat-card appearance="outlined" class="card" *ngIf="wayPoints$ | async as wayPoints">
+      <mat-card-header class="card-header elevation-gain">
+          <mat-card-title>Elevation Gain:</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+          <span class="gain-css" *ngIf="wayPoints">
+              {{ elevation(wayPoints) | number: '1.2-2' }} ft.
+          </span>
+      </mat-card-content>
+  </mat-card> -->
+
+    <mat-card appearance="outlined" class="card-wrapper" *ngIf="wayPoints$ | async as wayPoints">
+        <mat-card-header class="header">
+            <mat-card-title class="title-border"> Elevation Gain</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="elevation-gain" *ngIf="wayPoints">
+            <ng-container *ngIf="elevationGain$ | async as elevationGain">
+                <span class="gain-css">
+                    Lowest: {{ elevationGain.lowest | number : '1.2-2' }} ft.
+                </span>
+
+                <span class="gain-css">
+                    Highest: {{ elevationGain.highest | number : '1.2-2' }} ft.
+                </span>
+
+                <span class="gain-css">
+                    Accumulative: {{ elevationGain.accumulative | number : '1.2-2' }} ft.
+                </span>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+</ng-template>

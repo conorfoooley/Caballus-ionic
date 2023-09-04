@@ -1,0 +1,38 @@
+<ion-content>
+    <div class="auth-page">
+        <img src="./assets/branding/icon.png" />
+        <ng-container [ngSwitch]="pageStatus$ | async">
+            <ng-container *ngSwitchCase="PageStatus.BeforeVerify">
+                <h2>Caballus Account Verification</h2>
+                <mat-spinner></mat-spinner>
+            </ng-container>
+            <ng-container *ngSwitchCase="PageStatus.AfterVerify">
+                <h2>Verification Complete!</h2>
+            </ng-container>
+            <ng-container *ngSwitchCase="PageStatus.Problem">
+                <h2>There was a Problem</h2>
+                <p>You may need a new verification email</p>
+            </ng-container>
+        </ng-container>
+        <div class="buttons">
+            <ng-container [ngSwitch]="pageStatus$ | async">
+                <button
+                    *ngSwitchCase="PageStatus.AfterVerify"
+                    mat-raised-button
+                    class="large-round"
+                    (click)="continueToLogin()"
+                >
+                    Continue
+                </button>
+                <button
+                    *ngSwitchCase="PageStatus.Problem"
+                    mat-raised-button
+                    class="large-round"
+                    (click)="goToResend()"
+                >
+                    Continue
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</ion-content>

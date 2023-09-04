@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Which horse?</h2>
+<div mat-dialog-content>
+    <div>
+        <mat-form-field style="width: 100%;">
+            <mat-label>Horses on this ride</mat-label>
+            <mat-select multiple (selectionChange)="onChangeHorses($event.value)">
+                <mat-option *ngFor="let horse of horses" [value]="horse._id">
+                    {{horse?.profile?.commonName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="center">
+
+    <div class='button-wrapper'>
+        <button mat-raised-button class='medium-round alt' (click)="cancel()">
+            cancel
+        </button>
+        <button mat-raised-button class='medium-round' (click)="select()">
+            Select
+        </button>
+    </div>
+</div>
+

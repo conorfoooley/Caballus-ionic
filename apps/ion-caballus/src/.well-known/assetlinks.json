@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.caballus.app",
+               "sha256_cert_fingerprints": ["F6:DC:55:0A:69:4F:26:40:C7:81:EE:2D:BD:76:CC:2F:CE:6B:78:6D:F0:D7:56:E2:3F:F9:E6:FB:1C:C3:51:83"] }
+}]

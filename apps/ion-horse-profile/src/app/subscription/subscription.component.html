@@ -1,0 +1,249 @@
+<header>
+  <fa-icon class="back-arrow" [icon]="['fas', 'arrow-left']" (click)="goBack()"></fa-icon>
+  <h1>My Account</h1>
+</header>
+
+<div class="body">
+  <ng-container *ngIf="isLoadingData$ | async; else userInfo">
+    <p>Loading...</p>
+  </ng-container>
+
+  <ng-template #userInfo>
+    <ng-container *ngIf="user$ | async as user; else userNotFound">
+      <p class="m-2" *ngIf="!user.billing || !user.billing.subscription">
+        Caballus is free to use. If you wish to manage multiple horse profiles and make them publicly available on our
+        Caballus website please subscribe.
+      </p>
+
+      <!-- subscribe -->
+      <mat-card class="subscribe card" *ngIf="!user.billing || !user.billing.subscription">
+        <mat-card-header class="card-header">
+          <mat-card-title>Subscribe:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+          <p>Have unlimited horses on your profile for $9.99/month</p>
+          <button mat-raised-button class="large-round spinner" routerLink="./payment">
+            Subscribe
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- transfer -->
+      <mat-card class="transfer card">
+        <mat-card-header class="card-header">
+          <mat-card-title>Payment Transfer Request:</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="card-content">
+          <ng-container
+            *ngIf="
+                            user.billing &&
+                                (!user.billing.payingUser.email ||
+                                    user.billing.payingUser.email === user.profile.email);
+                            else transferAlreadyDone
+                        "
+          >
+            <!-- Paid by owner -->
+            <ng-container
+              *ngIf="
+                                user.billing.payingUser.email === user.profile.email;
+                                else noPayer
+                            "
+            >
+              You may request to have another caballus user pay for your account. If
+              accepted by the user, then they will start paying for it starting the
+              subsequent billing period.
+
+              <ng-container *ngTemplateOutlet="transferForm"></ng-container>
+            </ng-container>
+
+            <!-- not paid -->
+            <ng-template #noPayer>
+              <p>
+                Alternatively, you may instead request to have another caballus user
+                pay for your account. If accepted by the user, then they will start
+                paying for it starting the subsequent billing period.
+              </p>
+
+              <ng-container *ngTemplateOutlet="transferForm"></ng-container>
+            </ng-template>
+          </ng-container>
+
+          <!-- Already transferred -->
+          <ng-template #transferAlreadyDone>
+            <span>Your subscription is being paid by the following person:</span>
+            {{ user.billing.payingUser.email }}.
+
+            <p>
+              To request to have another user pay for your account please enter their
+              email below.
+            </p>
+            <ng-container *ngTemplateOutlet="transferForm"></ng-container>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- downgrade -->
+      <ng-container *ngIf="user.billing && user.billing.subscription">
+        <mat-card class="downgrade card" *ngIf="enabledHorsesCount$ | async as horsesCount">
+          <mat-card-header class="card-header">
+            <mat-card-title>Downgrade Subscription:</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="card-content">
+            <ng-container>
+              <ng-container *ngIf="horsesCount < 2">
+                <button
+                  mat-button
+                  class="large-round spinner my-2"
+                  (click)="downgradeConfirmation()"
+                >
+                  Downgrade
+                </button>
+              </ng-container>
+
+              <ng-container *ngIf="horsesCount > 1">
+                <p>
+                  If you wish to downgrade your subscription, you will need to
+                  disable the profile of {{ horsesCount - 1 }} horses first.
+                </p>
+                <button
+                  mat-button
+                  class="large-round spinner my-2"
+                  routerLink="horse-list"
+                >
+                  Enable / Disabled Horses
+                </button>
+              </ng-container>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+
+      <!-- other payment responsibility -->
+      <ng-container *ngIf="userSubscriptionsList$ | async as userSubscriptionsList">
+        <mat-card class="subscribe card">
+          <mat-card-header class="card-header">
+            <mat-card-title>Other Accounts:</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="card-content">
+            <p>
+              You have accepted payment responsibility for the following accounts at
+              $9.99/month per user. This allows each user to have multiple horses
+              enabled on Caballus:
+            </p>
+
+            <div class="other-accounts-list-container">
+              <table>
+                <tr>
+                  <th>User</th>
+                  <th>Horses</th>
+                  <th>Since</th>
+                </tr>
+
+                <tr *ngFor="let userSubscription of userSubscriptionsList">
+                  <td>{{ userSubscription.label }}</td>
+                  <td>{{ userSubscription.horseCount }}</td>
+                  <td>{{ userSubscription.since | date: 'MM/dd/yyyy' }}</td>
+                  <td>
+                    <button
+                      class="fullscreen-show"
+                      [disabled]="isRemoveSubscriptionInProcess$ | async"
+                      (click)="removeSubscription(userSubscription)"
+                      mat-icon-button
+                    >
+                      <mat-icon class="trash">delete_forever</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+
+      <!-- Change Payment Method -->
+      <ng-container>
+        <mat-card
+          class="payment-method card"
+          *ngIf="user.billing && user.billing.customerId"
+        >
+          <mat-card-header class="card-header">
+            <mat-card-title>Update Payment Method:</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="card-content">
+            <mat-card
+              *ngIf="userSubscriptionPaymentMethod$ | async as paymentMethod"
+              class="credit-card-details"
+            >
+              <mat-card-content class="credit-card-item">
+                <div class="credit-card-item-details">
+                  <label>Card No :</label>
+                  <span>{{ paymentMethod.card?.last4 }}</span>
+                </div>
+                <div class="credit-card-item-details">
+                  <label>Expiry Date :</label>
+                  <span>
+                                        {{ paymentMethod.card?.exp_month }} /
+                    {{ paymentMethod.card?.exp_year.toString().substr(2) }}
+                                    </span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <button
+              mat-button
+              class="large-round spinner my-2"
+              (click)="updatePaymentMethod()"
+            >
+              Change Payment Method
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+
+      <!-- delete account -->
+      <mat-card class="delete card">
+        <mat-card-header class="card-header">
+          <mat-card-title>Delete:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+          <p>This will permanently remove your information from Caballus.</p>
+          <button mat-raised-button class="danger large-round spinner" routerLink="./delete">
+            Delete
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+
+    <!-- User not found -->
+    <ng-template #userNotFound>
+      <p>User not found!</p>
+    </ng-template>
+  </ng-template>
+</div>
+
+<!-- Transfer request form -->
+<ng-template #transferForm>
+  <form [formGroup]="form" class="form-wrapper">
+    <mat-form-field appearance="outline" [formGroup]="form">
+      <input matInput type="email" placeholder="Enter Email" formControlName="email" />
+    </mat-form-field>
+    <button
+      mat-button
+      class="large-round spinner"
+      [disabled]="sendTransferRequestInProcess$ | async"
+      (click)="sendRequest()"
+    >
+      Send Request
+      <mat-spinner *ngIf="sendTransferRequestInProcess$ | async"></mat-spinner>
+    </button>
+  </form>
+</ng-template>
+
+<span class="privacy-policy-details">
+  <a href="https://caballusapp.com/privacy-policy/" target="_blank">
+    Click here to see our full Privacy Policy and Terms and Conditions
+  </a>
+</span>

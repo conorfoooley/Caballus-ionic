@@ -1,0 +1,82 @@
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar>
+    <h2 class="ion-text-center ion-margin-vertical">{{ title$ | async }}</h2>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Container for the JWPlayer -->
+  <div style="display: flex; justify-content: center; align-items: center" *ngIf="jwPlayerId">
+    <iframe style="width: 100%; height:100%" [src]="urlSafe"></iframe>
+  </div>
+
+  <div class="preview-wrapper" *ngIf="!jwPlayerId">
+    <!-- Video -->
+    <ng-container *ngIf="isVideo">
+
+      <!-- Video with url -->
+      <vg-player *ngIf="attachmentUrl$ | async as url">
+        <vg-overlay-play></vg-overlay-play>
+        <vg-buffering></vg-buffering>
+
+        <vg-scrub-bar>
+          <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+          <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar>
+
+        <vg-controls>
+          <vg-play-pause></vg-play-pause>
+          <!-- <vg-playback-button></vg-playback-button> -->
+
+          <vg-time-display
+            vgProperty="current"
+            vgFormat="mm:ss"
+          ></vg-time-display>
+
+          <vg-scrub-bar style="pointer-events: none"></vg-scrub-bar>
+
+          <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+          <vg-time-display
+            vgProperty="total"
+            vgFormat="mm:ss"
+          ></vg-time-display>
+
+          <!-- <vg-track-selector></vg-track-selector> -->
+          <vg-mute></vg-mute>
+          <vg-volume></vg-volume>
+
+          <vg-fullscreen></vg-fullscreen>
+        </vg-controls>
+
+        <video #media [vgMedia]="$any(media)" id="singleVideo" preload="auto">
+          <source [src]="url" type="video/mp4" />
+        </video>
+      </vg-player>
+    </ng-container>
+
+    <!-- Image -->
+    <ng-container *ngIf="!isVideo">
+      <ion-img [src]="attachmentUrl$ | async" alt="Horse picture"></ion-img>
+    </ng-container>
+
+    <button
+      class="fullscreen-show"
+      (click)="showOnFullscreen()"
+      mat-icon-button
+    >
+      <mat-icon>fullscreen</mat-icon>
+    </button>
+
+  </div>
+
+  <div class="actions-container" *ngIf="action$ | async as buttonAction">
+    <button mat-raised-button class="large-round" (click)="accept()">
+      {{ buttonAction }}
+    </button>
+  </div>
+</ion-content>

@@ -1,0 +1,777 @@
+<ion-content>
+    <app-profile-header
+        [doRefresh]="hasEdit$ | async"
+        [parentBack]="true"
+        (goBack)="backToHorseList()"
+    >
+    </app-profile-header>
+    <ng-container
+        *ngIf="(selectedMenuItem$ | async) === AppHorseDetail.General"
+        [ngTemplateOutlet]="horseProfile"
+        [ngTemplateOutletContext]="{
+            horseStatsAndRelationships: horseStatsAndRelationships$ | async,
+            horse: horse$ | async
+        }"
+    >
+    </ng-container>
+    <ng-container
+        *ngIf="(selectedMenuItem$ | async) === AppHorseDetail.Analytics"
+        [ngTemplateOutlet]="horseAnalytics"
+        [ngTemplateOutletContext]="{
+            horseStatsAndRelationships: horseStatsAndRelationships$ | async,
+            horse: horse$ | async
+        }"
+    >
+    </ng-container>
+</ion-content>
+<ng-template
+    #horseProfile
+    let-horseStatsAndRelationships="horseStatsAndRelationships"
+    let-horse="horse"
+>
+    <div class="tab-header">
+        <img class="tab-image" src="../../../../../assets/icons/icon-horseProfile-general.svg" />
+        <h1>General Information</h1>
+    </div>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header>
+            <mat-checkbox
+                (change)="changeFollowCheckBox($event.checked)"
+                [checked]="isHorseFollowed"
+                [disabled]="isLoading$ | async"
+                class="wrap-checkbox-label"
+            >
+                Follow this Horse
+            </mat-checkbox>
+        </mat-card-header>
+    </mat-card>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Owner:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+            <div class="circle">
+                <img
+                    [src]="
+                        horseStatsAndRelationships?.owner?.profilePicture?.url ||
+                        './assets/icons/user-placeholder.svg'
+                    "
+                />
+            </div>
+            <div class="details">
+                <div class="detail">
+                    <div class="label">Name:</div>
+                    <div class="value">
+                        {{ horseStatsAndRelationships?.owner?.firstName || '' }}
+                        {{ horseStatsAndRelationships?.owner?.lastName || '' }}
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="label">Email:</div>
+                    <div class="value">{{ horseStatsAndRelationships?.owner?.email }}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Phone:</div>
+                    <div class="value">{{ horseStatsAndRelationships?.owner?.phone }}</div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Bio:</mat-card-title>
+            <mat-icon class="edit" *ngIf="canEdit$ | async" (click)="onEdit()">edit</mat-icon>
+        </mat-card-header>
+        <mat-card-content *ngIf="!(isEditableMode$ | async)">
+            <div class="details">
+                <div class="detail">
+                    <div class="label big-label">Barn Name:</div>
+                    <div class="value">{{ horse?.profile?.commonName }}</div>
+                </div>
+                <div class="detail">
+                    <div class="label big-label">Registered Name:</div>
+                    <div class="value">{{ horse?.profile?.registeredName }}</div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="circle horse-profile-picture" (click)="previewHorseProfileImage()">
+                    <img
+                        [src]="
+                            horse?.profile?.profilePicture?.url ||
+                            './assets/icons/horse-placeholder.svg'
+                        "
+                    />
+                    <button class="picture-edit" mat-icon-button *ngIf="canEdit$ | async">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+                <div class="details">
+                    <div class="detail">
+                        <div class="label">Breed:</div>
+                        <div class="value">{{ HorseBreed.toString(horse?.profile?.breed) }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Reg #:</div>
+                        <div class="value">{{ horse?.profile?.registrationNumber }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Weight (lbs):</div>
+                        <div class="value">
+                            {{ kgToLbs(horse?.profile?.weightKilograms) | number: '1.0-0' }}
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Height (hands):</div>
+                        <div class="value">
+                            {{ meterToHands(horse?.profile?.heightMeters) | number: '1.0-1' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="isEditableMode$ | async">
+            <form
+                class="form-section"
+                #horseBioFormEl
+                [formGroup]="horseBioForm"
+                (ngSubmit)="onBioEdit()"
+            >
+                <div class="details">
+                    <div class="form-row">
+                        <ion-item>
+                            <ion-label position="stacked">Barn Name:</ion-label>
+                            <ion-input required formControlName="commonName"></ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.commonName">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        horseBioForm.get('commonName').hasError(validation.type) &&
+                                        (horseBioForm.get('commonName').dirty ||
+                                            horseBioForm.get('commonName').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!--
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('commonName')"
+                        ></mat-error>
+
+                        <mat-form-field appearance="outline" class="large" floatLabel="always">
+                            <mat-label>Barn Name:</mat-label>
+                            <input matInput required formControlName="commonName" />
+                            <mat-error [rfxError]="horseBioForm.get('commonName')"></mat-error>
+                        </mat-form-field> -->
+                    </div>
+                    <div class="form-row">
+                        <ion-item>
+                            <ion-label position="stacked">Registered Name:</ion-label>
+                            <ion-input formControlName="registeredName"></ion-input>
+                        </ion-item>
+                        <!-- <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('registeredName')"
+                        ></mat-error>
+                        <mat-form-field appearance="outline" class="large" floatLabel="always">
+                            <mat-label>Registered:</mat-label>
+                            <input matInput formControlName="registeredName" />
+                            <mat-error [rfxError]="horseBioForm.get('registeredName')"></mat-error>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="circle horse-profile-picture" (click)="previewHorseProfileImage()">
+                        <img
+                            [src]="
+                                horse?.profile?.profilePicture?.url ||
+                                './assets/icons/horse-placeholder.svg'
+                            "
+                        />
+                        <button
+                            class="picture-edit"
+                            mat-icon-button
+                            *ngIf="canEdit$ | async"
+                            (click)="previewHorseProfileImage()"
+                        >
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                    <div class="details details-edit">
+                        <!-- <div class="form-row"> -->
+                        <ion-item style="width: 80%;">
+                            <ion-label position="stacked">Breed</ion-label>
+                            <ion-select formControlName="breed">
+                                <ion-select-option *ngFor="let m of HorseBreed.members" [value]="m">
+                                    {{ HorseBreed.toString(m) }}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.breed">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        horseBioForm.get('breed').hasError(validation.type) &&
+                                        (horseBioForm.get('breed').dirty ||
+                                            horseBioForm.get('breed').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- <ion-item  lines="none" v-if="horseBioForm.get('breed')">
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('breed')"
+                        ></mat-error> -->
+                        <!-- </ion-item> -->
+                        <!--  <mat-form-field>
+                                <mat-label>Breed:</mat-label>
+                                <mat-select placeholder="Breed" formControlName="breed">
+                                    <mat-option *ngFor="let m of HorseBreed.members" [value]="m">
+                                        {{ HorseBreed.toString(m) }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error [rfxError]="horseBioForm.get('breed')"></mat-error>
+                            </mat-form-field> -->
+                        <!-- </div> -->
+                        <!-- <div class="form-row"> -->
+                        <ion-item style="width: 80%;">
+                            <ion-label position="stacked">Reg #:</ion-label>
+                            <ion-input formControlName="registrationNumber"></ion-input>
+                        </ion-item>
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('registrationNumber')"
+                        ></mat-error>
+                        <!--  <mat-form-field appearance="outline" class="large" floatLabel="always">
+                                <mat-label>Reg #:</mat-label>
+                                <input matInput formControlName="registrationNumber" />
+                                <mat-error
+                                    [rfxError]="horseBioForm.get('registrationNumber')"
+                                ></mat-error>
+                            </mat-form-field> -->
+                        <!-- </div> -->
+                        <!-- <div class="form-row"> -->
+                        <ion-item style="width: 80%;">
+                            <ion-label position="stacked">Weight (lbs):</ion-label>
+                            <ion-input required formControlName="weightKilograms"></ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.weightKilograms">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        horseBioForm
+                                            .get('weightKilograms')
+                                            .hasError(validation.type) &&
+                                        (horseBioForm.get('weightKilograms').dirty ||
+                                            horseBioForm.get('weightKilograms').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('weightKilograms')"
+                        ></mat-error>
+                         <mat-form-field appearance="outline" class="large" floatLabel="always">
+                                <mat-label>Weight (lbs):</mat-label>
+                                <input
+                                    matInput
+                                    required
+                                    formControlName="weightKilograms"
+                                    type="number"
+                                />
+                                <mat-error
+                                    [rfxError]="horseBioForm.get('weightKilograms')"
+                                ></mat-error>
+                            </mat-form-field> -->
+                        <!-- </div> -->
+                        <!-- <div class="form-row"> -->
+                        <ion-item style="width: 80%;">
+                            <ion-label position="stacked">Height (hands):</ion-label>
+                            <ion-input required formControlName="heightMeters"></ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.heightMeters">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        horseBioForm
+                                            .get('heightMeters')
+                                            .hasError(validation.type) &&
+                                        (horseBioForm.get('heightMeters').dirty ||
+                                            horseBioForm.get('heightMeters').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!--  <mat-error
+                            class="ion-error"
+                            [rfxError]="horseBioForm.get('heightMeters')"
+                        ></mat-error>
+                         <mat-form-field appearance="outline" class="large" floatLabel="always">
+                                <mat-label>Height (hands):</mat-label>
+                                <input
+                                    matInput
+                                    required
+                                    formControlName="heightMeters"
+                                    type="number"
+                                />
+                                <mat-error
+                                    [rfxError]="horseBioForm.get('heightMeters')"
+                                ></mat-error>
+                            </mat-form-field> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="button-container m-t-5">
+                    <button
+                        mat-raised-button
+                        class="large-round end spinner"
+                        type="submit"
+                        [disabled]="isLoading$ | async"
+                    >
+                        Save
+                        <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+                    </button>
+                    <button
+                        mat-raised-button
+                        class="large-round go-back"
+                        (click)="onBioCancel()"
+                        [disabled]="isLoading$ | async"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Photos and Videos:</mat-card-title>
+            <ion-button
+                shape="round"
+                size="small"
+                class="view-all"
+                (click)="goToPhotoGallery('view-all', true)"
+            >
+                View All
+            </ion-button>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="images">
+                <div class="img-circle" *ngFor="let photo of horsePinnedImages$ | async">
+                    <div
+                        *ngIf="photo?.latest?.type === MediaDocumentType.Video"
+                        class="img-thumbnail-overlay"
+                        (click)="imageViewerModal(photo?.latest?.url, photo._id)"
+                    ></div>
+                    <img
+                        (click)="imageViewerModal(photo?.latest?.url, photo._id)"
+                        class="img-thumbnail"
+                        [src]="
+                            photo?.thumbnail?.url ||
+                            ((canEdit$ | async)
+                                ? './assets/icons/plus-placeholder.svg'
+                                : './assets/icons/no-placeholder.svg')
+                        "
+                    />
+                </div>
+            </div>
+            <div class="info-text" *ngIf="canEdit$ | async">
+                The above 5 images can be shared online
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Horse Stats:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="details">
+                <div class="detail">
+                    <div class="label">Miles:</div>
+                    <div class="value">
+                        {{
+                            kilometersToMiles(horseStatsAndRelationships?.totalDistanceKilometers)
+                                | number: '1.2-2'
+                        }}
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="label">Hours:</div>
+                    <div class="value">
+                        {{
+                            minutesToHours(horseStatsAndRelationships?.totalMinutes)
+                                | number: '1.2-2'
+                        }}
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="label">Number of Rides:</div>
+                    <div class="value">{{ horseStatsAndRelationships?.totalRides }}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Riders:</div>
+                    <div class="value">{{ horseStatsAndRelationships?.riderNames }}</div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Trainers and Students:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngFor="let trainersAndStudent of horseStatsAndRelationships?.trainersAndStudents">
+                <div class="detail">
+                    <div class="label">Name:</div>
+                    <div class="value">
+                        {{ trainersAndStudent.firstName || '' }} {{ trainersAndStudent.firstName || ''}}
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="label">Email:</div>
+                    <div class="value">{{ trainersAndStudent.email }}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Phone:</div>
+                    <div class="value">{{ trainersAndStudent.phone }}</div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <ion-button
+        expand="block"
+        shape="round"
+        size="large"
+        class="invite-btn"
+        (click)="goToInvitesAndPermissions()"
+    >
+        Invites / Permissions
+    </ion-button>
+    <ion-buttons expand="block" shape="round" size="large" class="action-btn-gp">
+        <ion-button
+            [disabled]="!(canEnable$ | async)"
+            class="enable"
+            *ngIf="doesUserHaveActiveSubscription$ | async"
+            [innerText]="
+                (canEnable$ | async)
+                    ? horse?.profile?.profileStatus === HorseProfileStatus.Active
+                        ? 'Disable'
+                        : 'Enable'
+                    : ''
+            "
+            (click)="disableEnableHorse()"
+        ></ion-button>
+        <ion-button
+            *ngIf="!(invitations$ | async).length"
+            [disabled]="!(canTransfer$ | async)"
+            class="transfer"
+            [innerText]="(canTransfer$ | async) ? 'Transfer' : ''"
+            (click)="transferHorse()"
+        ></ion-button>
+        <ion-button
+            *ngIf="(invitations$ | async).length"
+            [disabled]="!(canTransfer$ | async)"
+            class="transfer"
+            [innerText]="(canTransfer$ | async) ? 'Cancel Transfer' : ''"
+            (click)="cancelTransferHorse()"
+        ></ion-button>
+        <ion-button
+            [disabled]="!(canDelete$ | async)"
+            class="delete"
+            [innerText]="(canDelete$ | async) ? 'Delete' : ''"
+            (click)="deleteHorse()"
+            >Delete
+        </ion-button>
+    </ion-buttons>
+</ng-template>
+<ng-template
+    #horseAnalytics
+    let-horseStatsAndRelationships="horseStatsAndRelationships"
+    let-horse="horse"
+>
+    <div class="tab-header">
+        <img class="tab-image" src="../../../../../assets/icons/analytics-top.png" />
+        <h1>Analytics</h1>
+    </div>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Ride Distances</mat-card-title>
+        </mat-card-header>
+        <div>
+            <p>Distance per Ride</p>
+            <div class="graph-label">
+                <div class="x">
+                    Miles
+                </div>
+                <div class="y">
+                    10-day Average
+                </div>
+            </div>
+            <canvas #rideChart id="rideChart"></canvas>
+            <div class="select-range">
+                <ng-container *ngIf="selectedRange === 'Custom'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>From</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="fromPicker"
+                            (dateInput)="addFromEvent($event)"
+                            (dateChange)="addFromEvent($event)"
+                        />
+                        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #fromPicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>To</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            (dateInput)="addToEvent($event)"
+                            (dateChange)="addToEvent($event)"
+                        />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <a (click)="addCustomRange()">
+                        <img src="../../../../../assets/icons/ArrowRightBtn.svg" />
+                    </a>
+                </ng-container>
+                <mat-form-field appearance="outline">
+                    <mat-select
+                        placeholder="Date Range"
+                        (selectionChange)="onChangeDate()"
+                        [(ngModel)]="selectedRange"
+                        name="dateRange"
+                    >
+                        <mat-option *ngFor="let m of dateRange" [value]="m">
+                            {{ m }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card>
+    <mat-card appearance="outlined" class="card m20">
+        <div class="gait-header card-header">
+            <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+                Ride totals
+            </div>
+            <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.PROFILE">
+                Gait Profile
+            </div>
+            <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.SETTINGS">
+                Gait Settings
+            </div>
+            <ion-segment (ionChange)="selectTab($event.target)" [(ngModel)]="gaitProfileType">
+                <ion-segment-button class="icons" [value]="GaitDetailTab.PROFILE">
+                    <mat-icon> insert_chart_outlined</mat-icon>
+                </ion-segment-button>
+                <ion-segment-button class="icons" [value]="GaitDetailTab.RIDE">
+                    <mat-icon>grid_on</mat-icon>
+                </ion-segment-button>
+                <ion-segment-button class="icons" [value]="GaitDetailTab.SETTINGS">
+                    <mat-icon>settings</mat-icon>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+        <div [hidden]="!(gaitProfileType === GaitDetailTab.PROFILE)">
+            <div class="graph-label">
+                <div class="x">
+                    Hours
+                </div>
+                <div class="y">
+                    Miles
+                </div>
+            </div>
+            <canvas #barChart id="barChart"></canvas>
+        </div>
+
+        <div *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col class="gait-label">
+                    Duration (hh:mm)
+                </ion-col>
+                <ion-col class="gait-label"> Distance (miles)</ion-col>
+            </ion-row>
+            <ion-row class="row gait-border">
+                <ion-col class="col gait-label nowrap">Ride Average</ion-col>
+                <ion-col class="col">{{
+                    minutesToHours(horseStatsAndRelationships?.averageMinutesPerRide)
+                        | number: '1.2-2'
+                }}</ion-col>
+                <ion-col class="col">{{
+                    kilometersToMiles(horseStatsAndRelationships?.averageKilometersPerRide)
+                        | number: '1.2-2'
+                }}</ion-col>
+            </ion-row>
+            <ion-row class="row">
+                <ion-col class="col gait-label">Gait Totals</ion-col>
+            </ion-row>
+            <div *ngFor="let m of Gait.members">
+                <ion-row class="row" *ngIf="Gait.None !== m">
+                    <ion-col class="col">{{ Gait.toString(m) }}</ion-col>
+                    <ion-col class="col">{{
+                        minutesToHours((horseStatsAndRelationships?.totalMinutesPerGait)[m])
+                            | number: '1.2-2'
+                    }}</ion-col>
+                    <ion-col class="col">{{
+                        kilometersToMiles((horseStatsAndRelationships?.totalDistancePerGait)[m])
+                            | number: '1.2-2'
+                    }}</ion-col>
+                </ion-row>
+            </div>
+            <div class="gait-border"></div>
+            <ion-row class="row">
+                <ion-col class="col gait-label">Grand Total</ion-col>
+                <ion-col class="col">{{
+                    minutesToHours(horseStatsAndRelationships?.totalMinutes) | number: '1.2-2'
+                }}</ion-col>
+                <ion-col class="col">{{
+                    kilometersToMiles(horseStatsAndRelationships?.totalDistanceKilometers)
+                        | number: '1.2-2'
+                }}</ion-col>
+            </ion-row>
+        </div>
+        <div *ngIf="gaitProfileType === GaitDetailTab.SETTINGS">
+            <ion-row class="gait-border">
+                <ion-col>Gait</ion-col>
+                <ion-col>Min Speed(MPH)</ion-col>
+            </ion-row>
+            <form
+                class="form-section"
+                #gaitSettingFormEl
+                [formGroup]="gaitSettingForm"
+                (ngSubmit)="onGaitSettingSave()"
+            >
+                <ion-row class="row">
+                    <ion-col class="col">Walk</ion-col>
+                    <ion-col class="col">
+                        <ion-item lines="none">
+                            <ion-input
+                                required
+                                formControlName="walk"
+                                [placeholder]="gaitSettingPlaceholder[Gait.Walk]"
+                            ></ion-input>
+                        </ion-item>
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="gaitSettingForm.get('walk')"
+                        ></mat-error>
+                        <!--  <input
+                            matInput
+                            required
+                            formControlName="walk"
+                            [placeholder]="gaitSettingPlaceholder[Gait.Walk]"
+                        />
+                        <mat-error [rfxError]="gaitSettingForm.get('walk')"></mat-error> -->
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row">
+                    <ion-col class="col">Trot</ion-col>
+                    <ion-col class="col">
+                        <ion-item lines="none">
+                            <ion-input
+                                required
+                                formControlName="trot"
+                                [placeholder]="gaitSettingPlaceholder[Gait.Trot]"
+                            ></ion-input>
+                        </ion-item>
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="gaitSettingForm.get('trot')"
+                        ></mat-error>
+                        <!-- <input
+                            matInput
+                            required
+                            formControlName="trot"
+                            [placeholder]="gaitSettingPlaceholder[Gait.Trot]"
+                        />
+                        <mat-error [rfxError]="gaitSettingForm.get('trot')"></mat-error> -->
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row">
+                    <ion-col class="col">Lope/Canter</ion-col>
+                    <ion-col class="col">
+                        <ion-item lines="none">
+                            <ion-input
+                                required
+                                formControlName="lope"
+                                [placeholder]="gaitSettingPlaceholder[Gait.Lope]"
+                            ></ion-input>
+                        </ion-item>
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="gaitSettingForm.get('lope')"
+                        ></mat-error>
+                        <!--  <input
+                            matInput
+                            required
+                            formControlName="lope"
+                            [placeholder]="gaitSettingPlaceholder[Gait.Lope]"
+                        />
+                        <mat-error [rfxError]="gaitSettingForm.get('lope')"></mat-error> -->
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row">
+                    <ion-col class="col">Gallop/Run</ion-col>
+                    <ion-col class="col">
+                        <ion-item lines="none">
+                            <ion-input
+                                required
+                                formControlName="gallop"
+                                [placeholder]="gaitSettingPlaceholder[Gait.Gallop]"
+                            ></ion-input>
+                        </ion-item>
+                        <mat-error
+                            class="ion-error"
+                            [rfxError]="gaitSettingForm.get('gallop')"
+                        ></mat-error>
+                        <!--  <input
+                            matInput
+                            required
+                            formControlName="gallop"
+                            [placeholder]="gaitSettingPlaceholder[Gait.Gallop]"
+                        />
+                        <mat-error [rfxError]="gaitSettingForm.get('gallop')"></mat-error> -->
+                    </ion-col>
+                </ion-row>
+                <div class="ride-btn m-t-25">
+                    <ion-button
+                        [disabled]="isGaitLoading$ | async"
+                        shape="round"
+                        class="go-back"
+                        (click)="onGaitReset()"
+                    >
+                        Reset
+                    </ion-button>
+                    <ion-button [disabled]="isGaitLoading$ | async" shape="round" type="submit"
+                        >Save
+                        <mat-spinner [diameter]="20" *ngIf="isGaitLoading$ | async"></mat-spinner>
+                    </ion-button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</ng-template>

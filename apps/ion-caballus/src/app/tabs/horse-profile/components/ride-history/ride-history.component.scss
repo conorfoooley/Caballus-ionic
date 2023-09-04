@@ -1,0 +1,122 @@
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 0px 15px;
+
+  h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+}
+
+.header-bar {
+  background: #f87f31;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.main-header {
+  border-bottom: 3px solid #f78131;
+  margin: 20px 20px 0px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    background-color: #f78131;
+    color: #ffffff;
+    font-size: smaller;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    width: 100%;
+    padding: 0px 10px;
+    border-radius: 16px;
+    height: 25px;
+    margin-bottom: 5px;
+
+    .btn-label {
+      margin-right: 10px;
+    }
+
+    .mdc-button__label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    mat-icon {
+      font-size: 20px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5px;
+    }
+
+    .rides {
+      font-size: larger;
+      font-weight: bold;
+      padding-left: 10px;
+    }
+  }
+}
+
+.ride-history-card {
+  margin-bottom: 15px;
+  box-shadow: 0 3px 9px #b0adad;
+  border-radius: 8px !important;
+
+  .card-container {
+    display: flex;
+    flex-direction: column;
+
+    .image-container {
+      border-radius: 8px;
+      margin-bottom: 10px;
+
+      .image-div {
+        height: 200px;
+      }
+
+      ::ng-deep google-map {
+        height: 230px !important;
+      }
+    }
+
+    .details-container {
+      display: flex;
+      flex-direction: column;
+
+      .basic-details-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .extra-details-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      h3 {
+        font-size: 1.15rem;
+        margin: 0;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-title>Configure GPS</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label position="stacked">Maximum Accuracy (Meters)</ion-label>
+            <ion-range min="0" max="96" step="1" pin
+                    [value]="initialAccuracy"
+                    (ionChange)="updateAccuracy($event)">
+                <ion-label slot="start">0</ion-label>
+                <ion-label slot="end">96</ion-label>
+            </ion-range>
+            <ion-note>
+                GPS readings with an accuracy value greater than this value
+                are rejected. Higher values allow less accurate GPS readings.
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Minimum Distance (Meters)</ion-label>
+            <ion-range min="0" max="30" step="1" pin
+                    [value]="initialDistance"
+                    (ionChange)="updateDistance($event)">
+                <ion-label slot="start">0</ion-label>
+                <ion-label slot="end">30</ion-label>
+            </ion-range>
+            <ion-note>
+                GPS readings that are less than this distance from the last
+                recorded position are rejected.
+            </ion-note>
+        </ion-item>
+    </ion-list>
+</ion-content>

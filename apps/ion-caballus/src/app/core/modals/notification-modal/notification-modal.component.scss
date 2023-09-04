@@ -1,0 +1,18 @@
+::ng-deep .notification-modal {
+  &::part(content) {
+    height: 17% !important;
+  }
+
+  div.modal {
+    .buttons {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 10px;
+
+      button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

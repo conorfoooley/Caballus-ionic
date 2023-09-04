@@ -1,0 +1,104 @@
+div.banner {
+  background: var(--caballus-color-tangerine-orange);
+
+  p {
+    color: white;
+    margin: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  div.option-scroller {
+    width: 100%;
+    height: 96px;
+    color: #fff;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    div.banner-button {
+      display: inline-block;
+      height: 100%;
+      width: 33%;
+      text-align: center;
+      box-sizing: border-box;
+
+      div.circle {
+        margin: auto;
+        margin-top: 10px;
+        width: 48px;
+        height: 48px;
+        border: 2px solid #fff;
+        border-radius: 24px;
+
+        mat-icon {
+          position: relative;
+          top: 9px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 50%;
+        }
+
+        .img-placeholder {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 50%;
+          background-color: gray;
+        }
+      }
+
+      span.label {
+        display: block;
+        margin-top: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+        margin-bottom: 1px;
+      }
+
+      div.underline {
+        height: 2px;
+        width: 100px;
+        margin: auto;
+        border-bottom: 2px solid var(--caballus-color-tangerine-orange);
+      }
+
+      div.underline.selected {
+        border-bottom: 2px solid #fff;
+      }
+    }
+  }
+
+  div.search::ng-deep {
+    display: flex;
+    justify-content: center;
+
+    mat-mdc-form-field {
+      width: 380px;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    .mat-focused,
+    .mat-mdc-form-field-label,
+    .mat-mdc-form-field-outline,
+    .mat-mdc-form-field-appearance-outline,
+    .mat-mdc-form-field-ripple,
+    input.mat-input-element {
+      color: #fff;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    .mat-mdc-form-field-wrapper {
+      padding-bottom: 10px;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    .mat-mdc-form-field-prefix {
+      padding-right: 4px;
+    }
+  }
+}

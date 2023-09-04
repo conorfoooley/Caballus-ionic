@@ -1,0 +1,198 @@
+<ion-content class="transfer-horse-page">
+    <app-profile-header></app-profile-header>
+    <h1 *ngIf="!cancelTransferModal">Transfer Horse Ownership</h1>
+    <h1 *ngIf="cancelTransferModal">Cancel Transfer Horse Ownership</h1>
+    <mat-card appearance="outlined" class="card" *ngIf="!cancelTransferModal">
+        <mat-card-header class="card-header">
+            <mat-card-title>Bio:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="details">
+                <div class="detail">
+                    <div class="label big-label">Barn Name:</div>
+                    <div class="value">{{ horse?.profile?.commonName }}</div>
+                </div>
+                <div class="detail">
+                    <div class="label big-label">Registered:</div>
+                    <div class="value">{{ horse?.profile?.registeredName }}</div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="details">
+                    <div class="detail">
+                        <div class="label">Breed:</div>
+                        <div class="value">{{ HorseBreed.toString(horse?.profile?.breed) }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Reg #:</div>
+                        <div class="value">{{ horse?.profile?.registeredName }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Weight (lbs):</div>
+                        <div class="value">
+                            {{ kgToLbs(horse?.profile?.weightKilograms) | number: '1.0-0' }}
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Height (hands):</div>
+                        <div class="value">
+                            {{ meterToHands(horse?.profile?.heightMeters) | number: '1.0-1' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div class="form" *ngIf="!(user$ | async) && !cancelTransferModal">
+        <label class="info-text">
+            Please type in the email of the Caballus user to whom you will transfer horse ownership:
+        </label>
+        <ion-item class="ion-no-padding">
+            <ion-label position="stacked">Enter user email</ion-label>
+            <ion-input
+                type="email"
+                placeholder="Search by Email"
+                [formControl]="searchControl"
+            ></ion-input>
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+        </ion-item>
+        <div class="error-container" style="margin-left: 43px;">
+            <ng-container *ngFor="let validation of validations.email">
+                <div
+                    class="error-message"
+                    *ngIf="
+                        searchControl.hasError(validation.type) &&
+                        (searchControl.dirty || searchControl.touched)
+                    "
+                >
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <span class="error-text">{{ validation.message }}</span>
+                </div>
+            </ng-container>
+        </div>
+        <!--  <mat-form-field appearance="outline">
+            <mat-label>
+                Enter user email
+            </mat-label>
+            <input matInput type="email" placeholder="Search by Email" [formControl]="searchControl" />
+            <mat-icon matPrefix>search</mat-icon>
+            <mat-error [rfxError]="searchControl"></mat-error>
+        </mat-form-field> -->
+        <div class="button-container">
+            <button
+                mat-raised-button
+                class="large-round go-back"
+                (click)="goBack()"
+                [disabled]="isSearching$ | async"
+            >
+                No, Go Back
+            </button>
+            <button
+                mat-raised-button
+                class="large-round end spinner email-search"
+                (click)="findUserByEmail()"
+                [disabled]="isSearching$ | async"
+            >
+                Submit
+                <mat-spinner *ngIf="isSearching$ | async"></mat-spinner>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="user$ | async as user">
+        <div *ngIf="!cancelTransferModal">
+            <mat-card appearance="outlined" class="card">
+                <mat-card-header class="card-header">
+                    <mat-card-title>Caballus User Found:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="details">
+                        <div class="detail">
+                            <div class="label big-label">First Name:</div>
+                            <div class="value">{{ user?.profile?.firstName || ''}}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label big-label">Last Name:</div>
+                            <div class="value">{{ user?.profile?.lastName || '' }}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label big-label">Email Address:</div>
+                            <div class="value">{{ user?.profile?.email }}</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <label class="info-text form">
+                Do you want to send them a horse-transfer email?
+            </label>
+            <div class="note form">
+                (<b>note</b>: They must respond to the email to complete the transfer)
+            </div>
+            <div class="button-container">
+                <button
+                    mat-raised-button
+                    class="large-round go-back reset-user"
+                    (click)="resetUser()"
+                    [disabled]="isInitiate$ | async"
+                >
+                    No, Go Back
+                </button>
+                <button
+                    mat-raised-button
+                    class="large-round end spinner initiate-user"
+                    (click)="initiateUser()"
+                    [disabled]="isInitiate$ | async"
+                >
+                    Yes, Initiate Transfer
+                    <mat-spinner *ngIf="isInitiate$ | async"></mat-spinner>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="cancelTransferModal">
+            <mat-card appearance="outlined" class="card">
+                <mat-card-header class="card-header">
+                    <mat-card-title
+                        >This will cancel the ownership-transfer process to:</mat-card-title
+                    >
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="details">
+                        <div class="detail">
+                            <div class="label big-label">First Name:</div>
+                            <div class="value">{{ user?.profile?.firstName }}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label big-label">Last Name:</div>
+                            <div class="value">{{ user?.profile?.lastName }}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="label big-label">Email Address:</div>
+                            <div class="value">{{ user?.profile?.email }}</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <label class="info-text form">
+                Do you wish to cancel the transfer already in progress?
+            </label>
+            <div class="button-container">
+                <button
+                    mat-raised-button
+                    class="large-round go-back"
+                    (click)="goBack()"
+                    [disabled]="isCanceling$ | async"
+                >
+                    No, Go Back
+                </button>
+                <button
+                    mat-raised-button
+                    class="large-round end spinner cancel-transfer"
+                    (click)="cancelTransferHorseProfile()"
+                    [disabled]="isCanceling$ | async"
+                >
+                    Yes, Cancel
+                    <mat-spinner *ngIf="isCanceling$ | async"></mat-spinner>
+                </button>
+            </div>
+        </div>
+    </div>
+</ion-content>

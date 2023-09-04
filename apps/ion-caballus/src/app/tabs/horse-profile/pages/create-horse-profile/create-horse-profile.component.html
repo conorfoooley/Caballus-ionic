@@ -1,0 +1,257 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon (click)="goBack()">keyboard_backspace</mat-icon>
+        <div>Add Profile</div>
+        <mat-icon>share</mat-icon>
+    </div>
+    <div class="permission-button-wrapper">
+        <mat-checkbox
+            (change)="changeShareCheckBox($event.checked)"
+            [checked]="shareHorse"
+            class="wrap-checkbox-label"
+        >
+            Public
+        </mat-checkbox>
+        <button mat-raised-button class="large-round permission-button" [disabled]="!shareHorse">
+            Permission for Sharing
+        </button>
+    </div>
+    <mat-card appearance="outlined" class="card-wrapper">
+        <form [formGroup]="profileForm">
+            <mat-card-header>
+                <mat-card-title class="title-border">
+                    Bio
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+            <ion-item>
+                <ion-label position="stacked">Barn Name</ion-label>
+                <ion-input placeholder="" formControlName="commonName"></ion-input>
+            </ion-item>
+            <!--  <mat-form-field>
+                <mat-label>Barn Name</mat-label>
+                <input matInput required placeholder="Barn Name" formControlName="commonName" />
+            </mat-form-field> -->
+
+            <ion-item>
+                <ion-label position="stacked">Registration Name</ion-label>
+                <ion-input placeholder="" formControlName="registeredName"></ion-input>
+            </ion-item>
+            <!--  <mat-form-field>
+                <mat-label>Registration Name</mat-label>
+                <input matInput placeholder="Registration Name" formControlName="registeredName" />
+            </mat-form-field> -->
+            <div class="d-flex">
+                <img
+                    class="horse-image"
+                    src="../../../../../assets/images/horse-placeholder.png"
+                    (click)="imageClick()"
+                />
+                <div>
+                    <ion-item>
+                        <ion-label position="stacked">Breed</ion-label>
+                        <ion-select formControlName="breed">
+                            <ion-select-option *ngFor="let m of HorseBreed.members" [value]="m">{{
+                                HorseBreed.toString(m)
+                            }}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <!--  <mat-form-field appearance="outline">
+                        <mat-label>Breed</mat-label>
+                        <mat-select placeholder="Contract Status" formControlName="breed">
+                            <mat-option *ngFor="let m of HorseBreed.members" [value]="m">
+                                {{ HorseBreed.toString(m) }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <ion-item>
+                        <ion-label position="stacked">Reg #</ion-label>
+                        <ion-input
+                            placeholder="Reg"
+                            formControlName="registrationNumber"
+                        ></ion-input>
+                    </ion-item>
+                    <!-- <mat-form-field>
+                        <mat-label>Reg</mat-label>
+                        <input matInput placeholder="Reg" formControlName="registrationNumber" />
+                    </mat-form-field> -->
+
+                    <ion-item>
+                        <ion-label position="stacked">Height (hands)</ion-label>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="heightMeters"
+                            title="1 hand = 4 inches"
+                            tooltip="1 hand = 4 inches"
+                        ></ion-input>
+                        <!-- <ion-icon name="help-outline" slot="end"></ion-icon> -->
+                    </ion-item>
+                    <!--  <ion-popover trigger="click-trigger" triggerAction="click">
+                        <ng-template>
+                            <ion-content class="ion-padding">1 hand = 4 inches</ion-content>
+                        </ng-template>
+                    </ion-popover> -->
+
+                    <!--  <mat-form-field>
+                        <mat-label>Height (hands) </mat-label>
+                        <input
+                            matInput
+                            placeholder="Height"
+                            formControlName="heightMeters"
+                            type="number"
+                            #tooltip="matTooltip"
+                            matTooltip="1 hand = 4 inches"
+                        />
+                        <mat-icon class="hint" matSuffix (click)="tooltip.toggle()">help</mat-icon>
+                    </mat-form-field> -->
+                    <ion-item>
+                        <ion-label position="stacked">Weight (lbs)</ion-label>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="weightKilograms"
+                        ></ion-input>
+                    </ion-item>
+                    <!-- <mat-form-field>
+                        <mat-label>Weight (lbs)</mat-label>
+                        <input
+                            matInput
+                            placeholder="Width"
+                            formControlName="weightKilograms"
+                            type="number"
+                        />
+                    </mat-form-field> -->
+                </div>
+            </div>
+            </mat-card-content>
+        </form>
+    </mat-card>
+
+
+    <form [formGroup]="gaitsKilometersPerHourFrom">
+        <mat-card appearance="outlined" class="card-wrapper">
+            <mat-card-header>
+            <mat-card-title class="title-border">
+                Update Gait Speed
+            </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content>
+            <div class="d-flex">
+                <div class="full-flex">Gait</div>
+                <div class="full-flex">
+                    Min Speed(MPH)
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="full-flex">Walk</div>
+                <div class="full-flex">
+                    <ion-item>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="Walk"
+                            required
+                        ></ion-input>
+                    </ion-item>
+                    <!--  <mat-form-field>
+                        <input
+                            matInput
+                            required
+                            placeholder="Walk"
+                            formControlName="Walk"
+                            type="number"
+                        />
+                    </mat-form-field> -->
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="full-flex">Trot</div>
+                <div class="full-flex">
+                    <ion-item>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="Trot"
+                            required
+                        ></ion-input>
+                    </ion-item>
+                    <!-- <mat-form-field>
+                        <input
+                            matInput
+                            required
+                            placeholder="Trot"
+                            formControlName="Trot"
+                            type="number"
+                        />
+                    </mat-form-field> -->
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="full-flex">Lope/Canter</div>
+                <div class="full-flex">
+                    <ion-item>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="Lope"
+                            required
+                        ></ion-input>
+                    </ion-item>
+                    <!-- <mat-form-field>
+                        <input
+                            matInput
+                            required
+                            placeholder="Lope/Canter"
+                            formControlName="Lope"
+                            type="number"
+                        />
+                    </mat-form-field> -->
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="full-flex">Gallop/Run</div>
+                <div class="full-flex">
+                    <ion-item>
+                        <ion-input
+                            placeholder=""
+                            type="number"
+                            formControlName="Gallop"
+                            required
+                        ></ion-input>
+                    </ion-item>
+                    <!-- <mat-form-field>
+                        <input
+                            matInput
+                            required
+                            placeholder="Gallop/Run"
+                            formControlName="Gallop"
+                            type="number"
+                        />
+                    </mat-form-field> -->
+                </div>
+            </div>
+            </mat-card-content>
+            <br />
+            <mat-card-footer>
+            <div class="button-wrapper">
+                <button mat-raised-button class="large-round" (click)="resetGaitForm()">
+                    Reset
+                </button>
+            </div>
+            </mat-card-footer>
+        </mat-card>
+    </form>
+    <div class="save-button">
+        <button
+            [disabled]="submitting$ | async"
+            (click)="createHorseProfile()"
+            mat-raised-button
+            class="large-round"
+        >
+            Save New Horse Profile
+        </button>
+    </div>
+</ion-content>

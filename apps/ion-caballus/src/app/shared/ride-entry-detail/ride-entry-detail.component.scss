@@ -1,0 +1,97 @@
+.tab-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0px 15px;
+    h1 {
+        margin: 0;
+        margin-bottom: 10px;
+        padding-left: 10px;
+    }
+}
+.header-bar {
+    background: #f87f31;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.card {
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+    ::ng-deep.mat-mdc-card-header-text {
+        margin: 0 !important;
+    }
+    box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 20px !important;
+    margin: 20px 20px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.ride-complted-wrapper {
+    position: fixed;
+    width: 100%;
+    background: white;
+    z-index: 1;
+}
+
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-top: 35px;
+    margin-bottom: 40px;
+    button.alt {
+        margin-right: 10px;
+    }
+}
+
+.duration-input {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+
+    input {
+        width: 45px;
+        border-style: solid;
+        text-align: center;
+
+        &.ng-invalid {
+            border-color: red;
+        }
+    }
+    span {
+        padding: 2px 4px 0;
+        font-weight: bold;
+    }
+}
+
+.thumbnail {
+    color: white;
+    height: 54px;
+    width: 54px;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 32px;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.12);
+}

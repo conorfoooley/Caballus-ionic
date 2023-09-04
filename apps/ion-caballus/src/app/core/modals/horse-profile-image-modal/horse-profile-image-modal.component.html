@@ -1,0 +1,21 @@
+<ion-header class="ion-no-border" mode="md">
+    <ion-toolbar>
+        <h1 class="ion-text-center ion-margin-vertical">Horse Profile Image</h1>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ng-container *ngIf="profilePictureUrl$ | async as url">
+        <ion-img [src]="url" alt="Horse picture"></ion-img>
+    </ng-container>
+    <div class="actions-container" *ngIf="canEdit$ | async">
+        <button  mat-raised-button class="large-round end spinner" (click)="changeProfileImage()">
+            Change Image
+        </button>
+    </div>
+</ion-content>

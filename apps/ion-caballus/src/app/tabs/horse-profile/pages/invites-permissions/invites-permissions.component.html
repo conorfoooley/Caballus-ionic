@@ -1,0 +1,28 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="backToHorseList()">arrow_back</mat-icon>
+        <div>Invites / Permissions</div>
+        <div></div>
+    </div>
+
+    <ion-button expand="block" shape="round" size="large" class="action-btn" (click)="moveToPublicPermissions()">
+        Public Permissions
+    </ion-button>
+
+    <mat-card appearance="outlined" class="card horse-role-card" *ngFor="let horseRole of (horseRoles$ | async)">
+        <mat-card-header class="card-header">
+            <mat-card-title>{{ horseRole.name }}(s):</mat-card-title>
+            <ion-button shape="round" size="small" class="add-button" (click)="moveToAddTrainerStudent(horseRole._id)">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+        </mat-card-header>
+        <mat-card-content *ngFor="let invite of (invitations$ | async)">
+            <app-invitation-card *ngIf="invite.horseRoleIdentity._id === horseRole._id" [invitation]="invite" (retractInviteId)="retractInvite($event)"></app-invitation-card>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="spinner-wrapper" *ngIf="loading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+
+</ion-content>

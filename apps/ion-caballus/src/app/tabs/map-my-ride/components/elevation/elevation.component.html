@@ -1,0 +1,14 @@
+<mat-card appearance="outlined" class="form-group card-wrapper">
+    <mat-card-content>
+        <mat-card-title class="form-group-header">
+            <div class="row">
+                <div class="card-title">
+                    Elevation Gain:
+                    <span class="gain-css" *ngIf="wayPoints">
+                        {{ elevation(wayPoints) | number: '1.2-2' }} ft.
+                    </span>
+                </div>
+            </div>
+        </mat-card-title>
+    </mat-card-content>
+</mat-card>

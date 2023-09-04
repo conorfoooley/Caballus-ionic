@@ -1,0 +1,75 @@
+<ion-content>
+  <div class="header-bar">
+    <mat-icon (click)="goBack()">keyboard_backspace</mat-icon>
+    <div>Photo Gallery</div>
+    <div class="dummy-image"></div>
+  </div>
+  <div class="container">
+    <div class="plus-icon-wrapper">
+      <img
+        src="../../../../../assets/icons/addButton.svg"
+        (click)="attachMedia()"
+      />
+      <mat-form-field appearance="outline">
+        <mat-select
+          placeholder="Sorting Order"
+          (selectionChange)="changeSortingOrder($event)"
+        >
+          <mat-option *ngFor="let m of GallerySortByOption.members" [value]="m">
+            {{ GallerySortByOption.toString(m) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="horse-gallery-container">
+      <div class="img-circle" *ngFor="let media of horseMedia$ | async">
+        <ng-container *ngIf="media.isUploaded; else mediaNotUploaded">
+          <ng-container *ngIf="media?.latest?.type === MediaDocumentType.Image; else video;">
+            <img
+              class="img-thumbnail"
+              (click)="imageViewerModal(media?.latest?.url, media._id, media.galleryCategory  === GalleryCategory.Pinned)"
+              [src]="
+                media?.thumbnail?.url
+                  ? media?.thumbnail?.url
+                  : './assets/icons/no-placeholder.svg'
+              "
+            />
+          </ng-container>
+
+          <ng-template #video>
+            <img
+              (click)="imageViewerModal(media?.latest?.jwPlayerId, media._id, media.galleryCategory === GalleryCategory.Pinned)"
+              class="img-thumbnail"
+              [src]="
+                media?.thumbnail?.url
+                  ? media?.thumbnail?.url
+                  : './assets/icons/no-placeholder.svg'
+              "
+            />
+          </ng-template>
+        </ng-container>
+
+        <ng-template #mediaNotUploaded>
+          <div class="video-uploading">
+            <img class="img-thumbnail" [src]="media?.thumbnail?.url" />
+
+            <ion-icon
+              name="cloud-upload-outline"
+              class="upload-icon"
+            ></ion-icon>
+          </div>
+        </ng-template>
+
+        <p class="media-date">{{ media.createdDate | date : 'shortDate' }}</p>
+        <fa-icon
+          matTooltip="This is a pinned image and is shared publicly when the horse profile is shared to social media."
+          [icon]="['far', 'thumbtack']"
+          *ngIf="media.galleryCategory === GalleryCategory.Pinned"
+          class="pinned-image"
+        ></fa-icon>
+      </div>
+    </div>
+  </div>
+  <input hidden type="file" #attachmentInput accept="video/*,image/*" />
+</ion-content>

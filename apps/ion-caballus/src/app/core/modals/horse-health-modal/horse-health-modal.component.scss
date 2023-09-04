@@ -1,0 +1,162 @@
+::ng-deep.horse-health-modal {
+
+  &::part(content) {
+    height: 60%;
+  }
+
+  div.modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    div.content-strip {
+      width: 100%;
+
+      div.button-container {
+        display: flex;
+        flex-direction: column;
+
+        button.large-round {
+          margin: auto;
+          margin-top: 24px;
+          width: 250px;
+        }
+      }
+    }
+
+    .modal-header {
+      border-bottom: 3px solid #f78131;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .title {
+        margin: 5px 0px;
+
+        .bold {
+          font-weight: bold !important;
+        }
+      }
+    }
+
+    .content-strip {
+      margin: 8px 16px;
+
+      .form-section-health {
+        padding-bottom: 50px;
+      }
+
+      .form-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid #f78131;
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+
+      .notes {
+        width: 100%;
+        height: 180px;
+
+        .mat-mdc-form-field {
+          height: 80%;
+          width: 100%;
+          /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+          /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+          .mat-mdc-form-field-wrapper {
+            padding: 0 !important;
+            height: 100%;
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+            .mat-mdc-form-field-flex {
+              height: 100%;
+            }
+          }
+
+          /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+          .mat-mdc-form-field-infix,
+          textarea {
+            height: 100%;
+          }
+        }
+      }
+
+      .docs {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .upload-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 10px 0px;
+      }
+
+      .button-container {
+        position: absolute;
+        width: calc(100% - 32px);
+        bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around !important;
+        flex-direction: row !important;
+
+        ion-button {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .trash {
+      color: #000000;
+    }
+
+    .button-container {
+      ion-button {
+        --border-radius: 20px;
+        height: 40px;
+        width: 100px;
+
+        &[disabled] {
+          opacity: 1;
+          --background: #cccccc;
+        }
+      }
+
+      mat-spinner {
+        width: 20px !important;
+        height: 20px !important;
+
+        svg {
+          width: 20px !important;
+          height: 20px !important;
+        }
+      }
+    }
+  }
+
+}
+
+@media screen and (max-height: 400px) {
+  ::ng-deep.horse-health-modal {
+    &::part(content) {
+      height: 100%;
+    }
+
+    div.modal {
+      .button-container {
+        bottom: 0 !important;
+      }
+    }
+  }
+
+  body {
+    background-color: lightgreen;
+  }
+}

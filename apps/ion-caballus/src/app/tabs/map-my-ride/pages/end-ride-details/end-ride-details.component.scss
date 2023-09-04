@@ -1,0 +1,173 @@
+.button-wrapper {
+    text-align: center;
+    margin: 16px 0px;
+
+    button.alt {
+        margin-right: 16px;
+    }
+}
+
+.ride-saved {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 48px 16px;
+
+    h1 {
+        margin: 0;
+    }
+}
+::ng-deep canvas#barChart {
+    background-color: rgba(189, 229, 255, 0.8);
+    opacity: 0.5;
+    border: 1px solid rgba(78, 99, 114, 0.8);
+}
+.graph-label {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px !important;
+    width: 100%;
+    padding: 0px;
+    .x {
+        color: rgb(64, 119, 255);
+        opacity: 0.8;
+    }
+    .y {
+        color: rgb(255, 0, 0);
+        opacity: 0.8;
+    }
+}
+
+.end-ride-content {
+    .gait-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 20px;
+        font-weight: bold;
+        width: 100%;
+
+        ::ng-deep ion-segment {
+            min-width: 150px;
+            max-width: 150px;
+            background: transparent !important;
+            border-radius: 0 !important;
+        }
+
+        ::ng-deep .segment-button-checked {
+            box-shadow: none;
+            margin-bottom: 5px;
+            border-bottom: 4px solid #00ff00;
+            border-radius: 0;
+            .indicator-background {
+                display: none !important;
+            }
+        }
+
+        ::ng-deep ion-segment-button {
+            min-width: 50px;
+            max-width: 50px;
+            margin-bottom: 5px;
+            --indicator-box-shadow: none;
+            border-bottom: 4px solid white;
+            border-radius: 0;
+        }
+    }
+
+    .gait-label {
+        color: gray;
+        font-weight: bold;
+    }
+
+    .gait-border {
+        border-bottom: 3px solid lightgray;
+    }
+
+
+    .nowrap {
+        white-space: nowrap !important;
+    }
+
+    ::ng-deep canvas#barChart {
+        background-color: rgba(189, 229, 255, 0.8);
+        opacity: 0.5;
+        border: 1px solid rgba(78, 99, 114, 0.8);
+    }
+
+    .graph-label {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px !important;
+        width: 100%;
+        padding: 0px;
+        .x {
+            color: rgb(64, 119, 255);
+            opacity: 0.8;
+        }
+        .y {
+            color: rgb(255, 0, 0);
+            opacity: 0.8;
+        }
+    }
+    .select-range {
+        display: flex;
+        justify-content: flex-end;
+        mat-mdc-form-field {
+            padding: 0 5px;
+        }
+        a:hover {
+            cursor: pointer;
+        }
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field-flex > .mat-mdc-form-field-infix {
+        padding: 0.4em 0 !important;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field-label-wrapper {
+        top: -1.5em;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep
+        .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-can-float.mat-mdc-form-field-should-float
+        .mat-mdc-form-field-label {
+        transform: translateY(-1.1em) scale(0.75);
+        width: 133.33333%;
+    }
+    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+    ::ng-deep .mat-select-placeholder {
+        color: rgba(0, 0, 0, 0.87);
+    }
+
+    .horse-header {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .horse-slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .ride-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .app-map-wrapper {
+        padding-top: 125px;
+    }
+
+    .ride-complted-wrapper {
+        position: fixed;
+        width: 100%;
+        background: white;
+        z-index: 1;
+    }
+}

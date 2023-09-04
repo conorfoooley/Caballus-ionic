@@ -1,0 +1,484 @@
+<ion-content>
+    <app-profile-header></app-profile-header>
+    <div class="tab-header">
+        <img class="tab-image" src="../../../../../assets/icons/medical.svg" />
+        <h1>Medical</h1>
+    </div>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header class="card-header">
+            <mat-card-title>Veterinarian Contact:</mat-card-title>
+            <mat-icon
+                class="edit"
+                *ngIf="(canEdit$ | async) && !editContact"
+                (click)="onContactEdit()"
+                >edit</mat-icon
+            >
+        </mat-card-header>
+        <mat-card-content class="card-content">
+            <form class="contactForm" [formGroup]="contactForm" (ngSubmit)="submitContactForm()">
+                <div class="details">
+                    <div *ngIf="!editContact" class="detail">
+                        <div class="label big-label">Name: {{ contactForm.value.fullName }}</div>
+                    </div>
+                    <div *ngIf="editContact" class="content-edit">
+                        <ion-item>
+                            <ion-input formControlName="fullName" type="text" placeholder="Name">
+                            </ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.fullName">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        contactForm.get('fullName').hasError(validation.type) &&
+                                        (contactForm.get('fullName').dirty ||
+                                            contactForm.get('fullName').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!--  <mat-error
+                            class="ion-error"
+                            [rfxError]="contactForm.get('fullName')"
+                        ></mat-error> -->
+                    </div>
+
+                    <div *ngIf="!editContact" class="detail">
+                        <div class="label big-label">Email: {{ contactForm.value.email }}</div>
+                    </div>
+                    <div *ngIf="editContact" class="content-edit">
+                        <ion-item>
+                            <ion-input formControlName="email" type="email" placeholder="Email">
+                            </ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.email">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        contactForm.get('email').hasError(validation.type) &&
+                                        (contactForm.get('email').dirty ||
+                                            contactForm.get('email').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!--
+                        <mat-error [rfxError]="contactForm.get('email')"></mat-error> -->
+                    </div>
+
+                    <div *ngIf="!editContact" class="detail">
+                        <div class="label big-label">Phone: {{ contactForm.value.phone }}</div>
+                    </div>
+                    <div *ngIf="editContact" class="content-edit">
+                        <ion-item>
+                            <ion-input
+                                formControlName="phone"
+                                type="text"
+                                phoneMask
+                                placeholder="Phone"
+                            >
+                            </ion-input>
+                        </ion-item>
+                        <div class="error-container">
+                            <ng-container *ngFor="let validation of validations.phone">
+                                <div
+                                    class="error-message"
+                                    *ngIf="
+                                        contactForm.get('phone').hasError(validation.type) &&
+                                        (contactForm.get('phone').dirty ||
+                                            contactForm.get('phone').touched)
+                                    "
+                                >
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <span class="error-text">{{ validation.message }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <!-- <mat-error [rfxError]="contactForm.get('phone')"></mat-error> -->
+                    </div>
+                    <div [formGroup]="address">
+                        <div *ngIf="!editContact" class="detail">
+                            <div class="label big-label">
+                                Address: {{ contactForm.value.address.line1 || '' }},
+                                {{ contactForm.value.address.city || '' }},
+                                {{ contactForm.value.address.state || '' }}
+                                {{ contactForm.value.address.postalCode || '' }}
+                            </div>
+                        </div>
+                        <div *ngIf="editContact" class="content-edit">
+                            <ion-item>
+                                <ion-input
+                                    formControlName="line1"
+                                    type="text"
+                                    placeholder="Address"
+                                >
+                                </ion-input>
+                            </ion-item>
+                            <div class="error-container">
+                                <ng-container *ngFor="let validation of validations.line1">
+                                    <div
+                                        class="error-message"
+                                        *ngIf="
+                                            contactForm
+                                                .get('address')
+                                                .get('line1')
+                                                .hasError(validation.type) &&
+                                            (contactForm.get('address').get('line1').dirty ||
+                                                contactForm.get('address').get('line1').touched)
+                                        "
+                                    >
+                                        <ion-icon name="information-circle-outline"></ion-icon>
+                                        <span class="error-text">{{ validation.message }}</span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div *ngIf="editContact" class="content-edit address">
+                            <ion-item>
+                                <ion-input formControlName="city" type="text" placeholder="City">
+                                </ion-input>
+                                <ion-select formControlName="state" multiple="false">
+                                    <ion-select-option class="ion-text-wrap" [value]="''">
+                                        Select State
+                                    </ion-select-option>
+                                    <ion-select-option
+                                        class="ion-text-wrap"
+                                        *ngFor="let state of states"
+                                        [value]="state.key"
+                                    >
+                                        {{ state.name }}
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </div>
+
+                        <div *ngIf="editContact" class="content-edit">
+                            <ion-item>
+                                <ion-input
+                                    formControlName="postalCode"
+                                    type="text"
+                                    placeholder="Zip"
+                                >
+                                </ion-input>
+                            </ion-item>
+                            <div class="error-container">
+                                <ng-container *ngFor="let validation of validations.postalCode">
+                                    <div
+                                        class="error-message"
+                                        *ngIf="
+                                            contactForm
+                                                .get('address')
+                                                .get('postalCode')
+                                                .hasError(validation.type) &&
+                                            (contactForm.get('address').get('postalCode').dirty ||
+                                                contactForm.get('address').get('postalCode')
+                                                    .touched)
+                                        "
+                                    >
+                                        <ion-icon name="information-circle-outline"></ion-icon>
+                                        <span class="error-text">{{ validation.message }}</span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <!--
+                            <mat-error
+                                [rfxError]="contactForm.get('address').get('postalCode')"
+                            ></mat-error> -->
+                        </div>
+                    </div>
+                    <div *ngIf="editContact" class="confirm-button">
+                        <ion-button
+                            [disabled]="!contactForm.valid || (isLoading$ | async)"
+                            type="submit"
+                            >Save
+                            <mat-spinner [diameter]="20" *ngIf="isLoading$ | async"></mat-spinner>
+                        </ion-button>
+                        <ion-button [disabled]="isLoading$ | async" (click)="onCancelContact()"
+                            >Cancel</ion-button
+                        >
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <ng-container
+        [ngTemplateOutlet]="horseHealth"
+        [ngTemplateOutletContext]="{ horseHealth: horseHealth$ | async }"
+    >
+    </ng-container>
+    <ng-template #horseHealth let-horseHealth="horseHealth">
+        <mat-card appearance="outlined" class="card health-card">
+            <mat-card-content class="card-content">
+                <mat-accordion class="expansion health" *ngIf="horseHealth">
+                    <mat-expansion-panel
+                        hideToggle
+                        (opened)="openPanel(HorseHealthType.Health)"
+                        (closed)="panelOpenState[HorseHealthType.Health].open = false"
+                    >
+                        <mat-expansion-panel-header>
+                            <mat-panel-title
+                                [class.card-header]="panelOpenState[HorseHealthType.Health].open"
+                            >
+                                <div>
+                                    Health
+                                </div>
+                                <div *ngIf="panelOpenState[HorseHealthType.Health].open">
+                                    <img
+                                        class="add-button"
+                                        (click)="
+                                            addEditHorseHealthModal(HorseHealthType.Health)
+                                        "
+                                        src="../../../../../assets/icons/addButton.svg"
+                                    />
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div
+                            class="expansion-wrap health"
+                            *ngIf="!horseHealth[HorseHealthType.Health]"
+                        >
+                            <div class="grid-div">
+                                <div class="label big-label">No Records</div>
+                            </div>
+                        </div>
+                        <div
+                            class="expansion-wrap health"
+                            *ngFor="let h of horseHealth[HorseHealthType.Health]"
+                        >
+                            <div class="date-picker">
+                                <div class="label big-label">
+                                    Date of Visit: {{ h.date | date: 'MM/dd/yyyy' }}
+                                </div>
+                                <mat-icon
+                                    class="edit"
+                                    (click)="addEditHorseHealthModal(HorseHealthType.Health, h)"
+                                    >edit
+                                </mat-icon>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label">Comments:</div>
+                                <div class="contents">{{ h.notes }}</div>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label" *ngIf="h.documents.length">
+                                    Attachment:
+                                </div>
+                                <div class="label big-label" *ngIf="!h.documents.length">
+                                    No Attachment
+                                </div>
+                                <div class="attachment" *ngFor="let d of h.documents">
+                                    <div>{{ displayFileName(d.latest.name) }}</div>
+                                    <a class="view" [href]="d.latest.url" target="_blank">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel
+                        hideToggle
+                        (opened)="openPanel(HorseHealthType.Farrier)"
+                        (closed)="panelOpenState[HorseHealthType.Farrier].open = false"
+                    >
+                        <mat-expansion-panel-header>
+                            <mat-panel-title
+                                [class.card-header]="panelOpenState[HorseHealthType.Farrier].open"
+                            >
+                                <div>
+                                    Farrier Work
+                                </div>
+                                <div *ngIf="panelOpenState[HorseHealthType.Farrier].open">
+                                    <img
+                                        class="add-button"
+                                        (click)="
+                                            addEditHorseHealthModal(HorseHealthType.Farrier)
+                                        "
+                                        src="../../../../../assets/icons/addButton.svg"
+                                    />
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div
+                            class="expansion-wrap Farrier"
+                            *ngIf="!horseHealth[HorseHealthType.Farrier]"
+                        >
+                            <div class="grid-div">
+                                <div class="label big-label">No Records</div>
+                            </div>
+                        </div>
+                        <div
+                            class="expansion-wrap Farrier"
+                            *ngFor="let h of horseHealth[HorseHealthType.Farrier]"
+                        >
+                            <div class="date-picker">
+                                <div class="label big-label">
+                                    Date of Visit: {{ h.date | date: 'MM/dd/yyyy' }}
+                                </div>
+                                <mat-icon
+                                    class="edit"
+                                    (click)="addEditHorseHealthModal(HorseHealthType.Farrier, h)"
+                                >
+                                    edit
+                                </mat-icon>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label">Comments:</div>
+                                <div class="contents">{{ h.notes }}</div>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label" *ngIf="h.documents.length">
+                                    Attachment:
+                                </div>
+                                <div class="label big-label" *ngIf="!h.documents.length">
+                                    No Attachment
+                                </div>
+                                <div class="attachment" *ngFor="let d of h.documents">
+                                    <div>{{ displayFileName(d.latest.name) }}</div>
+                                    <a class="view" [href]="d.latest.url" target="_blank">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel
+                        hideToggle
+                        (opened)="openPanel(HorseHealthType.Vaccination)"
+                        (closed)="panelOpenState[HorseHealthType.Vaccination].open = false"
+                    >
+                        <mat-expansion-panel-header>
+                            <mat-panel-title
+                                [class.card-header]="
+                                    panelOpenState[HorseHealthType.Vaccination].open
+                                "
+                            >
+                                <div>
+                                    Vaccinations
+                                </div>
+                                <div *ngIf="panelOpenState[HorseHealthType.Vaccination].open">
+                                    <img
+                                        class="add-button"
+                                        (click)="
+                                            addEditHorseHealthModal(HorseHealthType.Vaccination)
+                                        "
+                                        src="../../../../../assets/icons/addButton.svg"
+                                    />
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div
+                            class="expansion-wrap vaccination"
+                            *ngIf="!horseHealth[HorseHealthType.Vaccination]"
+                        >
+                            <div class="grid-div">
+                                <div class="label big-label">No Records</div>
+                            </div>
+                        </div>
+                        <div
+                            class="expansion-wrap vaccination"
+                            *ngFor="let h of horseHealth[HorseHealthType.Vaccination]"
+                        >
+                            <div class="date-picker">
+                                <div class="label big-label">
+                                    Date of Visit: {{ h.date | date: 'MM/dd/yyyy' }}
+                                </div>
+                                <mat-icon
+                                    class="edit"
+                                    (click)="
+                                        addEditHorseHealthModal(HorseHealthType.Vaccination, h)
+                                    "
+                                    >edit
+                                </mat-icon>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label">Comments:</div>
+                                <div class="contents">{{ h.notes }}</div>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label" *ngIf="h.documents.length">
+                                    Attachment:
+                                </div>
+                                <div class="label big-label" *ngIf="!h.documents.length">
+                                    No Attachment
+                                </div>
+                                <div class="attachment" *ngFor="let d of h.documents">
+                                    <div>{{ displayFileName(d.latest.name) }}</div>
+                                    <a class="view" [href]="d.latest.url" target="_blank">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel
+                        hideToggle
+                        (opened)="openPanel(HorseHealthType.Evaluation)"
+                        (closed)="panelOpenState[HorseHealthType.Evaluation].open = false"
+                    >
+                        <mat-expansion-panel-header>
+                            <mat-panel-title
+                                [class.card-header]="
+                                    panelOpenState[HorseHealthType.Evaluation].open
+                                "
+                            >
+                                <div>
+                                    Health Evaluations
+                                </div>
+                                <div *ngIf="panelOpenState[HorseHealthType.Evaluation].open">
+                                    <img
+                                        class="add-button"
+                                        (click)="
+                                            addEditHorseHealthModal(HorseHealthType.Evaluation)
+                                        "
+                                        src="../../../../../assets/icons/addButton.svg"
+                                    />
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div
+                            class="expansion-wrap no-evaluation"
+                            *ngIf="!horseHealth[HorseHealthType.Evaluation]"
+                        >
+                            <div class="grid-div">
+                                <div class="label big-label">No Records</div>
+                            </div>
+                        </div>
+                        <div
+                            class="expansion-wrap evaluation"
+                            *ngFor="let h of horseHealth[HorseHealthType.Evaluation]"
+                        >
+                            <div class="date-picker">
+                                <div class="label big-label">
+                                    Date of Visit: {{ h.date | date: 'MM/dd/yyyy' }}
+                                </div>
+                                <mat-icon
+                                    class="edit"
+                                    (click)="addEditHorseHealthModal(HorseHealthType.Evaluation, h)"
+                                >
+                                    edit
+                                </mat-icon>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label">Comments:</div>
+                                <div class="contents">{{ h.notes }}</div>
+                            </div>
+                            <div class="grid-div">
+                                <div class="label big-label" *ngIf="h.documents.length">
+                                    Attachment:
+                                </div>
+                                <div class="label big-label" *ngIf="!h.documents.length">
+                                    No Attachment
+                                </div>
+                                <div class="attachment" *ngFor="let d of h.documents">
+                                    <div>{{ displayFileName(displayFileName(d.latest.name)) }}</div>
+                                    <a class="view" [href]="d.latest.url" target="_blank">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
+</ion-content>

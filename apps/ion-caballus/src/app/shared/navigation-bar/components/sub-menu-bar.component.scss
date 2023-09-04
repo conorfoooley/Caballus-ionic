@@ -1,0 +1,146 @@
+
+::ng-deep app-sub-menu-bar {
+    .extend-swipe {
+        background-color: #4d9dfe;
+        transition: height 1.5s;
+        height: 0px;
+    }
+    
+    .collapse-swipe {
+        background-color: #4d9dfe;
+        height: 0px;
+        transition: height 1.5s;
+    }
+
+    .collapse-swipe-hidden {
+        height: 10px
+    }
+
+    .extend-swipe-show {
+        height: 225px;
+    }
+
+    .tool-bar-content {
+        position: relative;
+    }
+    .swipe {
+        z-index: 1000;
+        position: absolute;
+        bottom: 45px;
+        width: 100%;
+        .card {
+            background-color: #4d9dfe;
+            padding: 18px !important;
+        }
+    }
+    .swiper-expand{
+        box-shadow: -2px 0px 2px rgb(0 0 0 / 25%), 2px 2px 2px rgb(0 0 0 / 35%);
+    }
+    .bottom-liner:after {
+        content: '';
+        position: absolute;
+        top: -13px;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid #4d9dfe;
+        left: 23%;
+        z-index: -99;
+    }
+    .swipe-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        flex-wrap: nowrap;
+        padding: 15px 20px;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        .swiper-content-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 33%;
+            min-height: 80px;
+            position: relative;
+            .menu-icon {
+                position: absolute;
+                top: 15px
+            }
+            .mene-icon-label {
+                position: absolute;
+                bottom: 10px;
+                letter-spacing: 0.5px;
+            }
+            .analytics {
+                top: 10px;
+            }
+            .ride-history {
+                width: 50px !important;
+                height: 40px;
+                top: 10px;
+            }
+            .general-info {
+                width: 40px !important;
+                height: 35px !important;
+            }
+            .cup {
+                width: 40px !important;
+                height: 35px !important;
+            }
+            .medical {
+                width: 40px !important;
+                height: 35px !important;
+                margin-left: 5px;
+            }
+            .star {
+                top: 10px;
+            }
+        img{
+            width: 40px;
+            height: 40px;
+        }
+        span {
+            color: white;
+        }
+        
+        }
+        .top-swipe-content {
+            border-top: 2px solid #0e86d5;
+            border-left: 2px solid #0e86d5;
+        }
+        .bottom-swipe-content {
+            border-top: 2px solid #0e86d5;
+            border-bottom: 2px solid #0e86d5;
+            border-left: 2px solid #0e86d5;
+        }
+        .right-swipe-content {
+            border-right: 2px solid #0e86d5;
+        }
+    
+    }
+    
+    .swiper-expand:after {
+        content: '';
+        position: absolute;
+        left: 21.5%;
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 15px solid #4d9dfe;
+        clear: both;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 15px solid #4d9dfe;
+        clear: both;
+        bottom: 6px;
+        text-shadow: 0 0 20px black;
+        filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.25));
+      }
+    
+      .mene-icon-label {
+          font-size: 12px;
+      }
+}

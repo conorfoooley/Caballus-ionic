@@ -1,0 +1,31 @@
+<div class="item-container" *ngIf="user$ | async as user">
+    <div class="card-content">
+        <div class="circle horse-profile-picture">
+            <img [src]="user?.profile?.profilePicture?.url || './assets/icons/user-placeholder.svg'" />
+        </div>
+        <div class="details">
+            <div class="detail">
+                <div class="label big-label">Name: </div>
+                <div class="value">{{(user?.profile?.firstName || '')+ " " + (user?.profile?.lastName || '')}}</div>
+            </div>
+            <div class="detail">
+                <div class="label big-label">Email: </div>
+                <div class="value">{{user?.profile?.email}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="details">
+        <div class="detail">
+            <div class="label big-label">ID: </div>
+            <div class="value">{{user?.profile?._id}}</div>
+        </div>
+        <div class="detail">
+            <div class="label big-label">Phone: </div>
+            <div class="value">{{user?.profile?.phone}}</div>
+        </div>
+        <div class="detail">
+            <div class="label big-label">Address: </div>
+            <div class="value">{{user?.profile?.address?.city}}</div>
+        </div>
+    </div>
+</div>

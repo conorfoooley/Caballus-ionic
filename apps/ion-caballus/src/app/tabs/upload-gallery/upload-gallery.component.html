@@ -1,0 +1,106 @@
+<ion-content>
+  <div class="header-bar">
+    <mat-icon (click)="goBack()">keyboard_backspace</mat-icon>
+    <div>Upload Gallery</div>
+    <div class="dummy-image"></div>
+  </div>
+
+  <div class="container">
+    <div class="upload-using-wrapper">
+      <mat-checkbox
+        [formControl]="uploadUsingCellularControl"
+        class="wrap-checkbox-label"
+      >
+        Upload using cellular data
+      </mat-checkbox>
+    </div>
+
+    <div
+      style="border-radius: 5px; border: 1px solid; padding: 5px"
+      *ngIf="isIos$ | async"
+    >
+      <p>
+        When uploading video to Caballus the app needs to remain active. Please
+        leave the app actively open to expedite video uploading.
+      </p>
+    </div>
+
+    <ng-container *ngIf="queuedItems$ | async as queuedItems">
+      <ng-container *ngIf="queuedItems.length; else noData">
+        <div
+          class="list-container"
+          *ngFor="let item of queuedItems; let ind = index"
+        >
+          <ion-item>
+            <ion-avatar slot="start">
+              <img
+                [src]="item.thumbnailUrl"
+                *ngIf="item.thumbnailUrl; else noThumbnailImage"
+              />
+            </ion-avatar>
+
+            <ng-template #noThumbnailImage>
+              <ng-container *ngIf="item.mediaType === MediaDocumentType.Video">
+                <ion-icon
+                  name="play-circle-outline"
+                  style="font-size: 40px"
+                ></ion-icon>
+              </ng-container>
+
+              <ng-container *ngIf="item.mediaType === MediaDocumentType.Image">
+                <ion-icon
+                  name="image-outline"
+                  style="font-size: 40px"
+                ></ion-icon>
+              </ng-container>
+            </ng-template>
+
+            <div style="padding-top: 10px; padding-bottom: 10px">
+              <!-- Media -->
+              <ion-label>
+                <h3>
+                  Media Type:
+                  {{ MediaSubjectType.toString(item.mediaSubjectType) }}
+                </h3>
+              </ion-label>
+
+              <!-- Date -->
+              <ion-label>
+                <h3>Date: {{ item.uploadCreatedAt | date: 'MMM dd,yyyy hh:mm a' }}</h3>
+              </ion-label>
+
+              <!-- Size -->
+              <ion-label>
+                <h3>Size: {{ item.fileSizeInString }}</h3>
+              </ion-label>
+
+              <!-- Uploaded -->
+              <ion-label>
+                <h3>
+                  Uploaded: {{ item.uploadedFileSizeInString }} /
+                  {{ item.fileSizeInString }}
+                </h3>
+              </ion-label>
+            </div>
+
+            <ion-icon
+              color="success"
+              name="cloud-upload-outline"
+              slot="end"
+              *ngIf="
+                (currentUploadingItemInQueue$ | async)?.mediaId === item.mediaId
+              "
+            ></ion-icon>
+            <!-- <ion-button slot="end" (click)="skipUploadConfirmation(item.id)"
+                >Skip</ion-button
+            > -->
+          </ion-item>
+        </div>
+      </ng-container>
+
+      <ng-template #noData>
+        <p class="text-center">No items in the upload queue</p>
+      </ng-template>
+    </ng-container>
+  </div>
+</ion-content>

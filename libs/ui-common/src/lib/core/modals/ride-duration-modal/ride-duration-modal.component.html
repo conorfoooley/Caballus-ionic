@@ -1,0 +1,46 @@
+<button class="close-button" mat-icon-button (click)="cancel()">
+    <mat-icon>close</mat-icon>
+</button>
+<h2 mat-dialog-title>Duration</h2>
+<mat-dialog-content>
+    <div class="duration-input">
+        <input
+            type="number"
+            min="0"
+            max="23"
+            maxlength="2"
+            [formControl]="hours"
+            (ngModelChange)="hours.updateValueAndValidity()"
+            aria-label="hours"
+        />
+        <span>:</span>
+        <input
+            type="number"
+            min="0"
+            max="59"
+            maxlength="2"
+            [formControl]="minutes"
+            (ngModelChange)="minutes.updateValueAndValidity()"
+            aria-label="minutes"
+        />
+        <span>:</span>
+        <input
+            type="number"
+            min="0"
+            max="59"
+            maxlength="2"
+            [formControl]="seconds"
+            (ngModelChange)="seconds.updateValueAndValidity()"
+            aria-label="seconds"
+        />
+    </div>
+    <small *ngIf="invalid$ | async">
+        Please check your input, value is not valid
+    </small>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button class="medium-round" mat-raised-button [disabled]="invalid$ | async" (click)="assent()">
+        Save
+    </button>
+    <button class="medium-round" mat-raised-button (click)="reset()">Reset</button>
+</mat-dialog-actions>

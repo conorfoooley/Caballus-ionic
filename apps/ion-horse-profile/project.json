@@ -1,0 +1,208 @@
+{
+  "name": "ion-horse-profile",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/ion-horse-profile/src",
+  "prefix": "caballus",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ion-horse-profile",
+        "allowedCommonJsDependencies": [
+          "lodash",
+          "moment",
+          "mongo-object-reader",
+          "localforage-cordovasqlitedriver",
+          "cropperjs",
+          "json-form-data",
+          "pdfjs-dist/build/pdf",
+          "pdfjs-dist/web/pdf_viewer",
+          "pdfjs-dist/legacy/build/pdf",
+          "pdfjs-dist/legacy/web/pdf_viewer",
+          "@rfx/common",
+          "localforage",
+          "ng2-pdf-viewer"
+        ],
+        "index": "apps/ion-horse-profile/src/index.html",
+        "main": "apps/ion-horse-profile/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/ion-horse-profile/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/ion-horse-profile/src/favicon.ico",
+          "apps/ion-horse-profile/src/assets",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": [
+          "apps/ion-caballus/src/styles.scss",
+          {
+            "input": "node_modules/@ionic/angular/css/normalize.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/structure.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/typography.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/core.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/display.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/padding.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/float-elements.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/text-alignment.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/text-transformation.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/flex-utils.css"
+          },
+          {
+            "input": "apps/ion-horse-profile/src/theme/variables.css"
+          }
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [{
+            "replace": "apps/ion-horse-profile/src/environments/environment.ts",
+            "with": "apps/ion-horse-profile/src/environments/environment.prod.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        },
+        "uat": {
+          "fileReplacements": [{
+            "replace": "apps/ion-horse-profile/src/environments/environment.ts",
+            "with": "apps/ion-horse-profile/src/environments/environment.uat.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        },
+        "qa": {
+          "fileReplacements": [{
+            "replace": "apps/ion-horse-profile/src/environments/environment.ts",
+            "with": "apps/ion-horse-profile/src/environments/environment.qa.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ion-horse-profile:build:production"
+        },
+        "development": {
+          "browserTarget": "ion-horse-profile:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ion-horse-profile:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/ion-horse-profile/**/*.ts",
+          "apps/ion-horse-profile/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/ion-horse-profile/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+    <p [innerHtml]="bodyHtml"></p>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="{{component ? 'matDialogDiv' : ''}}">
+    <button mat-raised-button type="button" (click)="cancel()" class="{{component ? 'deleteAndCancelButton' : ''}}" *ngIf="cancelText !== null">
+        {{ cancelText }}
+    </button>
+    <button mat-raised-button type="button" color="warn" (click)="assent()" class="{{component ? 'deleteAndCancelButton' : ''}}" >
+        {{ confirm }}
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,31 @@
+<ion-grid class="ion-text-center padding-0">
+    <ion-row>
+        <ion-col class="duration">
+            <p class="margin-0"><b>Duration</b></p>
+            <h4     *ngIf="isRideCompleted$ | async; else noEditDuration"
+                    class="editable"
+                    (click)="showDurationEdit()">
+                {{ formatDuration(rideDuration$ | async) }}
+            </h4>
+            <ng-template #noEditDuration>
+                <h4>{{ formatDuration(rideDuration$ | async) }}</h4>
+            </ng-template>
+        </ion-col>
+        <ion-col class="distance">
+            <p class="margin-0"><b>Distance</b> (Miles)</p>
+            <h4     *ngIf="isRideCompleted$ | async; else noEditDistance"
+                    class="editable"
+                    (click)="showDistanceEdit()">
+                {{ rideDistance$ | async | number: '1.2-2' }}
+            </h4>
+            <ng-template #noEditDistance>
+                <h4>{{ rideDistance$ | async | number: '1.2-2' }}</h4>
+            </ng-template>
+        </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isRideCompleted$ | async">
+        <ion-col>
+            <small>Altering duration or distance will flag data as manual entry</small>
+        </ion-col>
+    </ion-row>
+</ion-grid>

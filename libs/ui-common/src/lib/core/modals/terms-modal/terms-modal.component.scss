@@ -1,0 +1,7 @@
+:host {
+    .mat-mdc-dialog-actions {
+        button + button {
+            margin-left: 10px;
+        }
+    }
+}

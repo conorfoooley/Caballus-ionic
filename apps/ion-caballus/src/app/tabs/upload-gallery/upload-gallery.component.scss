@@ -1,0 +1,43 @@
+ion-content {
+  padding: 20px;
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-mdc-form-field-wrapper {
+    padding: 0 !important;
+  }
+
+  .header-bar {
+    background: #f87f31;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .container {
+    padding: 12px;
+
+    .upload-using-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding-bottom: 10px;
+    }
+
+    .list-container {
+      ion-item {
+        padding: 5px;
+
+        ion-avatar {
+          height: 60px;
+          width: 60px;
+          font-size: 60px;
+        }
+      }
+    }
+  }
+}

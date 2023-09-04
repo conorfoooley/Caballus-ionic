@@ -1,0 +1,80 @@
+ion-content {
+    .header-bar {
+        background: #f87f31;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .action-btn {
+        color: white;
+        margin: 20px 20px;
+        text-transform: capitalize;
+    }
+
+    .card {
+        box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+        border-radius: 20px !important;
+        margin: 20px 20px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        padding-top: 4px;
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+        mat-card-header {
+            &.card-header {
+                border-bottom: 3px solid #f78131;
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .mat-icon {
+                    margin: 5px;
+                }
+                /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+                /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+                ::ng-deep.mat-mdc-card-header-text {
+                    margin: 0 !important;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 24px;
+                    .mat-mdc-card-title {
+                        margin: 0;
+                    }
+                }
+                .add-button {
+                    --padding-end: 2px;
+                    --padding-start: 2px;
+                    --padding-top: 2px;
+                    --padding-bottom: 2px;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+            mat-card-title {
+                font-weight: bold;
+            }
+            .edit {
+                font-size: 20px;
+                margin: 0 !important;
+            }
+        }
+    }
+
+    .spinner-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

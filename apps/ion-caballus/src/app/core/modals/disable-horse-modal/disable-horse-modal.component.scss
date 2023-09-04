@@ -1,0 +1,32 @@
+div.modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    div.content-strip {
+        width: 400px;
+
+        h1 {
+            text-align: center;
+            margin: auto;
+            margin-bottom: 24px;
+            margin-top: 80px;
+        }
+
+        p {
+            width: 300px;
+            margin: auto;
+        }
+
+        div.button-container {
+            display: flex;
+            flex-direction: column;
+
+            button.large-round {
+                margin: auto;
+                margin-top: 24px;
+                width: 250px;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .logo {
+        width: 56px;
+    }
+
+    fa-icon {
+        margin-left: 5px;
+        color: var(--ion-color-primary);
+        font-size: 30px;
+        cursor: pointer;
+        padding-left: 5px;
+    }
+}

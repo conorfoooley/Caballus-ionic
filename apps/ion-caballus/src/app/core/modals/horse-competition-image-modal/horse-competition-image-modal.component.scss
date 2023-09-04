@@ -1,0 +1,36 @@
+ion-img {
+  display: block;
+  border: 1px solid black;
+
+  &::part(image) {
+    object-position: center;
+    object-fit: contain;
+  }
+}
+
+.actions-container {
+  button {
+    display: block;
+    margin: 16px auto 0 auto;
+
+    &.large-round {
+      width: 90%;
+    }
+  }
+}
+
+::ng-deep.horse-competition-modal {
+  &::part(content) {
+    opacity: 1;
+    height: 50%;
+    border-radius: 16px;
+    width: 90%;
+  }
+}
+
+ion-content::part(scroll) {
+  &::before,
+  &::after {
+    height: 0 !important;
+  }
+}

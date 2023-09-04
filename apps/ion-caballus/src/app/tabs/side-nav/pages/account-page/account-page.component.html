@@ -1,0 +1,132 @@
+<app-sidenav-header
+    [friends]="[]"
+    [title]="title$ | async"
+    [search]="false"
+    [filterIconStatus]="false"
+></app-sidenav-header>
+
+<ion-content [scrollY]="true" *ngIf="user$ | async as user">
+    <div class="img" (click)="previewUserProfileImage()">
+        <div *ngIf="profilePictureUrl$ | async as url" class="img-placeholder">
+            <img [src]="url" class="user-img" alt="User Image " />
+            <button class="picture-edit" mat-icon-button *ngIf="showEditIcon$ | async">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+        <div class="img-placeholder" *ngIf="!(profilePictureUrl$ | async) as url">
+            <div class="profile-placeholder">
+                {{ (user.firstName || '').charAt(0) + (user.lastName || '').charAt(0) }}
+            </div>
+            <button class="picture-edit" mat-icon-button *ngIf="showEditIcon$ | async">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <mat-card appearance="outlined" class="card">
+            <mat-card-header class="card-header">
+                <mat-card-title>Bio:</mat-card-title>
+                <mat-icon class="edit" (click)="onEdit()" *ngIf="showEditIcon$ | async"
+                    >edit
+                </mat-icon>
+            </mat-card-header>
+            <mat-card-content *ngIf="!(isEditableMode$ | async)">
+                <p>First Name: {{ user.firstName || '' }}</p>
+                <p>Last Name: {{ user.lastName || '' }}</p>
+                <p *ngIf="user.url">Username: {{ user.url }}</p>
+                <p *ngIf="!user.url">Username:</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Phone number: {{ user.phone }}</p>
+                <p>Disciplines: {{ userSelectedDisciplines$ | async }}</p>
+            </mat-card-content>
+            <mat-card-content *ngIf="isEditableMode$ | async">
+                <form [formGroup]="userBioForm">
+                    <div>
+                        <div class="form-row">
+                            <mat-form-field>
+                                <mat-label>First Name</mat-label>
+                                <input matInput required formControlName="firstName" />
+                                <mat-error [rfxError]="userBioForm.get('firstName')"></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field>
+                                <mat-label>Last Name</mat-label>
+                                <input matInput required formControlName="lastName" />
+                                <mat-error [rfxError]="userBioForm.get('lastName')"></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field>
+                                <mat-label>UserName</mat-label>
+                                <input matInput required formControlName="url" />
+                                <mat-error [rfxError]="userBioForm.get('url')"></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field>
+                                <mat-label>Email</mat-label>
+                                <input matInput required formControlName="email" />
+                                <mat-error [rfxError]="userBioForm.get('email')"></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field>
+                                <mat-label>Phone</mat-label>
+                                <input matInput required formControlName="phone" />
+                                <mat-error [rfxError]="userBioForm.get('phone')"></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-label>Disciplines</mat-label>
+                            <div class="disciplines-list" formGroupName="disciplines">
+                                <mat-checkbox
+                                    class="checkbox"
+                                    *ngFor="let label of disciplineLabels; index as i"
+                                    value="{{ label.split(' ').join() }}"
+                                    [formControlName]="label"
+                                    >{{ label }}</mat-checkbox
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button
+                            class="medium-round end spinner"
+                            mat-raised-button
+                            type="submit"
+                            [disabled]="isLoading$ | async"
+                            (click)="onBioEdit()"
+                        >
+                            Save
+                            <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+                        </button>
+                        <button
+                            mat-raised-button
+                            class="medium-round go-back"
+                            (click)="goBack()"
+                            [disabled]="isLoading$ | async"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+        <div class="action-button-container">
+            <button
+                class="medium-round"
+                mat-raised-button
+                type="submit"
+                (click)="navigateToRideHistoryPage()"
+            >
+                {{ userId ? (user.firstName || '') + "'s" : 'My' }} Ride History
+            </button>
+            <button mat-raised-button class="medium-round" (click)="navigateToHorsePage()">
+                {{ userId ? (user.firstName || '') + "'s" : 'My' }} Horses
+            </button>
+        </div>
+    </div>
+</ion-content>

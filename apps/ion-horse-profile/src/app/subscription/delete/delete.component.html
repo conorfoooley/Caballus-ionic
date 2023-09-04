@@ -1,0 +1,37 @@
+<header>
+    <fa-icon
+        class="back-arrow"
+        [icon]="['fas', 'arrow-left']"
+        (click)="goBack()"
+    ></fa-icon>
+    <h1>Delete Account</h1>
+</header>
+
+<ion-content>
+    <div class="page-container">
+        <span class="confirmation">
+            Warning: Deleting your account will permanently remove all your data on Caballus.
+        </span>
+
+        <div class="continue-btn">
+            <button
+                class="back-btn large-round"
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="goBack()"
+            >
+                Back
+            </button>
+
+            <button mat-raised-button class="delete large-round spinner"
+                    color="primary"
+                    (click)="deleteAccount()">
+                <div class="loading" *ngIf="deleteInProcess$ | async">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
+</ion-content>

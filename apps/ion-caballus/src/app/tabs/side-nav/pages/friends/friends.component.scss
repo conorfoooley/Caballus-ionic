@@ -1,0 +1,91 @@
+
+
+
+.d-flex {
+    display: flex;
+}
+
+.img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    background-color: gray;
+}
+.horse-profile-block {
+    padding: 10px 10px;
+    margin: 10px 20px;
+    border: 1px solid #80808066;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
+
+    p {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+}
+
+.horse-image {
+    height: 60px;
+    width: 60px;
+    background: #80808059;
+    border-radius: 30px;
+    margin-right: 10px;
+}
+
+.horse-name {
+    font-weight: 600;
+}
+
+.light-text {
+    color: gray;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.scrollable-div {
+    overflow: scroll;
+    height: calc(100vh - 233px);
+}
+.button-clear-filter{
+    order: 0;
+    font-style: inherit;
+    font-variant: inherit;
+    line-height: 1;
+    text-transform: none;
+    cursor: pointer;
+    background: none
+}
+
+.filter-image-user {
+    display: flex;
+    margin-bottom: 2px;
+    margin-top: 4px;
+}
+
+.image-filter{
+    width: 100px;
+    height: 40px;
+}
+.image-filter-other{
+    width: 100px;
+    height: 40px;
+}
+
+div.banner {
+    background: var(--caballus-color-tangerine-orange);
+    div.option-scroller {
+        width: 100%;
+        height: 65px;
+        color: #fff;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.mat-icon {
+    margin: 10px;
+}

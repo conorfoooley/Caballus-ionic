@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="33.445946mm"
+   height="33.445946mm"
+   viewBox="0 0 33.445946 33.445946"
+   version="1.1"
+   id="svg1297"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="questionmarkBtn.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1299"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.79107744"
+     inkscape:cx="121.98553"
+     inkscape:cy="304.01575"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1294" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-72.577702,-68.229733)">
+    <circle
+       style="opacity:1;fill:#f78132;fill-opacity:1;stroke-width:1.5"
+       id="path1380"
+       cx="89.300674"
+       cy="84.952705"
+       r="16.722973" />
+    <text
+       xml:space="preserve"
+       style="font-size:25.4px;line-height:1.25;font-family:'Yu Gothic';-inkscape-font-specification:'Yu Gothic';stroke-width:0.264583"
+       x="82.611488"
+       y="95.989861"
+       id="text6720"><tspan
+         sodipodi:role="line"
+         id="tspan6718"
+         style="font-size:25.4px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="82.611488"
+         y="95.989861" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Yu Gothic';-inkscape-font-specification:'Yu Gothic';fill:#ffffff;stroke-width:0.264583"
+       x="82.082314"
+       y="95.236153"
+       id="text23668"><tspan
+         sodipodi:role="line"
+         id="tspan23666"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Yu Gothic';-inkscape-font-specification:'Yu Gothic, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.264583"
+         x="82.082314"
+         y="95.236153">?</tspan></text>
+  </g>
+</svg>

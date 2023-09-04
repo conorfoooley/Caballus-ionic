@@ -1,0 +1,7 @@
+import { UserProfilePictureInterceptor } from './user-profile-picture.interceptor';
+
+describe('UserProfilePictureInterceptor', () => {
+  it('should be defined', () => {
+    expect(new UserProfilePictureInterceptor()).toBeDefined();
+  });
+});

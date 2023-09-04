@@ -1,0 +1,35 @@
+import { User } from '@clicked/api-common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { FileService } from '@rfx/nst-file';
+import { from, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+@Injectable()
+export class UserProfilePictureInterceptor implements NestInterceptor {
+    constructor(private readonly _fileService: FileService) {}
+
+    private async _mapUserProfilePicture(user: User): Promise<User> {
+        if (user.profilePicture && user.profilePicture.path) {
+            const url = await this._fileService.getUrl(user.profilePicture.path);
+            return new User({
+                ...user,
+                profilePicture: {
+                    ...user.profilePicture,
+                    url
+                }
+            });
+        }
+        return user;
+    }
+
+    public intercept(context: ExecutionContext, next: CallHandler): Observable<User | User[]> {
+        return next.handle().pipe(
+            switchMap((params: User | User[]) => {
+                if (Array.isArray(params)) {
+                    return from(Promise.all(params.map(u => this._mapUserProfilePicture(u))));
+                }
+                return from(this._mapUserProfilePicture(params));
+            })
+        );
+    }
+}

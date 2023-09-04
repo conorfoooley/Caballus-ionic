@@ -1,0 +1,30 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="backToPublicPermissions()">arrow_back</mat-icon>
+        <div *ngIf="horseRole$ | async as role">Invite {{ role.name }}</div>
+        <div></div><!--qa-->
+    </div>
+    <div class="search-container">
+        <ion-label>Enter email(Must be a caballus user):</ion-label>
+        <div class="search-box">
+            <ion-input type="email" [(ngModel)]="email" (keyup.enter)="searchUsersByEmail()"></ion-input>
+            <ion-button shape="round" size="small" class="search-button" (click)="searchUsersByEmail()"
+                [disabled]="!email || (isSearching$ | async)">
+                <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+        </div>
+    </div>
+    <mat-card appearance="outlined" class="card" *ngIf="(user$ | async)">
+        <mat-card-header class="card-header">
+            <mat-card-title>Contact Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <app-user [user$]="user$"></app-user>
+        </mat-card-content>
+    </mat-card>
+
+    <ion-button *ngIf="(user$ | async)" [disabled]="(isSending$ | async)" expand="block" shape="round" size="large"
+        class="action-btn" (click)="sendInvite()">
+        Send Invite
+    </ion-button>
+</ion-content>

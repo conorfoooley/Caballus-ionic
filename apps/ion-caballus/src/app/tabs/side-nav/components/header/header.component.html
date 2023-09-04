@@ -1,0 +1,17 @@
+<header>
+    <fa-icon class="back-arrow" (click)="goBack()" [icon]="['fas', 'arrow-left']"></fa-icon>
+    <h1>{{ title }}</h1>
+    <fa-icon
+        *ngIf="filterIconStatus"
+        (click)="activateFilter()"
+        class="search"
+        [icon]="['fas', 'filter']"
+    ></fa-icon>
+    <fa-icon
+        *ngIf="search"
+        (click)="activateSearch()"
+        class="search"
+        [icon]="['fas', 'plus-circle']"
+    ></fa-icon>
+</header>
+<app-user-search [friends]="friends" [blockedFriends]="blockedFriends" *ngIf="searchActive"></app-user-search>

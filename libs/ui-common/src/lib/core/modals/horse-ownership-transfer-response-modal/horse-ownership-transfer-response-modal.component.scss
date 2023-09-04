@@ -1,0 +1,27 @@
+:host {
+    .mat-mdc-dialog-actions {
+        button + button {
+            margin-left: 10px;
+        }
+    }
+    .horse-details {
+        ul {
+            list-style: none;
+            padding-left: 0px;
+
+            li {
+                display: block;
+    
+                .label {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    .mat-mdc-dialog-actions {
+        button {
+            margin-left: 0px !important;
+            margin-bottom: 10px;
+        }
+    }
+}

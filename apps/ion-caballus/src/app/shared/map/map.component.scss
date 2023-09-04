@@ -1,0 +1,109 @@
+$map-height: 40vh;
+
+:host {
+  position: relative;
+  display: block;
+}
+
+google-map {
+  display: block;
+  height: 40vh;
+  width: 100%;
+}
+
+google-map + .map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  width: 100%;
+  height: calc(100% - 30px);
+
+  // Make sure that you can still press the buttons on and interact with the
+  // map underneath the overlay
+  pointer-events: none;
+
+  & > * {
+    // Re-enable pointer-events for child elements of the overlay so that
+    // buttons there can still function
+    pointer-events: auto;
+  }
+
+  & > .left {
+    float: left;
+  }
+
+  & > .right {
+    float: right;
+  }
+}
+
+.card-gps {
+  width: 38px;
+  padding: 5px;
+}
+
+.gps-indicator {
+  $size: 1.25em;
+  width: $size;
+  height: $size;
+  border-radius: calc($size / 2);
+  margin: 0 5px;
+  visibility: hidden;
+  display: inline-block;
+  padding: 2px 0 0 0 !important;
+}
+
+.signal-bars {
+  height: 18px;
+  width: 30px;
+}
+
+.signal-bars .bar {
+  width: 14%;
+  margin-left: 1%;
+  min-height: 20%;
+  display: inline-block;
+  visibility: visible;
+  background-color: #fafafa;
+  border: thin solid;
+}
+
+.signal-bars > div:first-child {
+  height: 20%;
+}
+
+.signal-bars > div:nth-child(2) {
+  height: 40%;
+}
+
+.signal-bars > div:nth-child(3) {
+  height: 60%;
+}
+
+.signal-bars > div:nth-child(4) {
+  height: 80%;
+}
+
+.signal-bars .bar.gps-none,
+.signal-bars .bar.gps-week,
+.signal-bars .bar.gps-average,
+.signal-bars .bar.gps-strong {
+  background-color: #222428;
+  border: thin solid darken(#222428, 7%);
+}
+
+.gps-config-button {
+  position: absolute;
+  cursor: pointer;
+  bottom: 18vh;
+}
+
+.reset-button {
+  position: absolute;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  bottom: 10px;
+  right: 10px;
+}

@@ -1,0 +1,123 @@
+<ion-content>
+    <form [formGroup]="form" class="auth-page">
+        <img src="./assets/branding/icon.png" />
+        <ng-container *ngIf="(pageStatus$ | async) === PageStatus.BeforeSignup; else afterSignup">
+            <h2>CABALLUS Sign Up</h2>
+            <div class="field-container">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        formControlName="email"
+                        placeholder="Email"
+                    />
+                    <mat-error [rfxError]="form.get('email')"></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="!!form.get('confirmEmail')"> 
+                    <mat-label>Confirm Email</mat-label>
+                    <input
+                        matInput
+                        formControlName="confirmEmail"
+                        placeholder="Confirm Email"
+                    />
+                    <mat-error [rfxError]="form.get('confirmEmail')"></mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        placeholder="Password"
+                        [type]="(passwordVisible$ | async) ? 'text' : 'password'"
+                        formControlName="password"
+                    />
+                    <mat-icon
+                        matSuffix
+                        class="visbility"
+                        (click)="toggleVisibility()"
+                    >
+                        {{ (passwordVisible$ | async) ? 'visibility' : 'visibility_off' }}
+                    </mat-icon>
+                    <mat-error [rfxError]="form.get('password')"></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="!!form.get('confirm')">
+                    <mat-label>Confirm Password</mat-label>
+                    <input
+                        matInput
+                        placeholder="Confirm Password"
+                        type="password"
+                        formControlName="confirm"
+                    />
+                    <mat-error
+                        [rfxError]="form.get('confirm')"
+                        [rfxErrorMessages]="{ equalTo: 'Passwords must match' }"
+                    ></mat-error>
+                </mat-form-field>
+            </div>
+            <div class="checkbox-wrapper">
+                <div class="checkbox-flex">
+                    <mat-checkbox
+                        #termsCheckbox
+                        formControlName="acceptedTerms"
+                        class="wrap-checkbox-label"
+                    >
+                        By clicking this check box, I'm agreeing that I've read and consent to the
+                        <span
+                            class="link"
+                            (click)="openPrivacyPolicy()"
+                        >
+                            Terms & Conditions
+                        </span>
+                        and
+                        <span
+                            class="link"
+                            (click)="openPrivacyPolicy()"
+                        >
+                            Privacy Policy
+                        </span>
+                        set by Caballus
+                    </mat-checkbox>
+                </div>
+                <mat-error
+                    *ngIf="form.get('acceptedTerms').touched && form.get('acceptedTerms').invalid"
+                    [rfxError]="form.get('acceptedTerms')"
+                    [rfxErrorMessages]="{ equal: 'Must accept terms' }"
+                    class="terms-error"
+                ></mat-error>
+            </div>
+        </ng-container>
+        <ng-template #afterSignup>
+            <h2>Sign Up Complete!</h2>
+            <p>
+                <strong>Verify your email</strong> within 72 hours to secure your account.
+                Failure to do so will keep you from using the Cabllus app until your email
+                is verified. Look for the authentication email in your inbox.
+            </p>
+        </ng-template>
+        <div class="buttons">
+            <button
+                *ngIf="(pageStatus$ | async) === PageStatus.BeforeSignup"
+                mat-raised-button
+                class="large-round spinner"
+                (click)="register()"
+                [disabled]="submitting$ | async"
+            >
+                Create Account
+                <mat-spinner *ngIf="submitting$ | async"></mat-spinner>
+            </button>
+            <button
+                *ngIf="(pageStatus$ | async) === PageStatus.AfterSignup"
+                mat-raised-button
+                class="large-round"
+                (click)="continueToApp()"
+            >
+                Continue
+            </button>
+        </div>
+        <div
+            *ngIf="(pageStatus$ | async) === PageStatus.BeforeSignup"
+            class="bottom-links"
+        >
+            <a routerLink="/auth/login">Go Back</a>
+        </div>
+    </form>
+</ion-content>

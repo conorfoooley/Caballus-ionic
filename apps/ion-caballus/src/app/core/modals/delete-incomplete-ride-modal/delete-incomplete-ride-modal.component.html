@@ -1,0 +1,19 @@
+<div class="modal">
+    <div class="content-strip">
+        <h1>Delete Ride</h1>
+        <p>
+            Not enough data in the Ride to save the Ride. Do you want to end the ride? You can still do a manual entry in the Horse's Ride History.
+        </p>
+        <div class="button-container">
+            <button
+                mat-raised-button
+                class="large-round end spinner"
+                (click)="deleteRide()"
+                [disabled]="isDeleting$ | async"
+            >
+                Yes, Delete Ride
+                <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+            </button>
+        </div>
+    </div>
+</div>

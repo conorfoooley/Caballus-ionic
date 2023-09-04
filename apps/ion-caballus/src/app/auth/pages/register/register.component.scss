@@ -1,0 +1,51 @@
+/*
+    See styles.scss for auth page style template
+*/
+
+form {
+
+    div.field-container {
+        min-height: 410px;
+    }
+
+    div.checkbox-wrapper {
+        min-height: 94px;
+
+        div.checkbox-flex {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 6px;
+            
+            ::ng-deep mat-checkbox {
+                width: 320px;
+                div.mdc-checkbox-inner-container {
+                    margin: 0;
+                    top: 3px;
+                }
+                .mdc-checkbox {
+                    white-space: normal;
+                    span.mdc-checkbox {
+                        padding-left: 8px;
+                        font-weight: lighter;
+                        font-size: 0.9em;
+                        line-height: 1.3em;
+                    }
+                }
+
+                span.link {
+                    text-decoration: underline;
+                    color: blue;
+                }
+            }
+        }
+
+        mat-error.terms-error {
+            text-align: center;
+        }
+    }
+
+    p {
+        font-weight: lighter;
+        padding-bottom: 24px;
+    }
+}

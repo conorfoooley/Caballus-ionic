@@ -1,0 +1,134 @@
+<div class="ion-justify-content-start">
+    <app-sidenav-header
+        [friends]="dat$ | async"
+        [blockedFriends]="blocked$ | async"
+        [title]="'Friends'"
+        [search]="true"
+        [filterIconStatus]="true"
+        [filterClick]="filterStatus"
+        (filterStatus)="filterStatus = $event"
+    ></app-sidenav-header>
+
+    <div class="banner" *ngIf="filterStatus">
+        <div class="option-scroller">
+            <div class="filter-image-user">
+                <img class="image-filter"
+                     (click)="filterUser('received')"
+                     src="/assets/icons/received.svg"
+                     alt=""
+                />
+                <img class="image-filter"
+                     (click)="filterUser('requested')"
+                     src="/assets/icons/friend requested.svg"
+                     alt=""
+                />
+                <img class="image-filter-other"
+                     (click)="filterUser('fiends')"
+                     src="/assets/icons/friends.svg"
+                     alt=""
+                />
+                <img class="image-filter-other"
+                     (click)="filterUser('blocked')"
+                     src="/assets/icons/blocked.svg"
+                     alt=""
+                />
+                <mat-icon class="trash button-clear-filter" (click)="filterUser('all')" *ngIf="filterValue !== 'all'">
+                    delete_forever
+                </mat-icon>
+
+                <div class="underline"></div>
+            </div>
+        </div>
+    </div>
+
+    <ion-item-group *ngIf="filterValue === 'all'">
+        <ion-item-divider class="group">
+            <ion-label>All Friends</ion-label>
+        </ion-item-divider>
+        <ng-container *ngTemplateOutlet="friendListItem; context: { items: allFriendsFilter$ | async }">
+        </ng-container>
+    </ion-item-group>
+
+    <!-- Friend Requests -->
+    <ion-item-group *ngIf="filterValue === 'requested'">
+        <ion-item-divider class="group">
+            <ion-label>Friend Requests</ion-label>
+        </ion-item-divider>
+        <ng-container *ngTemplateOutlet="friendListItem; context: { items: friendRequests$ | async }">
+        </ng-container>
+    </ion-item-group>
+
+    <!-- Friends -->
+    <ion-item-group *ngIf="filterValue === 'fiends'">
+        <ion-item-divider class="group">
+            <ion-label>Friends</ion-label>
+        </ion-item-divider>
+        <ng-container *ngTemplateOutlet="friendListItem; context: { items: friends$ | async }">
+        </ng-container>
+    </ion-item-group>
+
+    <ion-item-group *ngIf="filterValue === 'received'">
+        <ion-item-divider class="group">
+            <ion-label>Received</ion-label>
+        </ion-item-divider>
+        <ng-container *ngTemplateOutlet="friendListItem; context: { items: friendReceived$ | async }">
+        </ng-container>
+    </ion-item-group>
+
+    <ion-item-group *ngIf="filterValue === 'blocked'">
+        <ion-item-divider class="group">
+            <ion-label>Blocked</ion-label>
+        </ion-item-divider>
+        <ng-container *ngTemplateOutlet="friendListItem; context: { items: blocked$ | async }">
+        </ng-container>
+    </ion-item-group>
+
+</div>
+
+<!-- template for the friend request items -->
+<ng-template #friendListItem let-items="items" >
+    <div class="scrollable-div">
+    <ion-item  *ngFor="let item of items" (click)="navToProfile(item)" class="horse-profile-block">
+            <ng-container *ngIf="item.userIdentity._id === user._id">
+                    <img class="horse-image" [src]="item.friendIdentity.picture.url" *ngIf="item.friendIdentity.picture?.url"
+                         alt="profilePicture"/>
+                <div *ngIf="!item.friendIdentity.picture?.url" class="horse-image"></div>
+                <ion-label>
+                    <h3 class="horse-name">{{ item.friendIdentity.label }}</h3>
+                    <p class="horse-name">Email: {{ item.friendIdentity.email }}</p>
+                </ion-label>
+            </ng-container>
+
+            <ng-container *ngIf="item.friendIdentity._id === user._id">
+                    <img class="horse-image" [src]="item.userIdentity.picture.url" *ngIf="item.userIdentity.picture?.url"
+                         alt="profilePicture"/>
+                <div *ngIf="!item.userIdentity.picture?.url" class="horse-image"></div>
+                <ion-label>
+                    <h3 class="horse-name">{{ item.userIdentity.label }}</h3>
+                    <p class="horse-name">Email: {{ item.userIdentity.email }}</p>
+                </ion-label>
+            </ng-container>
+
+            <img
+                src="/assets/icons/received.svg"
+                alt=""
+                *ngIf="item.friendStatus === FriendStatus.Requested && item.userIdentity._id !== user._id"
+            />
+            <img
+                src="/assets/icons/friend requested.svg"
+                alt=""
+                *ngIf="item.friendStatus === FriendStatus.Requested && item.userIdentity._id === user._id"
+            />
+            <img
+                src="/assets/icons/friends.svg"
+                alt=""
+                *ngIf="item.friendStatus === FriendStatus.Friends"
+            />
+            <img
+                src="/assets/icons/blocked.svg"
+                alt=""
+                *ngIf="item.friendStatus === FriendStatus.Blocked"
+            />
+    </ion-item>
+    </div>
+</ng-template>

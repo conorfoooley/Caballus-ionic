@@ -1,0 +1,27 @@
+<div class="banner">
+    <div class="option-scroller" (scroll)="onScroll($event)">
+        <div *ngFor="let o of (options$ | async); let i = index" class="banner-button" (click)="toggle(i)">
+            <div class="circle">
+                <img [src]="(imgSource(i) | async)" />
+            </div>
+            <span class="label">{{ o.commonName }}</span>
+            <div class="underline" [class.selected]="(isSelected(i) | async)"></div>
+        </div>
+        <div class="banner-button" (click)="quickAdd()">
+            <div class="circle">
+                <mat-icon>plus_one</mat-icon>
+            </div>
+            <span class="label">Quick Add</span>
+        </div>
+    </div>
+    <div *ngIf="showSearchBar">
+        <div *ngIf="showSearch$ | async" class="search">
+            <mat-form-field appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput placeholder="Search" [formControl]="searchControl" />
+                <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+
+</div>

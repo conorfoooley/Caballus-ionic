@@ -1,0 +1,78 @@
+
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="goBack()">arrow_back</mat-icon>
+        <div>Ride History</div>
+        <mat-icon (click)="editRideEvent()" *ngIf="editFlag">edit</mat-icon>
+        <mat-icon style="color: #f87f31;" *ngIf="!editFlag">edit</mat-icon>
+    </div>
+    <ng-container [ngTemplateOutlet]="horseRide"
+        [ngTemplateOutletContext]="{ride : (ride$ | async), horseNames: (horseNames$ | async), horseId: (horseId$ | async)}">
+    </ng-container>
+    <ng-template #horseRide let-ride='ride' let-horseNames='horseNames' let-horseId='horseId'>
+        <mat-card appearance="outlined" class="card">
+            <mat-card-content>
+                <ion-list lines="none">
+                    <ion-item>
+                        <ion-label>
+                            <h3>Ride Date</h3>
+                            <p>{{ ride.startDateTime | date: 'MM/dd/yy' }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>
+                            <h3>Horses On Ride</h3>
+                            <p>{{ horseNames }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>
+                            <h3>Category</h3>
+                            <p>{{ RideCategory.toString($any(ride.category)) }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="ion-text-wrap">
+                            <h3>Location</h3>
+                            <p>{{ ride.name || 'Unknown' }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="ion-text-wrap">
+                            <h3>Notes</h3>
+                            <p>{{ ride.notes || 'No notes' }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="ion-text-wrap">
+                            <h3>Distance (miles)</h3>
+                            <p>{{ kilometersToMiles(ride.distanceKilometers) }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="ion-text-wrap">
+                            <h3>Duration (hh:mm)</h3>
+                            <p>{{ duration }}</p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined" class="card">
+            <mat-card-header class="card-header">
+                <mat-card-title>Photos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="images" *ngIf="ride.medias.length">
+                    <div class="img-round-square" *ngFor="let photo of ride.medias">
+                        <img (click)="imageViewerModal(photo?.latest?.url, photo._id)" class="img-thumbnail"
+                            [src]="photo?.thumbnail?.url" />
+                    </div>
+                </div>
+                <div class="not-found-imgs" *ngIf="!ride.medias.length">
+                    No Photos Found
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
+</ion-content>

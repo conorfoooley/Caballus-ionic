@@ -1,0 +1,65 @@
+:host {
+    ion-item {
+        --min-height: 38px;
+        ion-checkbox {
+            margin: 0 16px 0 0;
+        }
+        ion-label {
+            margin: 0;
+        }
+    }
+}
+
+ion-content {
+    .header-bar {
+        background: #f87f31;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .option-group {
+        display: flex;
+        ion-radio-group {
+            display: flex;
+            margin: auto;
+            .radio-item {
+                display: flex;
+                margin: 8px 16px;
+                ion-radio {
+                    margin-right: 8px;
+                }
+                font-weight: bold;
+                font-size: 20px;
+            }
+        }
+    }
+    .privacy-group {
+        display: flex;
+        margin-top: 16px;
+        .privacy-container {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            ion-label {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        .action-btn {
+            color: white;
+            margin: 10px auto;
+            text-transform: capitalize;
+            width: 260px;
+        }
+    }
+}

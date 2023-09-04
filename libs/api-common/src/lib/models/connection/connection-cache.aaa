@@ -1,0 +1,39 @@
+import { ConnectionCacheWithoutIds } from '@clicked/common';
+import { ObjectId, parseObjectId, parseObjectIdList } from '@rfx/njs-db/mongo';
+
+export class ConnectionCache extends ConnectionCacheWithoutIds {
+    public _id: ObjectId;
+    public userId: ObjectId;
+    public newConnectionIds: ObjectId[] = [];
+    public connectionIds: ObjectId[] = [];
+    public potentialConnectionIds: ObjectId[] = [];
+    public preferredConnectionIds: ObjectId[] = [];
+    public blockedIds: ObjectId[] = [];
+    public connectionRequestIds: ObjectId[] = [];
+
+    constructor(params: Partial<ConnectionCache>) {
+        super(params);
+        if (!!params) {
+            this._id = !!params._id ? parseObjectId(params._id) : this._id;
+            this.userId = !!params.userId ? parseObjectId(params.userId) : this.userId;
+            this.newConnectionIds = Array.isArray(params.newConnectionIds)
+                ? parseObjectIdList(params.newConnectionIds)
+                : this.newConnectionIds;
+            this.connectionIds = Array.isArray(params.connectionIds)
+                ? parseObjectIdList(params.connectionIds)
+                : this.connectionIds;
+            this.potentialConnectionIds = Array.isArray(params.potentialConnectionIds)
+                ? parseObjectIdList(params.potentialConnectionIds)
+                : this.potentialConnectionIds;
+            this.preferredConnectionIds = Array.isArray(params.preferredConnectionIds)
+                ? parseObjectIdList(params.preferredConnectionIds)
+                : this.preferredConnectionIds;
+            this.blockedIds = Array.isArray(params.blockedIds)
+                ? parseObjectIdList(params.blockedIds)
+                : this.blockedIds;
+            this.connectionRequestIds = Array.isArray(params.connectionRequestIds)
+                ? parseObjectIdList(params.connectionRequestIds)
+                : this.connectionRequestIds;
+        }
+    }
+}

@@ -1,0 +1,53 @@
+.container {
+    background-color: rgba(105, 105, 105, 0.788);
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.side-panel {
+    background-color: white;
+    width:70%;
+    height: 100%;
+    text-align: center;
+}
+
+.user-img {
+    border-radius: 50%;
+    height: 9em;
+    margin-top: 1em;
+}
+
+.icon-margin {
+    margin-right: 5px;
+}
+
+.alignment {
+    text-align: start;
+    width: 60%;
+}
+
+.arrow-margin {
+    text-align: end;
+    width: 40%;
+}
+
+.img-placeholder {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.profile-placeholder {
+    font-size: 70px;
+    color: white;
+    border-radius: 50%;
+    background-color: gray;
+    height: 1.8em;
+    width: 1.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

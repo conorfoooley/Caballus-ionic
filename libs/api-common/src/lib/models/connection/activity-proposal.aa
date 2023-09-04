@@ -1,0 +1,24 @@
+import { ActivityProposalWithoutIds } from '@clicked/common';
+import { ObjectId, parseObjectId } from '@rfx/njs-db/mongo';
+import { UserIdentity } from '../user/user-identity';
+
+export class ActivityProposal extends ActivityProposalWithoutIds {
+    public _id: ObjectId;
+    public inviterIdentity: UserIdentity = null;
+    public recipientIdentity: UserIdentity = null;
+    public messageId: ObjectId;
+
+    constructor(params: Partial<ActivityProposal>) {
+        super(params);
+        if (!!params) {
+            this._id = !!params._id ? parseObjectId(params._id) : this._id;
+            this.inviterIdentity = !!params.inviterIdentity
+                ? new UserIdentity(params.inviterIdentity)
+                : this.inviterIdentity;
+            this.recipientIdentity = !!params.recipientIdentity
+                ? new UserIdentity(params.recipientIdentity)
+                : this.recipientIdentity;
+            this.messageId = !!params.messageId ? parseObjectId(params.messageId) : this.messageId;
+        }
+    }
+}

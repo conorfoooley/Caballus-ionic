@@ -1,0 +1,41 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="toggleSearch()">search</mat-icon>
+        <div>My Horses</div>
+        <mat-icon (click)="moveToCreateHorse()">add</mat-icon>
+    </div>
+    <div class="search">
+        <ion-item *ngIf="showSearch$ | async">
+            <ion-label >Search</ion-label>
+            <ion-input [formControl]="searchControl" placeholder=""></ion-input>
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+        </ion-item>
+        <!-- <mat-form-field appearance="outline" *ngIf="showSearch$ | async">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Search" [formControl]="searchControl" />
+            <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field> -->
+    </div>
+    <div
+        *ngFor="let horse of options$ | async"
+        class="d-flex horse-profile-block"
+        (click)="moveToDetailHorse(horse)"
+    >
+        <img
+            class="horse-image"
+            [src]="horse?.profile?.profilePicture?.url"
+            *ngIf="horse?.profile?.profilePicture?.url"
+        />
+        <img
+            class="horse-image"
+            src="../../../../../assets/images/horse-placeholder.png"
+            *ngIf="!horse?.profile?.profilePicture?.url"
+        />
+        <div>
+            <p class="horse-name">{{ horse?.profile?.commonName }}</p>
+            <p class="light-text">Last Ride : {{ horse?.lastRideDate | date }}</p>
+            <p class="light-text">By : {{ horse?.lastRiderIdentity?.label }}</p>
+        </div>
+    </div>
+    <p *ngIf="hasNoData" class="text-center">No horses have been added yet</p>
+</ion-content>

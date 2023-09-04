@@ -1,0 +1,25 @@
+<div mat-dialog-title class="dialog-title">
+    <h2>{{ title }}</h2>
+    <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<mat-dialog-content>
+    <div class="ion-text-center">
+        <button mat-raised-button class="small-round" color="primary" (click)="uploadPhoto()">
+            Upload Photo
+        </button>
+    </div>
+    <div class="ion-text-center" *ngIf="!isWeb">
+        <button mat-raised-button class="small-round" color="primary" (click)="takePhoto()">
+            Take Photo
+        </button>
+    </div>
+
+    <!-- only allow to upload videos on the mobile devices -->
+    <div class="ion-text-center" *ngIf="!isWeb">
+        <button mat-raised-button class="small-round" color="primary" (click)="uploadVideo()">
+            Upload Video
+        </button>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,124 @@
+header {
+    background-color: #f87f31;
+    display: flex;
+    color: white;
+}
+
+h1 {
+    width: 85%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.page-container {
+    padding: 20px;
+}
+
+.back-arrow {
+    margin-left: 15px;
+    margin-top: 10px;
+    width: 5%;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.mat-card-content {
+    font-size: 16px;
+}
+
+.float-label {
+    margin-right: 20px;
+    color: rgba(0, 0, 0, 0.54);
+
+}
+
+.card {
+    background-color: rgb(226, 226, 226);
+    padding: 20px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    span {
+        margin-top: 0;
+        font-size: 1.4rem;
+    }
+}
+
+mat-label {
+    width: 300px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+mat-mdc-form-field,
+mat-radio-group {
+    width: 80%;
+    margin-left: 10px;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+    margin-top: 0 !important;
+
+}
+
+.mat-radio-button {
+    margin-right: 10px;
+}
+
+
+.cardholder {
+    text-align: center;
+    // grid-template-columns: repeat(, 50%);
+}
+
+.card-info {
+    text-align: center;
+}
+
+.confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 500;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.continue-btn {
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .back-btn {
+        margin-right: 20px;
+    }
+
+    .large-round {
+        font-size: 1.5em;
+        min-width: 80px;
+        height: 50px;
+        border-radius: 25px;
+        background: #f78031;
+        color: #fff;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card-header {
+        span {
+            font-size: 1.3rem;
+        }
+    }
+
+    form {
+        height: calc(100% - 93px);
+    }
+}

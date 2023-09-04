@@ -1,0 +1,241 @@
+<ion-content class="end-ride-content">
+    <div class="page-container" *ngIf="ride$ | async as ride">
+        <ng-template #rideCompleted>
+            <div class="ride-complted-wrapper">
+                <h1 class="ion-text-center">Ride Completed</h1>
+                <div class="button-wrapper">
+                    <button mat-raised-button class="medium-round alt" (click)="deleteRide()">
+                        Delete
+                    </button>
+                    <button mat-raised-button class="medium-round" (click)="saveRide()">
+                        Save Ride
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-container *ngIf="isRideSaved(ride); else rideCompleted">
+            <div class="ride-saved ride-complted-wrapper">
+                <h1>Ride Saved</h1>
+                <mat-icon (click)="shareRide()">share</mat-icon>
+            </div>
+        </ng-container>
+        <form [formGroup]="form">
+            <caballus-map
+              [ride]="ride"
+              [centerPosition]="lastWayPoint(ride)"
+              [fitBounds]="true"
+              class="app-map-wrapper"
+            ></caballus-map>
+
+            <app-time-and-distance></app-time-and-distance>
+            <app-category [form]="form"></app-category>
+            <app-notes [form]="form"></app-notes>
+            <app-ride-media-upload
+                [ride]="ride"
+                [rideMedia]="currentRideMedia$ | async"
+                [doesUserHaveActiveSubscription]="doesUserHaveActiveSubscription$ | async"
+                (media)="handleAttachedMedia($event)"
+            ></app-ride-media-upload>
+            <app-ride-analytics [ride]="ride"></app-ride-analytics>
+            <caballus-app-gait-profile [gaitData$]="gaitData$" [form]="form"></caballus-app-gait-profile>
+            <app-elevation [wayPoints]="wayPoints$ | async"></app-elevation>
+        </form>
+
+        <mat-card appearance="outlined" class="card m20">
+            <mat-card-content class="horse-slider">
+                <div class="view-btn">
+                    <img
+                        class="tab-image"
+                        src="../../../../../assets/icons/ArrowLeftBtn.svg"
+                        (click)="onPreviousGaitProfile()"
+                    />
+                </div>
+                <div class="view-btn horse-header">
+                    {{ ride.horseIdentities[selectedHorse$ | async]?.label }}
+                </div>
+                <div class="view-btn">
+                    <img
+                        class="tab-image"
+                        src="../../../../../assets/icons/ArrowRightBtn.svg"
+                        (click)="onNextGaitProfile()"
+                    />
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <div *ngFor="let h of ride.horseIdentities; let i = index">
+            <mat-card appearance="outlined" class="card m20" [hidden]="(selectedHorse$ | async) !== i">
+                <mat-card-header>
+                    <div class="gait-header card-header">
+                        <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+                            Ride totals
+                        </div>
+                        <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.PROFILE">
+                            Gait Profile
+                        </div>
+                        <div class="sub-header bold" *ngIf="gaitProfileType === GaitDetailTab.SETTINGS">
+                            Gait Settings
+                        </div>
+                        <ion-segment
+                            (ionChange)="selectTab($event)"
+                            [(ngModel)]="gaitProfileType"
+                        >
+                            <ion-segment-button class="icons" [value]="GaitDetailTab.PROFILE">
+                                <mat-icon> insert_chart_outlined</mat-icon>
+                            </ion-segment-button>
+                            <ion-segment-button class="icons" [value]="GaitDetailTab.RIDE">
+                                <mat-icon>grid_on</mat-icon>
+                            </ion-segment-button>
+                            <ion-segment-button class="icons" [value]="GaitDetailTab.SETTINGS">
+                                <mat-icon>settings</mat-icon>
+                            </ion-segment-button>
+                        </ion-segment>
+                    </div>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div [hidden]="!(gaitProfileType === GaitDetailTab.PROFILE)">
+                        <div class="graph-label">
+                            <div class="x">
+                                Minutes
+                            </div>
+                            <div class="y">
+                                Miles
+                            </div>
+                        </div>
+                        <canvas [id]="'barChart_' + h._id"></canvas>
+                    </div>
+                    <div *ngIf="gaitProfileType === GaitDetailTab.RIDE">
+                        <ion-row>
+                            <ion-col></ion-col>
+                            <ion-col class="gait-label">
+                                Duration (mm:ss)
+                            </ion-col>
+                            <ion-col class="gait-label"> Distance (miles)</ion-col>
+                        </ion-row>
+                        <ion-row class="row">
+                            <ion-col class="col gait-label">Gait Totals</ion-col>
+                        </ion-row>
+                        <div *ngFor="let m of Gait.members">
+                            <ion-row class="row" *ngIf="Gait.None !== m">
+                                <ion-col class="col">{{ Gait.toString(m) }}</ion-col>
+                                <ion-col class="col">{{
+                                    (gaitMinutesStats$ | async)[h._id][m] | number: '1.2-2'
+                                }}</ion-col>
+                                <ion-col class="col">{{
+                                    kilometersToMiles((gaitKilometersStats$ | async)[h._id][m])
+                                        | number: '1.2-2'
+                                }}</ion-col>
+                            </ion-row>
+                        </div>
+                        <div class="gait-border"></div>
+                        <ion-row class="row">
+                            <ion-col class="col gait-label">Total</ion-col>
+                            <ion-col class="col">{{
+                                (totalMinutes$ | async)[h._id] | number: '1.2-2'
+                            }}</ion-col>
+                            <ion-col class="col">{{
+                                kilometersToMiles((ride$ | async)?.distanceKilometers) | number: '1.2-2'
+                            }}</ion-col>
+                        </ion-row>
+                    </div>
+                    <div *ngIf="gaitProfileType === GaitDetailTab.SETTINGS">
+                        <ion-row class="gait-border">
+                            <ion-col>Gait</ion-col>
+                            <ion-col>Time</ion-col>
+                        </ion-row>
+                        <form
+                            class="form-section"
+                            #gaitSettingFormEl
+                            [formGroup]="gaitSettingForm[h._id]"
+                            (ngSubmit)="onGaitSettingSave(h._id)"
+                        >
+                            <ion-row class="row">
+                                <ion-col class="col">Walk</ion-col>
+                                <ion-col class="col">
+                                    <input
+                                        (click)="onFocusGaitChange()"
+                                        matInput
+                                        required
+                                        formControlName="walk"
+                                        [placeholder]="gaitSettingPlaceholder[Gait.Walk].toString()"
+                                    />
+                                    <mat-error
+                                        [rfxError]="gaitSettingForm[h._id].get('walk')"
+                                    ></mat-error>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="row">
+                                <ion-col class="col">Trot</ion-col>
+                                <ion-col class="col">
+                                    <input
+                                        (click)="onFocusGaitChange()"
+                                        matInput
+                                        required
+                                        formControlName="trot"
+                                        [placeholder]="gaitSettingPlaceholder[Gait.Trot].toString()"
+                                    />
+                                    <mat-error
+                                        [rfxError]="gaitSettingForm[h._id].get('trot')"
+                                    ></mat-error>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="row">
+                                <ion-col class="col">Lope/Canter</ion-col>
+                                <ion-col class="col">
+                                    <input
+                                        (click)="onFocusGaitChange()"
+                                        matInput
+                                        required
+                                        formControlName="lope"
+                                        [placeholder]="gaitSettingPlaceholder[Gait.Lope].toString()"
+                                    />
+                                    <mat-error
+                                        [rfxError]="gaitSettingForm[h._id].get('lope')"
+                                    ></mat-error>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="row">
+                                <ion-col class="col">Gallop/Run</ion-col>
+                                <ion-col class="col">
+                                    <input
+                                        (click)="onFocusGaitChange()"
+                                        matInput
+                                        required
+                                        formControlName="gallop"
+                                        [placeholder]="gaitSettingPlaceholder[Gait.Gallop].toString()"
+                                    />
+                                    <mat-error
+                                        [rfxError]="gaitSettingForm[h._id].get('gallop')"
+                                    ></mat-error>
+                                </ion-col>
+                            </ion-row>
+                            <div class="ride-btn m-t-25">
+                                <ion-button
+                                    [disabled]="
+                                        (isGaitLoading$ | async) || !(hasUpdateProfile$ | async)[h._id]
+                                    "
+                                    shape="round"
+                                    class="go-back"
+                                    (click)="onGaitReset(h._id)"
+                                >
+                                    Reset
+                                </ion-button>
+                                <ion-button
+                                    [disabled]="isGaitLoading$ | async"
+                                    shape="round"
+                                    type="submit"
+                                    >Save
+                                    <mat-spinner
+                                        [diameter]="20"
+                                        *ngIf="isGaitLoading$ | async"
+                                    ></mat-spinner>
+                                </ion-button>
+                            </div>
+                        </form>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</ion-content>

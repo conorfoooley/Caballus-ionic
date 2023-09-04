@@ -1,0 +1,99 @@
+:host {
+    overflow: visible;
+
+    &.fixed-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 0;
+    }
+}
+
+mat-toolbar {
+    display: flex;
+    justify-content: space-around;
+    height: 46px !important;
+    z-index: 9999;
+    padding: 8px 0;
+    position: relative;
+    .content {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+button {
+    color: var(--ion-color-primary-contrast);
+    width: 46px;
+    height: 46px;
+
+    mat-icon {
+        transform: scale(1.5);
+
+        img {
+            height: 24px;
+
+            &.map-my-ride {
+                transform: scale(0.8);
+            }
+
+            &.tips {
+                transform: scale(0.7);
+            }
+        }
+    }
+
+    .requires-attention {
+        position: absolute;
+        top: 10px;
+        right: 5px;
+        background-color: var(--ion-color-secondary);
+        border-radius: 50%;
+        width: 8px;
+        height: 8px;
+    }
+
+    &.nav-button {
+        &.selected .selected-indicator {
+            position: absolute;
+            top: 0;
+            border-top: 5px solid var(--ion-color-secondary);
+            width: 100%;
+        }
+    }
+
+    &.nav-fab {
+        position: relative;
+        top: -58%;
+        transform: scale(1.3);
+        &.selected {
+            background-color: var(--ion-color-secondary);
+        }
+    }
+}
+
+:host ::ng-deep .nav-fab {
+    /*TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+    .mat-button-wrapper {
+        padding: unset;
+        display: block;
+        line-height: unset;
+    }
+}
+
+.bottom-safe-area {
+    height: var(--ion-safe-area-bottom);
+    width: 100%;
+    background-color: var(--ion-color-primary);
+}
+
+.notification {
+    display: block;
+    //margin-top: 8px;
+}
+
+.buttons {
+    width: 100%;
+    text-align: center;
+}

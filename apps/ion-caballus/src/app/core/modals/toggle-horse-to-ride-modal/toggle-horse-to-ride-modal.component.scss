@@ -1,0 +1,88 @@
+::ng-deep.toggle-horse-to-ride-modal {
+
+  &::part(content) {
+    height: 70%;
+    width: 90% !important;
+    border-radius: 16px !important;
+  }
+
+  div.modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    div.content-strip {
+      width: 400px;
+
+      div.cancel {
+        display: flex;
+        justify-content: flex-end;
+
+        fa-icon {
+          padding-top: 18px;
+          padding-right: 18px;
+          font-size: 30px;
+        }
+      }
+
+      h1 {
+        text-align: center;
+        margin: auto;
+      }
+
+      div.button-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: row !important;
+
+        .add-remove-btn {
+          width: 80%;
+        }
+      }
+
+      ion-thumbnail.ride-image {
+        margin: 0px 15px;
+      }
+
+      div.rides-container {
+        width: 100%;
+
+        h2 {
+          padding-left: 16px;
+          margin-top: 10px !important;
+        }
+
+        div.ride {
+          display: flex;
+          flex-basis: 1px;
+
+          div.ride-bullet {
+            min-width: 40px;
+            display: flex;
+            justify-content: center;
+
+            mat-icon {
+              padding-top: 12px;
+            }
+          }
+
+          div.ride-info {
+            margin-bottom: 18px;
+            margin-right: 40px;
+
+            label {
+              padding-right: 4px;
+            }
+
+            div.notes-block {
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<div class="modal">
+    <div class="content-strip">
+        <mat-card appearance="outlined" class="card" *ngIf="data && data.user">
+            <mat-card-header class="card-header">
+                <mat-card-title>Caballus User Found:</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="details">
+                    <div class="detail">
+                        <div class="label big-label">Username:</div>
+                        <div class="value">{{ data.user?.profile?.url }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label big-label">First Name:</div>
+                        <div class="value">{{ data.user?.profile.firstName || '' }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label big-label">Last Name:</div>
+                        <div class="value">{{ data.user?.profile?.lastName || '' }}</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label big-label">Email:</div>
+                        <div class="value">{{ data.user?.profile?.email }}</div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button mat-button class="large-round spinner" (click)="goBack()">
+                        No, Go Back
+                    </button>
+                    <button mat-button [disabled]="sendRequestInProcess$ | async" class="large-round spinner"
+                            (click)="sendRequest()">
+                        Yes, Send
+                        <mat-spinner *ngIf="sendRequestInProcess$ | async"></mat-spinner>
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

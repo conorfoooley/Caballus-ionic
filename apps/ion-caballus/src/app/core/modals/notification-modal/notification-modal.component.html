@@ -1,0 +1,21 @@
+<div class="modal" (click)="dismiss()">
+    <div class="content-strip">
+        <mat-card appearance="outlined" class="card">
+            <mat-card-header class="card-header">
+                <mat-card-title>Caballus Message</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="details">
+                    <div class="detail">
+                        <span>
+                            <span class="notifications-user-display-name" *ngIf="notification.riderIdentity">{{
+                                notification.riderIdentity.displayName
+                            }}</span>
+                            {{ notification.message }}
+                        </span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

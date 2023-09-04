@@ -1,0 +1,59 @@
+.container {
+  overflow-y: scroll;
+  height: 100%;
+  overflow-x: hidden;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.img-container {
+  width: 100%;
+  margin-top: 110px;
+  max-height: 230px;
+  height: 230px;
+}
+
+.img-preview-container {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+
+  img {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 3px 0 #dddddd;
+  }
+}
+
+.cropper-bg {
+  background: none !important;
+}
+
+.img-preview {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-left: 10px;
+}
+
+.button-full-width {
+  width: calc(100% - 40px);
+  margin: 5px 20px;
+}
+
+.submit {
+  padding-top: 10px;
+}
+
+::ng-deep.image-crop-modal {
+  &::part(content) {
+    height: 80%;
+  }
+}

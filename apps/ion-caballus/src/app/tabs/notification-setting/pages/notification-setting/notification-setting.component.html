@@ -1,0 +1,65 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="goBack()">arrow_back</mat-icon>
+        <div>Notification setting</div>
+        <div></div>
+    </div>
+    <form class="contactForm" [formGroup]="userNotificationSettingForm" (ngSubmit)="onUpdateNotificationSetting()">
+        <div [formGroup]="allowNotificationSetting">
+            <mat-card appearance="outlined" class="card" [formGroup]="allowNotificationSetting">
+                <mat-card-header class="card-header">
+                    <mat-card-title>Allow Notifications:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="allow-notification-card">
+                    <ul>
+                        <li>
+                            <mat-checkbox formControlName="onNewDataAddedOnHorse">
+                                When data is added to one of my <br> horses
+                            </mat-checkbox>
+                        </li>
+                        <li>
+                            <mat-checkbox formControlName="onHorseFollowNewActivity">
+                                When a horse I follow has new <br> activity
+                            </mat-checkbox>
+                        </li>
+                        <li>
+                            <mat-checkbox formControlName="onFriendHasNewActivity">
+                                When a friend has new activity
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div [formGroup]="sendNotificationSetting">
+            <mat-card appearance="outlined" class="card">
+                <mat-card-header class="card-header">
+                    <mat-card-title>Send Notifications Via:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <ul>
+                        <li>
+                            <mat-checkbox formControlName="appPushNotification">
+                                Caballus Push Notifications
+                            </mat-checkbox>
+                        </li>
+                        <li>
+                            <mat-checkbox formControlName="emailNotification">
+                                Email Notifications
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div class="text-center">
+            <div class="button-container button-container-notification">
+                <button mat-raised-button class="large-round spinner" [disabled]="isLoading$ | async" type="submit">
+                    Save
+                    <mat-spinner class="spinner-notification" *ngIf="isLoading$ | async"></mat-spinner>
+                </button>
+            </div>
+        </div>
+    </form>
+</ion-content>

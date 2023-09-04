@@ -1,0 +1,174 @@
+.img {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  .user-img {
+    border-radius: 50%;
+    height: 9em;
+    margin-top: 1em;
+  }
+
+  .img-placeholder {
+    position: relative;
+    // width: min-content;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .picture-edit {
+    position: absolute !important;
+    top: -12px !important;
+    right: -12px !important;
+    font-size: 20px !important;
+  }
+}
+
+.add-img {
+  font-size: 80px;
+  color: white;
+  border-radius: 50%;
+  background-color: gray;
+  height: 1.8em;
+  width: 1.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-placeholder {
+  font-size: 80px;
+  color: white;
+  border-radius: 50%;
+  background-color: gray;
+  height: 1.8em;
+  width: 1.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:active.link {
+  transform: scale(1.025);
+  box-shadow: gray;
+}
+
+:active.add-img {
+  font-size: 80px;
+  color: white;
+  border-radius: 50%;
+  box-shadow: gray;
+  background-color: rgb(141, 141, 141);
+  height: 2em;
+  width: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+}
+
+.card {
+  box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+  border-radius: 20px !important;
+  margin: 10px 20px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+  mat-card-title {
+    font-weight: bold;
+  }
+
+  .picture-edit {
+    position: absolute !important;
+    top: -12px !important;
+    right: -12px !important;
+    font-size: 20px !important;
+  }
+
+  .card-header {
+    border-bottom: 3px solid #f78131;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .mat-icon {
+      margin: 5px;
+    }
+
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    ::ng-deep.mat-mdc-card-header-text {
+      margin: 0 !important;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+
+      .mat-mdc-card-title {
+        margin: 0;
+      }
+    }
+  }
+
+  .card-header-2 {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .mat-icon {
+      margin: 5px;
+    }
+
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    ::ng-deep.mat-mdc-card-header-text {
+      margin: 0 !important;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+
+      .mat-mdc-card-title {
+        margin: 0;
+      }
+    }
+  }
+
+  .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around !important;
+  }
+
+  .form-row {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+  }
+}
+
+p {
+  font-size: 16px;
+  background-color: rgb(240, 240, 240);
+  padding: 5px;
+  font-weight: 500;
+}
+
+.card-margin-bottom {
+  margin-bottom: 50px;
+}
+
+.action-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+
+  button {
+    margin-bottom: 10px;
+  }
+}

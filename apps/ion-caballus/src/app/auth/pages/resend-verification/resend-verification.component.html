@@ -1,0 +1,44 @@
+<ion-content>
+    <form [formGroup]="form" class="auth-page">
+        <img src="./assets/branding/icon.png" />
+        <h2>CABALLUS Account Verification</h2>
+        <ng-container *ngIf="(pageStatus$ | async) === PageStatus.BeforeSend; else afterSend">
+            <p>You need to verify your account, please enter your email address so we can send you a verification link</p>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                    matInput
+                    formControlName="email"
+                    placeholder="Email"
+                />
+                <mat-error [rfxError]="form.get('email')"></mat-error>
+            </mat-form-field>
+        </ng-container>
+        <ng-template #afterSend>
+            <p>If your email exists in our system, and your account has not already been verified, then your verification link will be on its way</p>
+        </ng-template>
+        <div class="buttons">
+            <button
+                *ngIf="(pageStatus$ | async) === PageStatus.BeforeSend"
+                mat-raised-button
+                class="large-round spinner"
+                (click)="sendVerification()"
+                [disabled]="submitting$ | async"
+            >
+                Resend Email
+                <mat-spinner *ngIf="submitting$ | async"></mat-spinner>
+            </button>
+            <button
+                *ngIf="(pageStatus$ | async) === PageStatus.AfterSend"
+                mat-raised-button
+                class="large-round"
+                (click)="continueToLogin()"
+            >
+                Continue
+            </button>
+        </div>
+        <div class="bottom-links">
+            <a routerLink="/auth/login">Cancel</a>
+        </div>
+    </form>
+</ion-content>

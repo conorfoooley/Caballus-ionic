@@ -1,0 +1,19 @@
+import { ClickEventWithoutIds } from '@clicked/common';
+import { UserIdentity } from '../user/user-identity';
+
+export class ClickEvent extends ClickEventWithoutIds {
+    public initiatedByUser: UserIdentity = null;
+    public targetUser: UserIdentity = null;
+
+    constructor(params: Partial<ClickEvent>) {
+        super(params);
+        if (!!params) {
+            this.initiatedByUser = !!params.initiatedByUser
+                ? new UserIdentity(params.initiatedByUser)
+                : this.initiatedByUser;
+            this.targetUser = !!params.targetUser
+                ? new UserIdentity(params.targetUser)
+                : this.targetUser;
+        }
+    }
+}

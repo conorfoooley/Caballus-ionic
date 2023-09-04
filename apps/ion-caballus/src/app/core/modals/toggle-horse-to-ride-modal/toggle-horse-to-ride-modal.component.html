@@ -1,0 +1,44 @@
+<div class="modal">
+    <div *ngIf="horse$ | async as horse" class="content-strip">
+        <div class="cancel">
+            <fa-icon [icon]="['far', 'times']" (click)="cancel()"></fa-icon>
+        </div>
+        <h1>{{ horse.commonName }}</h1>
+        <div class="rides-container">
+            <ng-container *ngIf="horse.rides.length > 0; else noRides">
+                <h2>Last 3 Rides:</h2>
+                <div *ngFor="let r of horse.rides" class="ride">
+                    <ion-thumbnail class="ride-image">
+                        <div
+                            style="padding: 5px; background-color: #d3eccb; height: 56px;
+                    width: 56px;"
+                            *ngIf="r.ridePicture as thumbnail"
+                        >
+                            <img [src]="thumbnail.url" />
+                        </div>
+                    </ion-thumbnail>
+                    <div class="ride-info">
+                        <label>Type:</label><span>{{ RideCategory.toString(r.category) }}</span
+                        ><br />
+                        <label>Rider:</label><span>{{ r.riderName }}</span
+                        ><br />
+                        <label>Miles:</label
+                        ><span>{{ kilometersToMiles(r.distanceKilometers) | number: '1.0-2' }}</span
+                        ><br />
+                        <div class="notes-block">
+                            <label>Notes:</label><span class="notes">{{ r.notes }}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #noRides>
+                <h2>No Ride Data</h2>
+            </ng-template>
+        </div>
+        <div class="button-container">
+            <button class="add-remove-btn" mat-raised-button color="primary" (click)="confirm()">
+                {{ (add$ | async) ? 'Add' : 'Remove' }}
+            </button>
+        </div>
+    </div>
+</div>

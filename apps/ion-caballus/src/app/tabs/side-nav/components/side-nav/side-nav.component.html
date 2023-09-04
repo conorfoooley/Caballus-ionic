@@ -1,0 +1,57 @@
+<div class='container'>
+    <div class='side-panel'>
+        <div class='user' *ngIf="user$ | async as user">
+            <div *ngIf='user.profile.profilePicture'>
+                <img
+                    [src]='user.profile.profilePicture.url'
+                    class='user-img'
+                    alt=''
+                />
+            </div>
+            <div
+                class='img-placeholder'
+                *ngIf='!user.profile.profilePicture || !user.profile.profilePicture.url'
+            >
+                <div class='profile-placeholder'>
+                    {{ (user.profile.firstName || '').charAt(0) + (user.profile.lastName || '').charAt(0) }}
+                </div>
+            </div>
+            <h3>
+                {{ (user.profile.firstName || '') + ' ' + (user.profile.lastName || '') }}
+            </h3>
+        </div>
+        <mat-nav-list class='nav-list' role="list">
+
+            <ng-container *ngFor='let menuItem of menuItems'>
+                <mat-list-item (click)='navigateToPage(menuItem)' role="listitem">
+                    <a matListItemTitle>
+                        <div class='alignment'>
+                            <span class='active-indicator'></span>
+                            <fa-icon class='icon-margin' [icon]='menuItem.icon'></fa-icon>
+                            <label>
+                                {{ menuItem.label }}
+                            </label>
+                        </div>
+                    </a>
+
+                    <div matListItemMeta>
+                        <fa-icon class='arrow-margin' [icon]="['fas', 'arrow-right']"></fa-icon>
+                    </div>
+                </mat-list-item>
+
+            </ng-container>
+
+            <mat-list-item role="listitem">
+                <a (click)='logout()' matListItemTitle>
+                    <div class='alignment'>
+                        <span class='active-indicator'></span>
+                        <fa-icon class='icon-margin' [icon]="['fas', 'sign-out']"></fa-icon>
+                        <label>
+                            Log Out
+                        </label>
+                    </div>
+                </a>
+            </mat-list-item>
+        </mat-nav-list>
+    </div>
+</div>

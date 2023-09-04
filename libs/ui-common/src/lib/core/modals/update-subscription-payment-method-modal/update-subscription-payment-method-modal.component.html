@@ -1,0 +1,36 @@
+<div class="modal">
+    <div class="content-strip">
+        <mat-card appearance="outlined" class="card">
+            <mat-card-header class="card-header">
+                <mat-card-title>Change Payment Method</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="details">
+                    <p class="info-text">Please edit the following to change your payment method.</p>
+                    <div class="form-content">
+                        <div id="stripe-card" class="stripe-card"></div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button
+                        mat-button
+                        [disabled]="updateCardInProcess$ | async"
+                        class="large-round spinner"
+                        (click)="updatePaymentMethod()"
+                    >
+                        Update
+                        <mat-spinner *ngIf="updateCardInProcess$ | async"></mat-spinner>
+                    </button>
+
+                    <button mat-button class="large-round spinner" (click)="cancel()">
+                        Cancel
+                    </button>
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+    </div>
+</div>

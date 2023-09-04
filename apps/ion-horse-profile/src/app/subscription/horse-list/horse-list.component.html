@@ -1,0 +1,62 @@
+<header>
+    <fa-icon class="back-arrow" [routerLink]="'../'" [icon]="['fas', 'arrow-left']"></fa-icon>
+    <h1>My Account</h1>
+</header>
+
+<div class="body">
+    <div style="text-align: center; padding: 10px">
+        In order to downgrade your subscription, you will need to enable only 1 horse. Click on each
+        horse below to enable or disable it. When you are done, click the back button above to
+        return to the previous screen.
+    </div>
+
+    <div
+        *ngFor="let horse of options$ | async; trackBy: trackByFn"
+        class="d-flex horse-profile-block"
+        (click)="toggleHorseStatus(horse)"
+    >
+        <img
+            class="horse-image"
+            [src]="horse?.profile?.profilePicture?.url"
+            *ngIf="horse?.profile?.profilePicture?.url"
+        />
+
+        <img
+            class="horse-image"
+            src="../../../assets/icons/horse-placeholder.svg"
+            *ngIf="!horse?.profile?.profilePicture?.url"
+        />
+
+        <div class="meta-data-container">
+            <div class="horse-details">
+                <p class="horse-name">{{ horse?.profile?.commonName }}</p>
+                <p class="light-text">Last Ride : {{ horse?.lastRideDate | date }}</p>
+                <p class="light-text">By : {{ horse?.lastRiderIdentity?.label }}</p>
+            </div>
+
+            <div class="horse-status">
+                <ng-container *ngIf="!horseStatusChangeLoaderMapper[horse._id]; else loading">
+                    <span
+                        *ngIf="horse.profile.profileStatus === HorseProfileStatus.Active"
+                        class="active"
+                        >Enabled</span
+                    >
+                    <span
+                        *ngIf="horse.profile.profileStatus === HorseProfileStatus.Disabled"
+                        class="disabled"
+                        >Disabled</span
+                    >
+                </ng-container>
+                <ng-template #loading>
+                    <span class="processing">{{
+                        horse.profile.profileStatus === HorseProfileStatus.Active
+                            ? 'Disabling...'
+                            : 'Enabling...'
+                    }}</span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <p *ngIf="hasNoData" class="text-center">No horses have been added yet</p>
+</div>

@@ -1,0 +1,37 @@
+<div class="modal">
+    <div class="content-strip">
+        <mat-card appearance="outlined" class="card" *ngIf="friendRequest">
+            <mat-card-header class="card-header">
+                <mat-card-title>Caballus-Friend Invitation</mat-card-title>
+                <div class="dismiss">
+                    <fa-icon [icon]="['far', 'times']" (click)="dismiss()"></fa-icon>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="details">
+                    <div class="detail">
+                        <span>
+                            {{ friendRequest.userIdentity?.label }} has extended an invitation to be
+                            friends here on Caballus. This will allow you to view each other's rides
+                            and history, and you can also chose to interact with and be made aware
+                            of each other's activities on Caballus. Note that you will also be able
+                            to remove this connection at any time.
+                        </span>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button mat-button class="large-round spinner center" (click)="rejectRequest()">
+                        Decline Invitation
+
+                        <mat-spinner *ngIf="isDeclineFriendRequestInProcess$ | async"></mat-spinner>
+                    </button>
+                    <button mat-button class="large-round spinner center" (click)="acceptRequest()">
+                        Accept Invitation
+
+                        <mat-spinner *ngIf="isAcceptFriendRequestInProcess$ | async"></mat-spinner>
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

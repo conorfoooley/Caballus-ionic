@@ -1,0 +1,40 @@
+<div class="modal">
+    <form class="content-strip" [formGroup]="form">
+        <div class="cancel">
+            <fa-icon
+                [icon]="['far','times']"
+                (click)="cancel()"
+            ></fa-icon>
+        </div>
+        <h1>Add a Horse</h1>
+        <div class="form-elements">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input
+                    matInput
+                    placeholder="name"
+                    formControlName="commonName"
+                />
+                <mat-error [rfxError]="form.get('commonName')"></mat-error>
+            </mat-form-field>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="quickCreate()"
+                class="spinner"
+                [disabled]="quickCreating$ | async"
+            >
+                Add Now (Details Later)
+                <mat-spinner *ngIf="quickCreating$ | async"></mat-spinner>
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="createWithDetails()"
+                [disabled]="quickCreating$ | async"
+            >
+                Add With Details
+            </button>
+        </div>
+    </form>
+</div>

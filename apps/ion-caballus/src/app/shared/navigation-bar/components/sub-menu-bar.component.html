@@ -1,0 +1,55 @@
+<ng-container [ngTemplateOutlet]="subMenu" [ngTemplateOutletContext]="{horseId : (horseId$ | async)}">
+</ng-container>
+<ng-template #subMenu let-horseId='horseId'>
+    <div class="collapse-swipe swipe bottom-liner" [class.collapse-swipe-hidden]="!(showHideMenu$ | async)">
+    </div>
+    <div class="extend-swipe swipe" [class.extend-swipe-show]="showHideMenu$ | async">
+        <mat-card appearance="outlined" class="card">
+            <mat-card-content class="card-content">
+                <div class="swipe-content swiper-expand">
+                    <div class="row">
+                        <div class="swiper-content-button top-swipe-content" routerDirection="root"
+                            [routerLink]="'/tabs/horse-profile/detail-horse/general-tab/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon general-info"
+                                src="../../../../../assets/icons/icon-horseProfile-general-w.svg" />
+                            <span class="mene-icon-label">General Info</span>
+                        </div>
+                        <div class="swiper-content-button top-swipe-content" routerDirection="root"
+                            [routerLink]="'/tabs/horse-profile/detail-horse/analytics/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon analytics" src="../../../../../assets/icons/analytics-w.svg" />
+                            <span class="mene-icon-label">Analytics</span>
+                        </div>
+                        <div class="swiper-content-button top-swipe-content right-swipe-content" routerDirection="root"
+                            [routerLink]="'/tabs/horse-profile/detail-horse/ride-history/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon ride-history" src="../../../../../assets/icons/rideHistory-w.svg" />
+                            <span class="mene-icon-label">Ride History</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="swiper-content-button bottom-swipe-content" routerDirection="root"
+                            [routerLink]="'/tabs/horse-profile/detail-horse/evaluations/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon star" src="../../../../../assets/icons/evaluations-w.svg" />
+                            <span class="mene-icon-label">Evaluations</span>
+                        </div>
+                        <div class="swiper-content-button bottom-swipe-content" routerDirection="root"
+                            [routerLink]="'/tabs/horse-profile/detail-horse/competitions/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon cup" src="../../../../../assets/icons/competitions-w.svg" />
+                            <span class="mene-icon-label">Competitions</span>
+                        </div>
+                        <div class="swiper-content-button bottom-swipe-content right-swipe-content"
+                            routerDirection="root" [routerLink]="'/tabs/horse-profile/detail-horse/medical/' + horseId"
+                            (click)="onBottomMenuClick()">
+                            <img class="menu-icon medical" src="../../../../../assets/icons/medical-w.svg" />
+                            <span class="mene-icon-label">Medical</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>

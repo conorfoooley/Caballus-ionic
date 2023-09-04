@@ -1,0 +1,268 @@
+<div class="modal relative">
+    <div class="content-strip">
+        <form
+            class="form-section"
+            #horseMatrixFormEl
+            [formGroup]="horseMatrixForm"
+            (ngSubmit)="onSave()"
+        >
+            <div class="modal-header" (click)="setPreviewImage(null)">
+                <div class="form-row">
+                    {{
+                        HorseMatrixType.toString(horseMatrixForm.value.horseMatrixType) ||
+                            horseMatrixForm.value.horseMatrixType
+                    }}
+                </div>
+                <mat-icon class="trash" (click)="goBack()">close</mat-icon>
+            </div>
+            <div
+                (click)="setPreviewImage(null)"
+                class="form-row"
+                *ngIf="horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]"
+            >
+                <div class="form-descriptive-text">
+                    <span>{{
+                        horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                            ?.descriptiveText || ''
+                    }}</span>
+                </div>
+            </div>
+
+            <div class="extreme-content">
+                <div class="extreme-text left">
+                    {{
+                        horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                            ?.lowExtreme || 'Unskilled'
+                    }}
+                </div>
+
+                <div
+                    class="extreme-text"
+                    *ngIf="evaluationType === HorseEvaluationType.Conformation"
+                >
+                    Ideal
+                </div>
+
+                <div class="extreme-text right">
+                    {{
+                        horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                            ?.highExtreme || 'Highly Skilled'
+                    }}
+                </div>
+            </div>
+
+            <div
+                class="form-row matrix-images"
+                *ngIf="horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]"
+            >
+                <div
+                    (click)="
+                        setPreviewImage(
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[0]
+                        )
+                    "
+                    class="images image-first"
+                >
+                    <img
+                        class="tab-image"
+                        [src]="
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[0]
+                        "
+                    />
+                </div>
+                <div
+                    (click)="
+                        setPreviewImage(
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[5]
+                        )
+                    "
+                    class="images"
+                >
+                    <img
+                        class="tab-image"
+                        [src]="
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[5]
+                        "
+                    />
+                </div>
+                <div
+                    (click)="
+                        setPreviewImage(
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[10]
+                        )
+                    "
+                    class="images image-last"
+                >
+                    <img
+                        class="tab-image"
+                        [src]="
+                            horseMatrixInfo[evaluationType][horseMatrixForm.value.horseMatrixType]
+                                .images[10]
+                        "
+                    />
+                </div>
+            </div>
+
+            <div class="form-row slider-row" (click)="setPreviewImage(null)">
+                <ngx-slider
+                    *ngIf="(isLocked$ | async) === false; else lockedSlider"
+                    formControlName="rating"
+                    [options]="sliderOptions"
+                ></ngx-slider>
+                <ng-template #lockedSlider
+                    ><ngx-slider
+                        #lockedSlider
+                        formControlName="rating"
+                        [options]="readonlySliderOptions"
+                    ></ngx-slider
+                ></ng-template>
+            </div>
+            <div class="img-preview" *ngIf="selectedImage$ | async" (click)="setPreviewImage(null)">
+                <img class="tab-image" [src]="selectedImage$ | async" />
+            </div>
+            <div *ngIf="!(selectedImage$ | async)" (click)="setPreviewImage(null)">
+                <div class="form-row notes">
+                    <!-- <div class="form-label">
+              <mat-label>Notes</mat-label>
+              <span>{{horseMatrixForm.get('notes').value.length}}/{{notesLength}}</span>
+          </div>
+          <mat-form-field class="notes" appearance="outline" class="large" floatLabel="always">
+              <mat-label>Notes</mat-label>
+              <textarea matInput formControlName="notes"></textarea>
+              <mat-error [rfxError]="horseMatrixForm.get('notes')"></mat-error>
+          </mat-form-field> -->
+                    <ion-item lines>
+                        <ion-label position="stacked">
+                            Notes
+                            <span>
+                                {{ horseMatrixForm.get('notes').value.length }}/{{ notesLength }}
+                            </span>
+                        </ion-label>
+
+                        <ion-textarea
+                            *ngIf="(isLocked$ | async) === false; else lockedNotes"
+                            cols="50"
+                            rows="5"
+                            formControlName="notes"
+                            required
+                        >
+                        </ion-textarea>
+                        <ng-template #lockedNotes
+                            ><ion-textarea
+                                #lockedNotes
+                                readonly
+                                cols="50"
+                                rows="5"
+                                formControlName="notes"
+                            >
+                            </ion-textarea
+                        ></ng-template>
+                    </ion-item>
+                    <div class="error-container">
+                        <ng-container *ngFor="let validation of validations.notes">
+                            <div
+                                class="error-message"
+                                *ngIf="
+                                    horseMatrixForm.get('notes').hasError(validation.type) &&
+                                    (horseMatrixForm.get('notes').dirty ||
+                                        horseMatrixForm.get('notes').touched)
+                                "
+                            >
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                <span class="error-text">{{ validation.message }}</span>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!--  <div class="form-label">
+               <mat-label></mat-label>
+           </div> -->
+                    <div class="upload">
+                        <div class="upload-title">
+                            <label class="bold"> Attachments: </label>
+                            <input
+                                class="upload-input"
+                                #fileElement
+                                type="file"
+                                name="documents"
+                                multiple="true"
+                                hidden
+                                (change)="onFilesAdded($event)"
+                            />
+                            <mat-icon
+                                *ngIf="(isLocked$ | async) === false"
+                                class="trash"
+                                (click)="fileElement.click()"
+                                >upload</mat-icon
+                            >
+                        </div>
+                        <div
+                            class="previous-upload"
+                            *ngFor="let doc of newDocuments$ | async as docs; index as i"
+                        >
+                            <div class="docs">
+                                <div (click)="previewSelectedFile(doc)">
+                                    {{ displayFileName(doc.name) }}
+                                </div>
+                                <div class="doc-icons">
+                                    <mat-icon class="trash" (click)="deleteNewDocument(i, doc.name)"
+                                        >delete_forever
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="previous-upload"
+                            *ngFor="let doc of existingDocuments$ | async as docs; index as i"
+                        >
+                            <div class="docs">
+                                <div (click)="previewExistingFile(doc)">
+                                    {{ doc.latest?.name }}
+                                </div>
+                                <div class="doc-icons delete-document">
+                                    <mat-spinner
+                                        [diameter]="20"
+                                        *ngIf="(existingDocumentsDeleting$ | async)[i]"
+                                    >
+                                    </mat-spinner>
+                                    <mat-icon
+                                        class="trash"
+                                        *ngIf="!(existingDocumentsDeleting$ | async)[i]"
+                                        (click)="
+                                            deleteExistingDocument(doc._id, doc.latest?.name, i)
+                                        "
+                                        >delete_forever
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                *ngIf="(isLocked$ | async) === false"
+                class="button-container"
+                (click)="setPreviewImage(null)"
+            >
+                <ion-button [disabled]="isLoading$ | async" shape="round" type="submit"
+                    >Ok
+                    <mat-spinner [diameter]="20" *ngIf="isLoading$ | async"></mat-spinner>
+                </ion-button>
+                <ion-button
+                    [disabled]="isLoading$ | async"
+                    shape="round"
+                    class="go-back"
+                    (click)="goBack()"
+                >
+                    Cancel
+                </ion-button>
+            </div>
+        </form>
+    </div>
+</div>

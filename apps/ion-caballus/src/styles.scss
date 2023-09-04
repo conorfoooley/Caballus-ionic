@@ -1,0 +1,477 @@
+@import '@caballus/ui-library/scss/index';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Correct application of font family to material icons */
+mat-icon {
+  font-family: 'Material Icons' !important;
+}
+
+/* Buttons */
+button.large-round {
+  font-size: 1.1em;
+  min-width: 200px;
+  height: 50px !important;
+  border-radius: 25px;
+  background-color: var(--caballus-color-tangerine-orange) !important;
+  color: #fff !important;
+}
+
+button.medium-round {
+  font-size: 1rem;
+  min-width: 100px;
+  height: 50px !important;
+  border-radius: 25px;
+  background: var(--caballus-color-tangerine-orange) !important;
+  color: #fff !important;
+}
+
+// button.medium-round {
+//     font-size: 1.5em;
+//     min-width: 100px;
+//     height: 34px;
+//     border-radius: 25px;
+//     background: var(--caballus-color-tangerine-orange);
+//     color: #fff;
+// }
+
+.hr-line {
+  border-bottom: 1px var(--caballus-color-light-gray) solid;
+}
+
+.hr-cal {
+  border-bottom: 3px solid var(--caballus-color-tangerine-orange);
+}
+
+button.alt {
+  border: 1px solid;
+  color: var(--caballus-color-tangerine-orange);
+  background: #fff;
+}
+
+button.spinner {
+  .mdc-button__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .mat-mdc-progress-spinner {
+      width: 20px !important;
+      height: 20px !important;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      circle {
+        stroke: #000000;
+      }
+    }
+  }
+}
+
+// this css class will be used to style the ion-modal
+// use it as a cssClass of a ion-modal
+.generic-ion-modal {
+  &::part(content) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    height: 50%;
+    border-radius: 16px;
+    width: 90%;
+  }
+
+  div.modal {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    div.content-strip {
+      h1 {
+        text-align: center;
+        margin: 24px auto;
+      }
+
+      p {
+        width: 300px;
+        margin: auto;
+      }
+
+      .detail {
+        display: flex !important;
+        align-items: center !important;
+
+        .label {
+          font-weight: bold;
+          margin-left: 5px;
+          min-width: 100px;
+        }
+
+        .value {
+          margin-left: 5px;
+        }
+
+        .big-label {
+          min-width: 100px;
+        }
+      }
+
+      .form {
+        padding: 0px 1.5em;
+      }
+
+      .note {
+        font-size: 12px;
+        font-weight: normal;
+        text-align: justify;
+        margin-bottom: 5px;
+      }
+
+      .card {
+        box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+        border-radius: 20px !important;
+        margin: 20px 20px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      }
+
+      .card-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        div.circle {
+          position: relative;
+          margin: 10px;
+          margin-left: 0px;
+          width: 60px;
+          height: 60px;
+          border: 2px solid #fff;
+          border-radius: 24px;
+
+          mat-icon {
+            position: relative;
+            top: 9px;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+          }
+        }
+
+        .details {
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          flex-direction: column;
+        }
+
+      }
+
+      .info-text {
+        font-size: 14px;
+        text-align: justify;
+        display: flex;
+        margin-bottom: 5px;
+      }
+
+      .mat-mdc-form-field {
+        width: 100%;
+      }
+
+      div.button-container {
+        display: flex;
+        flex-direction: column;
+
+        button.large-round {
+          margin: auto;
+          margin-top: 24px;
+          width: 250px;
+        }
+      }
+    }
+  }
+}
+
+/* Auth Pages */
+
+form.auth-page,
+div.auth-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  img {
+    max-width: 75%;
+    margin: auto;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  p {
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .mat-mdc-form-field {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 24px;
+    width: 240px;
+  }
+
+  div.buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  div.bottom-links {
+    padding: 36px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      color: #000;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+  }
+}
+
+.card-wrapper {
+  box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+  border-radius: 20px !important;
+  margin: 20px 20px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+  .mat-mdc-card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0px;
+  }
+
+  .title-border {
+    border-bottom: 2px solid var(--ion-color-primary);
+  }
+
+  .mat-mdc-card-content {
+    padding: 16px !important;
+  }
+
+  .mat-mdc-card-footer {
+    padding: 16px !important;
+  }
+
+  .mat-mdc-card-header-text {
+    width: 100%;
+  }
+}
+
+/* Dialogs */
+.mat-mdc-dialog-container {
+
+  .mat-mdc-dialog-surface {
+    border-radius: 16px !important;
+  }
+
+  & > * {
+    position: relative;
+  }
+
+  *[mat-dialog-title] {
+    text-align: center;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+}
+
+/*
+This .scss loop will create "margin helpers" and "padding helpers" for use in your web projects.
+It will generate several classes such as:
+
+.m-r-10 which gives margin-right 10 pixels.
+.m-r-15 gives MARGIN to the RIGHT 15 pixels.
+.m-t-15 gives MARGIN to the TOP 15 pixels and so on.
+
+.p-b-5 gives PADDING to the BOTTOM of 5 pixels
+.p-l-40 gives PADDING to the LEFT of 40 pixels
+
+The first letter is "m" or "p" for MARGIN or PADDING
+Second letter is "t", "b", "l", or "r" for TOP, BOTTOM, LEFT, or RIGHT
+Third letter is the number of spacing in pixels. Adjust the amounts generated by editing the $spaceamounts variable below.
+
+*/
+.ion-error {
+  margin-top: 5px;
+  margin-left: 20px;
+  display: block;
+}
+
+$spaceamounts: (
+  5,
+  10,
+  15,
+  20,
+  25,
+  30,
+  35,
+  40,
+  45,
+  50,
+  75,
+  100
+); // Adjust this to include the pixel amounts you need.
+$sides: (top, bottom, left, right); // Leave this variable alone
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m-#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px !important;
+    }
+
+    .p-#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px !important;
+    }
+  }
+}
+
+/*
+  RUN GULP to generate the classes. Now you can use these helpers to customize spacing on HTML elements.
+*/
+
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.shepherd-button {
+  margin: auto !important;
+  background: var(--caballus-color-tangerine-orange) !important;
+  color: #fff !important;
+}
+
+.shepherd-title {
+  color: white !important;
+  font-size: 30px !important;
+}
+
+.shepherd-has-title .shepherd-content .shepherd-cancel-icon {
+  color: white !important;
+}
+
+.shepherd-header {
+  background: var(--caballus-color-tangerine-orange) !important;
+}
+
+.shepherd-element {
+  margin-bottom: 14px !important;
+  width: 90vw !important;
+}
+
+.shepherd-text {
+  overflow: overlay !important;
+}
+
+.shepherd-button {
+  font-size: 1.5em;
+  height: 50px;
+  border-radius: 25px !important;
+  background: var(--caballus-color-tangerine-orange);
+  color: #fff;
+}
+
+div.mat-mdc-menu-panel.bdc-walk-popup .title {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  background: var(--caballus-color-accent);
+  width: 100%;
+  font-size: 25px;
+  padding: 10px;
+  color: white !important;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px 10px 0px 0px;
+}
+
+div.mat-mdc-menu-panel.bdc-walk-popup .title .header {
+  color: white !important;
+}
+
+div.mat-mdc-menu-panel.bdc-walk-popup .buttons button {
+  background: var(--caballus-color-accent);
+  color: white !important;
+  min-width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 20px;
+  margin: auto;
+}
+
+.cdk-overlay-pane {
+  padding: 10px;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of menu that may no longer apply for the MDC version.*/
+div.mat-mdc-menu-panel.bdc-walk-popup.arrow.mat-menu-above:not(.horizontal) {
+  margin-bottom: -5px !important;
+}
+
+div.mat-mdc-menu-panel.bdc-walk-popup {
+  border: none !important;
+}
+
+div.mat-mdc-menu-panel.bdc-walk-popup .container {
+  padding-top: 50px !important;
+}
+
+div.error-container {
+  margin-top: 4px;
+
+  div.error-message {
+    color: var(--ion-color-danger-tint);
+
+    span.error-text {
+      margin-left: 5px;
+      font-size: 0.9em;
+      vertical-align: text-bottom;
+    }
+
+    ion-icon {
+      vertical-align: text-bottom;
+    }
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

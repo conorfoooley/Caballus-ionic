@@ -1,0 +1,16 @@
+<ion-header class="ion-no-border" mode="md">
+    <ion-toolbar>
+        <h1 class="ion-text-center ion-margin-vertical">Horse Competition Image</h1>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ng-container >
+        <ion-img [src]="attachedImage.url" alt="Horse competition picture"></ion-img>
+    </ng-container>
+</ion-content>

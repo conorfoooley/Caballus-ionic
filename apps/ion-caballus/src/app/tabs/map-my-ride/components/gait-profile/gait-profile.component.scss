@@ -1,0 +1,35 @@
+
+  .table-col {
+    padding: 6px 0px 6px 10px;
+    width:50%;
+        input{
+            width: 100%;
+            background: #EEEEEE;
+            border: none;
+            padding: 4px;
+        }
+  }
+
+  .table-row{
+      display: flex;
+  }
+
+  .header-border{
+    border-bottom: 2px solid #E1E1E1;
+    padding-top: 5px;
+    font-weight: 500;
+    color: #818181;
+  }
+
+  .small-round{
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  
+  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+  mat-card-title {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+  

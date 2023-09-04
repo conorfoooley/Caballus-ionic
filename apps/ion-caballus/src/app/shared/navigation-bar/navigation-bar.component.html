@@ -1,0 +1,153 @@
+<div class="tool-bar-content" #content>
+    <mat-toolbar color="primary">
+        <button
+            class="nav-button nav-notifications"
+            mat-icon-button
+            routerLinkActive="selected"
+            routerDirection="root"
+            routerLink="/tabs/notifications"
+            (click)="tabOnClick()"
+        >
+            <div class="selected-indicator"></div>
+            <fa-icon class="notification" [icon]="['fas', 'bell']" size="2x"></fa-icon>
+            <div
+                *ngIf="(notifications$ | async)?.Notifications > 0"
+                class="requires-attention"
+            ></div>
+        </button>
+        <button
+            class="nav-button nav-horse-profile"
+            mat-icon-button
+            routerLinkActive="selected"
+            routerDirection="root"
+            routerLink="/tabs/horse-profile"
+            (click)="tabOnClick()"
+        >
+            <div class="selected-indicator"></div>
+            <mat-icon>
+                <img src="/assets/icons/horse.svg" />
+            </mat-icon>
+        </button>
+        <div></div>
+        <button
+            class="nav-fab nav-map-my-ride"
+            mat-fab
+            routerLinkActive="selected"
+            routerDirection="root"
+            routerLink="/tabs/map-my-ride"
+            color="primary"
+        >
+            <mat-icon>
+                <img class="map-my-ride" src="/assets/icons/ride.png" alt="Map my ride" />
+            </mat-icon>
+        </button>
+        <div></div>
+        <button
+            class="nav-button nav-tips"
+            mat-icon-button
+            routerLinkActive="selected"
+            routerDirection="root"
+            routerLink="/tabs/menu/friends"
+            (click)="tabOnClick()"
+        >
+            <div class="selected-indicator"></div>
+            <mat-icon>group</mat-icon>
+        </button>
+
+        <button
+            class="nav-button nav-menu"
+            mat-icon-button
+            routerLinkActive="selected"
+            routerDirection="root"
+            routerLink="/tabs/menu"
+            (click)="tabOnClick()"
+        >
+            <div class="selected-indicator"></div>
+            <mat-icon>menu</mat-icon>
+        </button>
+    </mat-toolbar>
+    <app-sub-menu-bar #subMenu *ngIf="enableSubMenu$ | async"></app-sub-menu-bar>
+    <!--<bdc-walk-popup
+        #notifications
+        name="notifications"
+        header="Notifications"
+        xPosition="after"
+        sideNoteText="1/5"
+        [showButton]="true"
+        buttonText="Next"
+        [mustCompleted]="{ dialogWelcome: true }"
+        [ButtonCompleteTask]="{ notifications: true }"
+    >
+        Be notified of friend invitations, when your friends go on rides, and when they share
+        photos, etc
+    </bdc-walk-popup>
+    <bdc-walk-popup
+        #horseProfile
+        name="horseProfile"
+        header="Horse Profile"
+        xPosition="after"
+        sideNoteText="2/5"
+        [showButton]="true"
+        buttonText="Next"
+        [mustCompleted]="{ notifications: true }"
+        [ButtonCompleteTask]="{ horseProfile: true }"
+    >
+        View your horses and their data. Upload their health information, evaluations, and see their
+        ride history.
+    </bdc-walk-popup>
+    <bdc-walk-popup
+        #mapMyRide
+        name="mapMyRide"
+        header="Map Ride"
+        xPosition="after"
+        sideNoteText="3/5"
+        [showButton]="true"
+        buttonText="Next"
+        [mustCompleted]="{ horseProfile: true }"
+        [ButtonCompleteTask]="{ mapMyRide: true }"
+    >
+        Map your ride with your horse. Add photos, edit gait speed, and share with friends.
+    </bdc-walk-popup>
+    <bdc-walk-popup
+        #tips
+        name="tips"
+        header="Tips and Training"
+        xPosition="after"
+        sideNoteText="4/5"
+        [showButton]="true"
+        buttonText="Next"
+        [mustCompleted]="{ mapMyRide: true }"
+        [ButtonCompleteTask]="{ tips: true }"
+    >
+        This is a growing section. Check back often to see documents and videos uploaded by users
+        like you!
+    </bdc-walk-popup>
+    <bdc-walk-popup
+        #menu
+        name="menu"
+        header="Menu"
+        xPosition="after"
+        sideNoteText="5/5"
+        [showButton]="true"
+        [mustCompleted]="{ tips: true }"
+        [ButtonCompleteTask]="{ menu: true }"
+    >
+        Edit your account, notification settings, and subscription status. View and send friend
+        requests here!
+    </bdc-walk-popup>
+    <bdc-walk-dialog #dialogWelcome name="dialogWelcome">
+        <h1 style="text-align:center;">Welcome to Trust Horse Caballus</h1>
+        <div class="buttons">
+            <button
+                (click)="dialogWelcome.close()"
+                mat-raised-button
+                color="primary"
+                class="large-round"
+            >
+                Let's start
+            </button>
+        </div>
+    </bdc-walk-dialog> -->
+</div>
+
+<div class="bottom-safe-area"></div>

@@ -1,0 +1,25 @@
+<ion-tabs>
+    <ion-header>
+        <ion-toolbar color="white">
+            <div slot="start" class="ion-padding-start">
+                <div class="logo-container">
+                    <ion-img class="logo" src="/assets/branding/logo.png"></ion-img>
+                    <fa-icon icon="upload" (click)="navigateToUploadGallery()"></fa-icon>
+                </div>
+            </div>
+            <div
+                slot="end"
+                class="ion-padding-end ion-align-items-end"
+                style="display:flex; height: 56px; padding-bottom: 8px;"
+            >
+                <small *ngIf="user$ | async as user">
+                    <span *ngIf="user.profile.firstName">{{ user.profile.firstName + ' ' + user.profile.lastName }}</span>
+                    <span *ngIf="!user.profile.firstName">{{ user.profile.email }}</span>
+                </small>
+            </div>
+        </ion-toolbar>
+        <app-notification-banner [message]="notificationMessage$ | async"></app-notification-banner>
+    </ion-header>
+
+    <app-navigation-bar slot="bottom"></app-navigation-bar>
+</ion-tabs>

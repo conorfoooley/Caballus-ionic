@@ -1,0 +1,22 @@
+<button class="close-button" mat-icon-button (click)="cancel()">
+    <mat-icon>close</mat-icon>
+</button>
+<h2 mat-dialog-title>Notes</h2>
+<mat-dialog-content>
+    <div class="notes-input">
+        <textarea
+            matInput
+            maxlength="250"
+            placeholder="Comments"
+            [formControl]="notes"
+            (ngModelChange)="notes.updateValueAndValidity()"
+            aria-label="notes"
+        ></textarea>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button class="medium-round" mat-raised-button [disabled]="invalid$ | async" (click)="assent()">
+        Save
+    </button>
+    <button class="medium-round" mat-raised-button (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border" mode="md">
+    <ion-toolbar>
+        <h2 class="ion-text-center ion-margin-vertical">View Media</h2>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="preview-wrapper">
+        <ng-container *ngIf="attachmentUrl">
+            <vg-player>
+                <vg-overlay-play></vg-overlay-play>
+                <vg-buffering></vg-buffering>
+
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+
+                <vg-controls>
+                    <vg-play-pause></vg-play-pause>
+                    <!-- <vg-playback-button></vg-playback-button> -->
+
+                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+
+                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                    <!-- <vg-track-selector></vg-track-selector> -->
+                    <vg-mute></vg-mute>
+                    <vg-volume></vg-volume>
+
+                    <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+
+                <video #media [vgMedia]="media" id="singleVideo" preload="auto">
+                    <source [src]="attachmentUrl" type="video/mp4" />
+                </video>
+            </vg-player>
+            <button class="fullscreen-show" (click)="showOnFullscreen()" mat-icon-button>
+                <mat-icon>fullscreen</mat-icon>
+            </button>
+        </ng-container>
+    </div>
+</ion-content>

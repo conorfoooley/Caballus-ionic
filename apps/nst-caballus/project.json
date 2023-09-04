@@ -1,0 +1,89 @@
+{
+  "name": "nst-caballus",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/nst-caballus/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/nst-caballus",
+        "main": "apps/nst-caballus/src/main.ts",
+        "tsConfig": "apps/nst-caballus/tsconfig.app.json",
+        "assets": ["apps/nst-caballus/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/nst-caballus/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [{
+            "replace": "apps/nst-caballus/src/environments/environment.ts",
+            "with": "apps/nst-caballus/src/environments/environment.prod.ts"
+          }]
+        },
+        "uat": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [{
+            "replace": "apps/nst-caballus/src/environments/environment.ts",
+            "with": "apps/nst-caballus/src/environments/environment.uat.ts"
+          }]
+        },
+        "qa": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [{
+            "replace": "apps/nst-caballus/src/environments/environment.ts",
+            "with": "apps/nst-caballus/src/environments/environment.qa.ts"
+          }]
+        },
+        "dev": {
+          "optimization": false,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "nst-caballus:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "nst-caballus:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/nst-caballus/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/nst-caballus/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

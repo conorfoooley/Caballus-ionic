@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Caballus</string>
+    <string name="title_activity_main">Caballus</string>
+    <string name="package_name">com.caballusapp.app</string>
+    <string name="custom_url_scheme">com.caballusapp.app</string>
+    <string name="capacitor_background_geolocation_notification_channel_name">
+        Map my Ride Location Tracking
+    </string>
+
+
+    <string name="applink_host">caballus.app.link</string>
+    <string name="applink_host_alternate">caballus-alternate.app.link</string>
+    <string name="deeplink_scheme">caballus</string>
+    <string name="branch_key">key_live_ajZSY03wyW6tJKJAm66U1klkrwnHbdyQ</string>
+    <string name="branch_test_key">key_test_hk8L87WzC69tHMNsb94XrjkfuzdPdkFX</string>
+    <bool name="branch_test_mode">false</bool>
+    <!-- set above to "true" to use test key -->
+</resources>

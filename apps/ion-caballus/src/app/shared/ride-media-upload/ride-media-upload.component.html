@@ -1,0 +1,68 @@
+<!-- adding media for the current ride -->
+<ng-container *ngIf="isCurrentRide">
+    <div class="end-ride-upload-media-wrapper">
+        <mat-card appearance="outlined" class="form-group card-wrapper">
+            <mat-card-header>
+                <mat-card-title class="form-group-header title-border">
+                    <div class="row">
+                        <div class="card-title">Photos and Videos:</div>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="row">
+                    <div class="thumbnail-list">
+                        <ng-container *ngFor="let thumbnail of thumbnails$ | async; index as ix">
+                            <ion-avatar class="thumbnail" (click)="onTapAttachedMedia(ix)">
+                                <img *ngIf="thumbnail; else add" [src]="thumbnail" />
+                                <ng-template #add>+</ng-template>
+                            </ion-avatar>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-container>
+
+<!-- Adding media for the existing ride / manual ride -->
+<ng-container *ngIf="!isCurrentRide">
+
+    <!-- Adding media while adding manual ride entry -->
+    <div class="ride-history-media-upload-wrapper" *ngIf="addingFromManualRideEntryPage">
+        <div class="row">
+            <div class="card-title">Photos and Videos:</div>
+        </div>
+        <div class="thumbnail-list">
+            <ng-container *ngFor="let thumbnail of thumbnails$ | async; index as ix">
+                <ion-avatar class="thumbnail" (click)="onTapAttachedMedia(ix)">
+                    <img *ngIf="thumbnail; else add" [src]="thumbnail" />
+                    <ng-template #add>+</ng-template>
+                </ion-avatar>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- Adding media for existing ride -->
+    <div class="ride-history-media-upload-wrapper" *ngIf="!addingFromManualRideEntryPage">
+        <mat-card appearance="outlined" class="card-wrapper">
+            <mat-card-header class="card-header">
+                <mat-card-title class="title-border">Photos and Videos</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="row">
+                    <div class="thumbnail-list">
+                        <ng-container *ngFor="let thumbnail of thumbnails$ | async; index as ix">
+                            <ion-avatar class="thumbnail" (click)="onTapAttachedMedia(ix)">
+                                <img *ngIf="thumbnail; else add" [src]="thumbnail" />
+                                <ng-template #add>+</ng-template>
+                            </ion-avatar>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-container>

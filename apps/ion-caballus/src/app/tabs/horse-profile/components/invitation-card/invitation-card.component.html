@@ -1,0 +1,40 @@
+<div class="item-container">
+    <div class="card-content">
+        <div class="circle horse-profile-picture">
+            <img [src]="invitation.to.userIdentity.picture?.path || './assets/icons/user-placeholder.svg'" />
+        </div>
+        <div class="details">
+            <div class="detail">
+                <div class="label">Name: </div>
+                <div class="value value-short">{{ invitation.to.userIdentity.label }}</div>
+            </div>
+            <div class="detail">
+                <div class="label">Email: </div>
+                <div class="value value-short">{{ invitation.to.email }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="details">
+        <div class="detail id">
+            <div class="label big-label">ID: </div>
+            <div class="value value-long">{{ invitation.to.userIdentity._id }}</div>
+        </div>
+        <div class="detail phone">
+            <div class="label big-label">Phone: </div>
+            <div class="value value-long">{{ invitation.toUserPhone }}</div>
+        </div>
+        <div class="detail address">
+            <div class="label big-label">Address: </div>
+            <div class="value value-long">{{ getAddressString(invitation.toUserAddress) }}</div>
+        </div>
+        <div class="detail status">
+            <div class="label big-label">Status: </div>
+            <div class="value value-long">{{ InvitationStatus.toString(invitation.invitationStatus) }}</div>
+        </div>
+    </div>
+    <div class="delete-btn-wrapper">
+        <ion-button shape="round" size="small" class="add-button" (click)="retractInvite(invitation._id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+    </div>
+</div>

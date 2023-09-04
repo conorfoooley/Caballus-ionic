@@ -1,0 +1,11 @@
+<ion-item
+    *ngIf="message && message.length > 0 && (showNotification$ | async)"
+    color="secondary"
+    lines="none"
+>
+    <span class="material-icons" slot="start">warning</span>
+    <ion-label class="ion-text-wrap">
+        {{ message }}
+    </ion-label>
+    <fa-icon [icon]="['far', 'times']" (click)="showNotification$.next(false)"></fa-icon>
+</ion-item>

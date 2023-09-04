@@ -1,0 +1,82 @@
+ion-content {
+	padding: 20px;
+	.header-bar {
+	  background: #f87f31;
+	  color: white;
+	  text-align: center;
+	  padding: 15px;
+	  font-weight: bold;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  margin-bottom: 20px;
+	}
+	.permission-button {
+	  font-size: 14px;
+	  max-width: 150px;
+	  white-space: normal;
+	  width: 150px !important;
+	  min-width: 150px !important;
+	  line-height: 20px;
+	}
+	.permission-button-wrapper {
+	  display: flex;
+	  justify-content: space-around;
+	  align-items: center;
+	  padding: 0 20px;
+	}
+	.mat-mdc-card {
+	  margin: 20px;
+	  border-radius: 20px;
+	}
+	.mat-mdc-form-field {
+	  width: 100%;
+	}
+  
+	.mat-mdc-card-title {
+	  font-size: 20px;
+	}
+  
+	.d-flex {
+	  display: flex;
+	  align-items: center;
+	}
+  
+	.full-flex {
+	  flex: 1;
+	}
+  
+	.save-button {
+	  display: flex;
+	  justify-content: center;
+	  margin-bottom: 100px;
+	}
+  
+	.horse-image {
+	  height: 60px;
+	  width: 60px;
+	  background: #80808059;
+	  border-radius: 30px;
+	  margin-right: 10px;
+	}
+  
+	.button-wrapper {
+	  display: flex;
+	  justify-content: center;
+	}
+
+	.hint {
+		background-color: white;
+		cursor: pointer;
+		color: #919493;
+	}
+  }
+::ng-deep .custom-msg {
+	simple-snack-bar {
+		flex-direction: column !important;
+		span {
+			white-space: pre-line !important;
+			text-align: justify !important;
+		}
+	}
+}

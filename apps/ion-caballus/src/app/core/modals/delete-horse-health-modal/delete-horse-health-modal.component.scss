@@ -1,0 +1,37 @@
+::ng-deep.delete-horse-health-modal {
+  &::part(content) {
+    --height: 80%;
+    width: 75% !important;
+    border-radius: 20px !important;
+  }
+
+  div.modal {
+    h1 {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    ::ng-deep .content-strip {
+      margin: 8px 16px;
+
+      .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around !important;
+        flex-direction: column !important;
+
+        .yes {
+          margin-top: 10px;
+        }
+
+        ion-button {
+          margin-top: 10px;
+          text-transform: capitalize;
+          border-radius: 25px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

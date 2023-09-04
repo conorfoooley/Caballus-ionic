@@ -1,0 +1,60 @@
+ion-content {
+    app-horse-select-banner {
+        height: 96px;
+    }
+
+    app-map {
+        height: 40vh;
+    }
+
+    app-time-and-distance {
+        height: 60px;
+    }
+
+    div.center-content {
+        display: flex;
+        justify-content: center;
+        padding-top: 0;
+        height: calc(60vh - 233px);
+        margin-top: -25px;
+
+        .start-ride {
+            margin-top: 25px;
+        }
+
+        div.pause-end {
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            button.pause,
+            button.end,
+            button.resume {
+                min-width: 180px;
+                max-width: 180px;
+            }
+
+            button.pause,
+            button.resume {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+
+            button.end {
+                background: var(--caballus-color-blue);
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+
+    .tour-button {
+        position: absolute;
+        height: 20px;
+        right: 20px;
+    }
+}

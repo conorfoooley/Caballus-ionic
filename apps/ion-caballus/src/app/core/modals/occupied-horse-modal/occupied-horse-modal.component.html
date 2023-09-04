@@ -1,0 +1,52 @@
+<div class="modal">
+    <div *ngIf="horse$ | async as horse" class="content-strip">
+        <div *ngIf="!showSaveDeleteModal && !showIncompleteDeleteModal">
+            <h1>Horse in Use</h1>
+            <p>
+                {{ horse.commonName }} appears to be on a ride with {{(ride$ | async)?.riderIdentity.label}}, since
+                {{(ride$ | async)?.startDateTime | date}}.
+                Are you sure you want to select this horse?
+            </p>
+            <div class="button-container">
+                <button mat-raised-button class="large-round exclude" (click)="yesNoInUseModal(false)">
+                    No, Go Back
+                </button>
+                <button mat-raised-button class="large-round include" (click)="yesNoInUseModal(true)">
+                    Yes, Continue
+                </button>
+            </div>
+        </div>
+        <div *ngIf="showSaveDeleteModal && !showIncompleteDeleteModal">
+            <h1>Horse in Use</h1>
+            <p>&nbsp;</p>
+            <p class="text-center">
+                Do you want to save the old ride or delete it?
+            </p>
+            <div class="button-container">
+                <button [disabled]="(isDeleting$ | async) || (isSaving$ | async)" mat-raised-button  class="large-round spinner exclude" (click)="save()">
+                    Save  <mat-spinner *ngIf="isSaving$ | async"></mat-spinner>
+                </button>
+                <button [disabled]="(isDeleting$ | async) || (isSaving$ | async)" mat-raised-button  class="large-round spinner include" (click)="deleteRide()">
+                    Delete  <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="showIncompleteDeleteModal">
+            <h1>Delete Ride</h1>
+            <p>
+                Not enough data in the Ride to save the Ride. Do you want to end the ride? You can still do a manual entry in the Horse's Ride History.
+            </p>
+            <div class="button-container">
+                <button
+                    mat-raised-button
+                    class="large-round end spinner"
+                    (click)="deleteInCompleteRide()"
+                    [disabled]="isDeleting$ | async"
+                >
+                    Yes, Delete Ride
+                    <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<ion-content>
+    <app-profile-header [parentBack]="true" (goBack)="goBack()"></app-profile-header>
+    <div class="tab-header">
+        <img class="tab-image header-img" src="../../../../../assets/icons/competitions-b.svg" />
+        <h1>Competitions</h1>
+    </div>
+    <div class="tab-header add-btn" *ngIf="canEdit$ | async">
+        <img
+            class="tab-image"
+            src="../../../../../assets/icons/addButton.svg"
+            (click)="addEditHorseCompetitionModal()"
+        />
+    </div>
+    <div class="tab-header">
+        <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+    </div>
+    <mat-card appearance="outlined" class="card" *ngIf="!(horseCompetitions$ | async).length && !(isLoading$ | async)">
+        <mat-card-content class="no-card-content">
+            <div class="detail">
+                <div class="content-large">
+                    No Competitions Found
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined" class="card" *ngFor="let e of horseCompetitions$ | async">
+        <mat-card-content class="card-content">
+            <div class="detail">
+                <div class="content-large">{{e.name}}</div>
+                <div class="content-medium" [innerText]="e.date | date: 'dd/MM/yyyy'"></div>
+                <div class="content-medium"><b>Location:</b> {{ e.location }}</div>
+                <div class="content-medium"><b>Results:</b> {{e.results}}</div>
+                <div class="content-medium"><b>Notes:</b> {{e.notes}}</div>
+                <div class="image-link" *ngIf="e.image" (click)="openImageModal(e.image)">Click to View Image</div>
+            </div>
+            <div class="view-btn">
+                <img
+                    class="tab-image"
+                    src="../../../../../assets/icons/ArrowRightBtn.svg"
+                    (click)="addEditHorseCompetitionModal(e)"
+                />
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ion-content>

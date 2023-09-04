@@ -1,0 +1,41 @@
+<header class="notification-header">
+    <fa-icon class="back-arrow" [routerLink]="'../'" [icon]="['fas', 'arrow-left']"></fa-icon>
+    <h1 *ngIf="!userId">Notifications</h1>
+</header>
+<ion-content [scrollY]="false">
+        <ion-list
+            ><ion-list-header>
+                <ion-label>New</ion-label>
+                <ion-item lines="none">
+                    <ion-button fill="clear" style="color:black;">
+                        <ion-icon
+                            name="checkmark-done-outline"
+                            slot="start"
+                            style="color:lightblue ;"
+                        ></ion-icon>
+                        Mark all as read
+                    </ion-button>
+                </ion-item>
+            </ion-list-header>
+
+    <cdk-virtual-scroll-viewport itemSize="56">
+            <ion-item *cdkVirtualFor="let r of notifications$ | async">
+                <div class="circle">
+                    <img [src]="r.category" />
+                    <div *ngIf="r.category" class="img-placeholder"></div>
+                </div>
+                <ion-label>
+                    <h3>{{ r.description }}</h3>
+                </ion-label>
+                <ion-icon
+                    *ngIf="!r.isRead"
+                    name="ellipse-sharp"
+                    size="small"
+                    slot="end"
+                    style="color: #39bded;"
+                ></ion-icon>
+                <!-- <img src="/assets/icons/friend requested.svg" alt="" />  -->
+            </ion-item>
+    </cdk-virtual-scroll-viewport>
+        </ion-list>
+</ion-content>

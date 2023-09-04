@@ -1,0 +1,288 @@
+::ng-deep.horse-matrix-modal {
+  .relative {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  &::part(content) {
+    height: 70%;
+  }
+
+  div.modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    div.content-strip {
+      width: 100%;
+
+      div.button-container {
+        display: flex;
+        flex-direction: column;
+
+        button.large-round {
+          margin: auto;
+          margin-top: 24px;
+          width: 250px;
+        }
+      }
+    }
+
+    .help {
+      margin-bottom: 25px;
+    }
+
+    form.form-section {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-header {
+      margin-bottom: 15px !important;
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      justify-content: space-between;
+
+      .title {
+        margin: 5px 0px;
+
+        .bold {
+          font-weight: bold !important;
+        }
+      }
+
+      .form-row {
+        width: 100%;
+        text-align: center;
+        font-weight: bold !important;
+      }
+    }
+
+    .content-strip {
+      margin: 8px 16px;
+
+      .form-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid #f78131;
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+
+      .img-preview {
+        margin-top: 30px;
+      }
+
+      .notes {
+        width: 100%;
+        margin-top: 30px;
+      }
+
+      .docs {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .upload-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 10px 0px;
+      }
+
+      .button-container {
+        width: calc(100% - 16px) !important;
+        display: flex;
+        flex-grow: 2;
+        align-items: end;
+        justify-content: space-around !important;
+        flex-direction: row !important;
+
+        ion-button {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .trash {
+      color: #000000;
+    }
+
+    .button-container {
+      ion-button {
+        --border-radius: 20px;
+        height: 40px;
+        width: 100px;
+
+        &[disabled] {
+          opacity: 1;
+          --background: #CCCCCC;
+        }
+      }
+
+      .mat-mdc-progress-spinner {
+        width: 20px !important;
+        height: 20px !important;
+
+        svg {
+          width: 20px !important;
+          height: 20px !important;
+        }
+      }
+    }
+  }
+
+  ::ng-deep .ngx-slider-full-bar {
+    left: 0;
+    box-sizing: border-box;
+    margin-top: -16px;
+    padding-top: 16px;
+    width: 100%;
+    z-index: 1;
+    background: #606060;
+    border-radius: 16px;
+  }
+
+  ::ng-deep .ngx-slider-bar {
+    top: calc(50% - 2px);
+    background: #606060 !important;
+  }
+
+  ::ng-deep .ngx-slider-tick {
+    top: -2px !important;
+    background: #606060 !important;
+    left: -5px !important;
+  }
+
+  ::ng-deep .ngx-slider-tick-value {
+    top: calc(100% - 14.25px) !important;
+    color: white;
+    left: 9.25px !important;
+  }
+
+  .matrix-images {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+
+    .images {
+      width: 30%;
+    }
+
+    .image-first {
+      margin-right: 10%;
+      margin-left: -10%;
+    }
+
+    .image-last {
+      margin-left: 10%;
+      margin-right: -10%;
+    }
+  }
+
+  .slider-row {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep ngx-slider {
+      margin: 0 !important;
+
+      .ngx-slider-pointer:focus-visible {
+        outline: 0;
+      }
+
+      .ngx-slider-pointer {
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 25px solid black;
+        border-top: 20px solid transparent;
+        display: inline-block;
+        background: transparent !important;
+        width: 0px !important;
+        top: 0px !important;
+        border-radius: 0px !important;
+      }
+
+      .ngx-slider-pointer:after {
+        background: transparent !important;
+      }
+
+      .ngx-slider-inner-tooltip {
+        background: transparent !important;
+      }
+
+      .ngx-slider-inner-tooltip {
+        font-size: 16px !important;
+      }
+    }
+  }
+
+  .form-descriptive-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .extreme-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .extreme-text {
+      font-size: 12px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+
+    .left {
+      justify-content: flex-start;
+    }
+
+    .right {
+      justify-content: flex-end;
+    }
+  }
+
+  .delete-document {
+    margin-right: 3px;
+
+    .mat-mdc-progress-spinner {
+      width: 20px !important;
+      height: 20px !important;
+
+      svg {
+        width: 20px !important;
+        height: 20px !important;
+
+        circle {
+          stroke: #f78131;
+        }
+      }
+    }
+  }
+
+  .previous-upload {
+    font-size: small !important;
+    padding: 0px 10px !important;
+  }
+}
+
+::ng-deep .mat-mdc-dialog-actions {
+  ion-button {
+    font-size: small !important;
+  }
+}

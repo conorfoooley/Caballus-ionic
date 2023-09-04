@@ -1,0 +1,78 @@
+<ion-content>
+    <form [formGroup]="form" class="auth-page">
+        <img src="./assets/branding/icon.png" />
+        <h2>CABALLUS Login</h2>
+        <div class="auth-form">
+            <ion-item>
+                <ion-label position="stacked">Email</ion-label>
+                <ion-input name="email" formControlName="email" placeholder=""></ion-input>
+            </ion-item>
+            <div class="error-container">
+                <ng-container *ngFor="let validation of validations.email">
+                    <div
+                        class="error-message"
+                        *ngIf="
+                            form.get('email').hasError(validation.type) &&
+                            (form.get('email').dirty ||
+                                form.get('email').touched)
+                        "
+                    >
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <span class="error-text">{{ validation.message }}</span>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- <ion-note color="danger">{{form.get('email').getError()}}</ion-note> 
+            <mat-error class="ion-error" [rfxError]="form.get('email')"></mat-error>-->
+            <ion-item>
+                <ion-label position="stacked">Password</ion-label>
+                <ion-input
+                    name="password"
+                    formControlName="password"
+                    placeholder=""
+                    type="password"
+                ></ion-input>
+            </ion-item>
+            <div class="error-container">
+                <ng-container *ngFor="let validation of validations.password">
+                    <div
+                        class="error-message"
+                        *ngIf="
+                            form.get('password').hasError(validation.type) &&
+                            (form.get('password').dirty ||
+                                form.get('password').touched)
+                        "
+                    >
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <span class="error-text">{{ validation.message }}</span>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- <ion-note color="danger">{{form.get('password')}}</ion-note>
+            <mat-error class="ion-error" [rfxError]="form.get('password')"></mat-error> -->
+        </div>
+        <!-- <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Email" />
+            <mat-error [rfxError]="form.get('email')"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" placeholder="Password" type="password" />
+            <mat-error [rfxError]="form.get('password')"></mat-error>
+        </mat-form-field> -->
+        <div class="buttons">
+            <button
+                mat-raised-button
+                class="large-round spinner"
+                (click)="login()"
+            >
+                Login
+            </button>
+        </div>
+        <div class="bottom-links">
+            <a routerLink="/auth/forgot-password">Forgot Password?</a>
+            <a routerLink="/auth/register">Sign Up</a>
+        </div>
+    </form>
+</ion-content>

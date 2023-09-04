@@ -1,0 +1,221 @@
+{
+  "name": "ion-caballus",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/ion-caballus/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/ion-caballus",
+        "allowedCommonJsDependencies": [
+          "lodash",
+          "moment",
+          "mongo-object-reader",
+          "localforage-cordovasqlitedriver",
+          "cropperjs",
+          "json-form-data",
+          "pdfjs-dist/build/pdf",
+          "pdfjs-dist/web/pdf_viewer",
+          "pdfjs-dist/legacy/build/pdf",
+          "pdfjs-dist/legacy/web/pdf_viewer",
+          "@rfx/common",
+          "localforage",
+          "ng2-pdf-viewer"
+        ],
+        "index": "apps/ion-caballus/src/index.html",
+        "main": "apps/ion-caballus/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/ion-caballus/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/ion-caballus/src/favicon.ico",
+          "apps/ion-caballus/src/assets",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": [
+          "apps/ion-caballus/src/styles.scss",
+          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+          "node_modules/ngx-videogular/fonts/videogular.css",
+          {
+            "input": "node_modules/shepherd.js/dist/css/shepherd.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/normalize.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/structure.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/typography.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/core.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/display.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/padding.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/float-elements.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/text-alignment.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/text-transformation.css"
+          },
+          {
+            "input": "node_modules/@ionic/angular/css/flex-utils.css"
+          },
+          {
+            "input": "apps/ion-caballus/src/theme/variables.css"
+          }
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [{
+            "replace": "apps/ion-caballus/src/environments/environment.ts",
+            "with": "apps/ion-caballus/src/environments/environment.prod.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "20kb"
+            }
+          ]
+        },
+        "uat": {
+          "fileReplacements": [{
+            "replace": "apps/ion-caballus/src/environments/environment.ts",
+            "with": "apps/ion-caballus/src/environments/environment.uat.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "20kb"
+            }
+          ]
+        },
+        "qa": {
+          "fileReplacements": [{
+            "replace": "apps/ion-caballus/src/environments/environment.ts",
+            "with": "apps/ion-caballus/src/environments/environment.qa.ts"
+          }],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [{
+            "type": "initial",
+            "maximumWarning": "2mb",
+            "maximumError": "5mb"
+          },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "20kb"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ion-caballus:build:production"
+        },
+        "development": {
+          "browserTarget": "ion-caballus:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ion-caballus:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/ion-caballus/**/*.ts",
+          "apps/ion-caballus/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/ion-caballus/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,27 @@
+<div class="modal delete-horse-modal">
+    <div class="content-strip">
+        <h1>Delete Data</h1>
+        <p>
+            Are you sure you want to delete this data? This cannot be undone and all data will be lost.
+        </p>
+        <div class="button-container">
+            <button
+                mat-raised-button
+                class="medium-round go-back"
+                (click)="goBack()"
+                [disabled]="isDeleting$ | async"
+            >
+                No, Go Back
+            </button>
+            <button
+                mat-raised-button
+                class="medium-round yes end spinner"
+                (click)="deleteHorseHeath()"
+                [disabled]="isDeleting$ | async"
+            >
+                Yes, Delete
+                <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+            </button>
+        </div>
+    </div>
+</div>

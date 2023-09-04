@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Invitation to Connect to Horse</h2>
+<div mat-dialog-content>
+    <p>{{ summary.invitationFrom.label }} has invited you to be a {{ summary.invitationToRoleName }} for the following horse:</p>
+    <div class="horse-details">
+        <ul>
+            <li> <span class="label">Barn Name</span>: {{ summary.commonName }} </li>
+            <li> <span class="label">Registered Name</span>: {{ summary.registeredName }} </li>
+            <li> <span class="label">Breed</span>: {{ HorseBreed.toString(summary.breed) }} </li>
+            <li> <span class="label">Registration Number</span>: {{ summary.registrationNumber }} </li>
+            <li> <span class="label">Weight (lbs) </span>: {{kgToLbs(summary.weightKilograms) | number
+                : '1.0-0'}}</li>
+            <li> <span class="label">Height (hans)</span>: {{meterToHands(summary.heightMeters) | number
+                : '1.0-1'}} </li>
+        </ul>
+    </div>
+    <p>
+        <a class="profile-link" (click)="goToProfile()">Go To Horse Public Profile</a>
+    </p>
+    <p>If you accept then you will be listed as a {{ summary.invitationToRoleName }}, and the horse will be added to your Horse List inventory.</p>
+</div>
+<div mat-dialog-actions align="center">
+    <button class="decline-btn" mat-stroked-button (click)="decline()">Decline</button>
+    <button class="accept-btn" mat-flat-button color="primary" (click)="accept()">
+        Accept
+    </button>
+</div>

@@ -1,0 +1,16 @@
+<mat-card appearance="outlined" class="form-group select-rideCategory card-wrapper">
+    <form [formGroup]="form">
+        <mat-card-header>
+    <mat-card-title class="form-group-header title-border">
+        Category:
+    </mat-card-title>
+</mat-card-header>
+<mat-card-content>
+    <mat-radio-group formControlName="category">
+        <mat-radio-button *ngFor="let m of RideCategory.members" [value]="m">
+            {{ RideCategory.toString(m) }}
+        </mat-radio-button>
+    </mat-radio-group>
+</mat-card-content>
+    </form>
+</mat-card>

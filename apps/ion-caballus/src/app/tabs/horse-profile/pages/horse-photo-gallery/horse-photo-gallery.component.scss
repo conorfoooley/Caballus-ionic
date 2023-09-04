@@ -1,0 +1,120 @@
+ion-content {
+  padding: 20px;
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-mdc-form-field-wrapper {
+    padding: 0 !important;
+  }
+  .header-bar {
+    background: #f87f31;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  .dummy-image {
+    height: 24px;
+    width: 24px;
+  }
+  .add-icon {
+    height: 80px;
+    width: 80px;
+    background: #f87e31;
+    border-radius: 40px;
+    color: white;
+    font-size: 59px;
+    margin: auto;
+    justify-content: center;
+    display: flex;
+  }
+
+  .plus-icon-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+
+    select {
+      width: 50%;
+    }
+    img {
+      height: 120px;
+      padding-bottom: 1.34375em;
+    }
+  }
+
+  .horse-gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+      width: 21vw;
+      height: 21vw;
+      margin-left: 2vw;
+      margin-top: 10px;
+      border-radius: 10px;
+      margin-right: 2vw;
+    }
+
+    .img-thumbnail-overlay {
+      background-image: url('/assets/icons/playButton.png');
+      background-size: 21vw;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 21vw;
+      height: 21vw;
+      margin-left: 2vw;
+      margin-top: 10px;
+      border-radius: 10px;
+      margin-right: 2vw;
+    }
+
+    .video-uploading {
+      position: relative;
+      opacity: 0.5;
+
+      .upload-icon {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        right: 43px;
+        top: 34px;
+      }
+    }
+  }
+
+  .media-date {
+    margin-top: 5px;
+    margin-left: 10px;
+  }
+
+  .pinned-image {
+    color: green;
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .img-circle {
+    position: relative;
+    width: 32%;
+  }
+}
+
+::ng-deep.horse-photo-modal {
+  --height: 100%;
+  .modal-wrapper {
+    background: transparent;
+  }
+}

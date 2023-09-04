@@ -1,0 +1,40 @@
+<ion-content>
+    <header>
+        <fa-icon
+            class="back-arrow"
+            matPrefix
+            (click)="goBack()"
+            [icon]="['fas', 'arrow-left']"
+        ></fa-icon>
+        <h1>
+            <ng-container *ngIf="user$ | async as user">
+                <span *ngIf="user.firstName">{{user.firstName}}'s </span>
+            </ng-container>
+            Horses
+        </h1>
+    </header>
+    <div
+        *ngFor="let horse of relationships$ | async"
+        class="d-flex horse-profile-block"
+        (click)="moveToDetailHorse(horse)"
+    >
+        <img
+            class="horse-image"
+            [src]="horse?.horseIdentity?.picture?.url"
+            *ngIf="horse?.horseIdentity?.picture?.url"
+        />
+        <img
+            class="horse-image"
+            src="../../../../../assets/images/horse-placeholder.png"
+            *ngIf="!horse?.horseIdentity?.picture?.url"
+        />
+        <div>
+            <p class="horse-name">{{ horse?.horseIdentity?.label }}</p>
+            <p class="light-text">Relationship : {{ horse?.horseRoleReference.name }}</p>
+        </div>
+        <div class="navigate">
+            <fa-icon class="details-arrow" [icon]="['fas', 'arrow-right']"></fa-icon>
+        </div>
+    </div>
+    <p *ngIf="hasNoData" class="text-center">No horses have been added yet</p>
+</ion-content>

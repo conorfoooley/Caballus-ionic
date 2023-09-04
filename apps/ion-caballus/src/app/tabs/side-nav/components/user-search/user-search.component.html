@@ -1,0 +1,20 @@
+<div class="banner">
+    <div class="option-scroller">
+        <div *ngFor="let o of baseOptions$ | async" class="banner-button" (click)="toggle(o)">
+            <div class="circle">
+                <img [src]="o.profilePicture.url" *ngIf="o.profilePicture?.url" />
+                <div *ngIf="!o.profilePicture?.url" class="img-placeholder"></div>
+            </div>
+            <span class="label">{{ o.firstName || '' }}</span>
+            <div class="underline"></div>
+        </div>
+    </div>
+    <p>Please enter the name of the friend you wish to contact</p>
+    <div class="search">
+        <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Search" [formControl]="searchControl" autocomplete="off"/>
+            <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+    </div>
+</div>

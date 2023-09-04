@@ -1,0 +1,75 @@
+import {
+    BaseMediaDocument,
+    ConnectionIdentity,
+    Post,
+    PostComment,
+    WallPost
+} from '@clicked/api-common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { PaginatedList } from '@rfx/common';
+import { FileService } from '@rfx/nst-file';
+import { from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
+@Injectable()
+export class PostPictureInterceptor implements NestInterceptor {
+    constructor(private readonly _fileService: FileService) {}
+
+    private async _mapPostPictures<T extends Post>(post: T): Promise<T> {
+        if (post.userIdentity.profilePicture && post.userIdentity.profilePicture.path) {
+            post.userIdentity = new ConnectionIdentity({
+                ...post.userIdentity,
+                profilePicture: {
+                    ...post.userIdentity.profilePicture,
+                    url: await this._fileService.getUrl(post.userIdentity.profilePicture.path)
+                }
+            });
+        }
+
+        if (post.images.length > 0) {
+            post.images = await Promise.all(
+                post.images.map(
+                    async i =>
+                        new BaseMediaDocument({
+                            ...i,
+                            url: await this._fileService.getUrl(i.path)
+                        })
+                )
+            );
+        }
+
+        if (post instanceof WallPost) {
+            post.comments.docs = await Promise.all(
+                post.comments.docs.map(c => this._mapPostPictures(c))
+            );
+            return (new WallPost(post) as unknown) as T;
+        } else if (post instanceof PostComment) {
+            return (new PostComment(post) as unknown) as T;
+        }
+        return post;
+    }
+
+    public intercept<T extends Post>(
+        context: ExecutionContext,
+        next: CallHandler
+    ): Observable<T | T[] | PaginatedList<T>> {
+        return next.handle().pipe(
+            switchMap((payload: T | T[] | PaginatedList<T>) => {
+                if ('docs' in payload) {
+                    return from(Promise.all(payload.docs.map(p => this._mapPostPictures(p)))).pipe(
+                        map(
+                            docs =>
+                                new PaginatedList<T>({
+                                    ...payload,
+                                    docs
+                                })
+                        )
+                    );
+                } else if (Array.isArray(payload)) {
+                    return from(Promise.all(payload.map(p => this._mapPostPictures(p))));
+                }
+                return from(this._mapPostPictures(payload));
+            })
+        );
+    }
+}

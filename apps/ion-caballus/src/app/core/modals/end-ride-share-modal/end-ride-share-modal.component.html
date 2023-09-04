@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <div>
+    <div class="header">
+      <h2 class="ion-text-center">Share</h2>
+    </div>
+
+    <div class="content">
+      <div class="form-row message">
+        Would you like to share this ride with others?
+      </div>
+    </div>
+  </div>
+
+
+  <div class="button-container">
+    <ion-button expand="block" shape="round" size="large" class="action-btn" type="submit" (click)="onSave()">
+      Yes, Share this ride
+    </ion-button>
+    <ion-button (click)="onCancel()" expand="block" shape="round" size="large" class="action-btn" type="button">
+      No ({{ timer$ | async }})
+    </ion-button>
+  </div>
+</div>

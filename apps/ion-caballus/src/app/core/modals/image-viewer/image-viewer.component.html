@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border" mode="md">
+    <ion-toolbar>
+        <h1
+            class="ion-text-center ion-margin-vertical"
+            *ngIf="!pinRemoveView || !(canEdit$ | async)"
+        >
+            View Media
+        </h1>
+        <h1
+            class="ion-text-center ion-margin-vertical"
+            *ngIf="!!pinRemoveView && !!(canEdit$ | async)"
+        >
+            Remove as Pinned Media?
+        </h1>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <!-- Container for the JWPlayer -->
+    <div
+        style="display: flex; justify-content: center; align-items: center"
+        *ngIf="isVideoUrl(attachmentUrl)"
+    >
+        <iframe style="width: 100%; height: 100%" [src]="urlSafe"></iframe>
+    </div>
+
+    <div [ngClass]="pinRemoveView ? 'preview-wrapper' : 'preview-wrapper-btns'" *ngIf="!isVideoUrl(attachmentUrl)">
+        <!-- Video -->
+        <ng-container *ngIf="isVideoUrl(attachmentUrl)">
+            <!-- Video with url -->
+            <vg-player>
+                <vg-overlay-play></vg-overlay-play>
+                <vg-buffering></vg-buffering>
+
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+
+                <vg-controls>
+                    <vg-play-pause></vg-play-pause>
+                    <!-- <vg-playback-button></vg-playback-button> -->
+
+                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                    <vg-scrub-bar style="pointer-events: none"></vg-scrub-bar>
+
+                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                    <!-- <vg-track-selector></vg-track-selector> -->
+                    <vg-mute></vg-mute>
+                    <vg-volume></vg-volume>
+
+                    <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+
+                <video #media [vgMedia]="$any(media)" id="singleVideo" preload="auto">
+                    <source [src]="attachmentUrl" type="video/mp4" />
+                </video>
+            </vg-player>
+        </ng-container>
+
+        <!-- Image -->
+        <ng-container *ngIf="!isVideoUrl(attachmentUrl)">
+            <ion-img [src]="attachmentUrl" alt="Horse picture"></ion-img>
+        </ng-container>
+
+        <button class="fullscreen-show" (click)="toggleFullImage()" mat-icon-button>
+            <mat-icon>fullscreen</mat-icon>
+        </button>
+    </div>
+    <ng-container *ngIf="(canEdit$ | async) && !onlyView">
+      <div class="actions-container">
+        <ng-container *ngIf="!pinRemoveView">
+            <button
+                *ngIf="!isVideoUrl(attachmentUrl)"
+                mat-raised-button
+                class="large-round"
+                (click)="pinMedia()"
+            >
+                Select as Pinned Image
+            </button>
+            <button mat-raised-button class="large-round" (click)="showAlert()">
+                Delete From Gallery
+            </button>
+            <button mat-raised-button class="large-round" (click)="onShare(attachmentUrl)">
+                Share This Media
+            </button>
+            <button
+                *ngIf="isVideoUrl(attachmentUrl)"
+                mat-raised-button
+                class="large-round"
+                (click)="dismiss()"
+            >
+                Go Back
+            </button>
+        </ng-container>
+        <ng-container *ngIf="pinRemoveView">
+            <button mat-raised-button class="large-round" (click)="removePin()">Remove</button>
+        </ng-container>
+    </div>
+    </ng-container>
+  
+</ion-content>

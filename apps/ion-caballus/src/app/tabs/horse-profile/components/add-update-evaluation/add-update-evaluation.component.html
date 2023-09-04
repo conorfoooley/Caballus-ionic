@@ -1,0 +1,420 @@
+<ion-content #content>
+  <app-profile-header
+    [title]="
+      horseEvaluationForm.get('evaluationType').value ===
+      HorseEvaluationType.Conformation
+        ? 'Conformation Matrix'
+        : 'Performance Evaluation'
+    "
+    [parentBack]="true"
+    (goBack)="goBackToEvaluation()"
+  >
+  </app-profile-header>
+
+  <div class="evaluation-form-content" (click)="showHideSubMenu()">
+    <form
+      class="form-section"
+      #horseEvaluationFormEl
+      [formGroup]="horseEvaluationForm"
+    >
+      <div class="form-row date">
+        <ion-item lines class="ion-no-padding">
+          <ion-label position="stacked" class="bold date-label">Date</ion-label>
+
+          <mat-form-field style="width: 0; height: 0; visibility: hidden">
+            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <ion-input
+            readonly="true"
+            value="{{
+              horseEvaluationForm.get('date').value | date : 'MM/dd/yyyy'
+            }}"
+            (ionFocus)="picker.open(); showHideSubMenu()"
+            (click)="picker.open()"
+            [disabled]="isPastEditEvaluationDeadline$ | async"
+            class="date-input"
+          ></ion-input>
+        </ion-item>
+
+        <div class="error-container">
+          <ng-container *ngFor="let validation of validations.date">
+            <div
+              class="error-message"
+              *ngIf="
+                horseEvaluationForm.get('date').hasError(validation.type) &&
+                (horseEvaluationForm.get('date').dirty ||
+                  horseEvaluationForm.get('date').touched)
+              "
+            >
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span class="error-text">{{ validation.message }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <!--  <mat-form-field appearance="outline" class="large" floatLabel="always">
+            <mat-label>Date</mat-label>
+            <input matInput required formControlName="date" [matDatepicker]="date" />
+            <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+            <mat-error [rfxError]="horseEvaluationForm.get('date')"></mat-error>
+        </mat-form-field> -->
+      </div>
+
+      <div class="form-row">
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">Evaluator</ion-label>
+          <ion-input
+            required
+            formControlName="evaluator"
+            placeholder=""
+            (ionChange)="showHideSubMenu()"
+            [readonly]="isPastEditEvaluationDeadline$ | async"
+          ></ion-input>
+        </ion-item>
+        <div class="error-container">
+          <ng-container *ngFor="let validation of validations.evaluator">
+            <div
+              class="error-message"
+              *ngIf="
+                horseEvaluationForm
+                  .get('evaluator')
+                  .hasError(validation.type) &&
+                (horseEvaluationForm.get('evaluator').dirty ||
+                  horseEvaluationForm.get('evaluator').touched)
+              "
+            >
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span class="error-text">{{ validation.message }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <!--  <mat-error
+            class="ion-error"
+            [rfxError]="horseEvaluationForm.get('evaluator')"
+        ></mat-error>
+        <mat-form-field appearance="outline" class="large" floatLabel="always">
+            <mat-label>Evaluator</mat-label>
+            <input matInput required formControlName="evaluator" />
+            <mat-error [rfxError]="horseEvaluationForm.get('evaluator')"></mat-error>
+        </mat-form-field> -->
+      </div>
+
+      <div class="form-row">
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">Location</ion-label>
+          <ion-input
+            required
+            formControlName="location"
+            placeholder=""
+            (ionChange)="showHideSubMenu()"
+            [readonly]="isPastEditEvaluationDeadline$ | async"
+          ></ion-input>
+        </ion-item>
+        <div class="error-container">
+          <ng-container *ngFor="let validation of validations.location">
+            <div
+              class="error-message"
+              *ngIf="
+                horseEvaluationForm.get('location').hasError(validation.type) &&
+                (horseEvaluationForm.get('location').dirty ||
+                  horseEvaluationForm.get('location').touched)
+              "
+            >
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span class="error-text">{{ validation.message }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <!--   <mat-error
+            class="ion-error"
+            [rfxError]="horseEvaluationForm.get('location')"
+        ></mat-error>
+       <mat-form-field appearance="outline" class="large" floatLabel="always">
+            <mat-label>Location</mat-label>
+            <input matInput required formControlName="location" />
+            <mat-error [rfxError]="horseEvaluationForm.get('location')"></mat-error>
+        </mat-form-field> -->
+      </div>
+
+      <div class="tab-header">
+        <mat-spinner *ngIf="isLoadingMatrix$ | async"></mat-spinner>
+      </div>
+
+      <ng-container *ngIf="!(isLoadingMatrix$ | async) && horseMatrixToShow">
+        <ng-container
+          *ngIf="evaluationType === HorseEvaluationType.Conformation"
+          [ngTemplateOutlet]="conformationHorseMatrixItems"
+          [ngTemplateOutletContext]="{ matrixItems: matrixItems$ | async }"
+        ></ng-container>
+        <ng-container
+          *ngIf="evaluationType === HorseEvaluationType.Performance"
+          [ngTemplateOutlet]="performanceHorseMatrixItems"
+          [ngTemplateOutletContext]="{ matrixItems: matrixItems$ | async }"
+        ></ng-container>
+      </ng-container>
+
+      <div class="button-container" *ngIf="!(isLocked$ | async)">
+        <button
+          mat-raised-button
+          class="large-round end spinner"
+          type="submit"
+          [disabled]="
+            (isLoading$ | async) ||
+            (isDeleting$ | async) ||
+            (isPastEditEvaluationDeadline$ | async)
+          "
+          (click)="onSave()"
+        >
+          Save
+          <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+        </button>
+        <button
+          *ngIf="evaluationId$ | async"
+          mat-raised-button
+          type="button"
+          class="large-round end spinner"
+          (click)="deleteHorseEvaluation()"
+          [disabled]="(isLoading$ | async) || (isDeleting$ | async)"
+        >
+          <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+          Delete
+        </button>
+      </div>
+    </form>
+  </div>
+</ion-content>
+
+<!-- conformation horse matrix items template -->
+<ng-template
+  #conformationHorseMatrixItems
+  let-matrixItems="matrixItems"
+  let-horse="horse"
+>
+  <div
+    *ngFor="let type of horseMatrixToShow; let i = index"
+    class="form-row matrix-row"
+  >
+    <ng-container
+      [ngTemplateOutlet]="horseMatrixItem"
+      [ngTemplateOutletContext]="{
+        matrixItems: matrixItems,
+        horseMatrixType: type
+      }"
+    ></ng-container>
+  </div>
+</ng-template>
+
+<!-- performance horse matrix items template -->
+<ng-template #performanceHorseMatrixItems let-matrixItems="matrixItems">
+  <ion-accordion-group [value]="0">
+    <div *ngFor="let type of horseMatrixToShow; let i = index">
+      <ion-accordion
+        *ngIf="
+          !isPastEditEvaluationDeadline$.getValue() ||
+          (isPastEditEvaluationDeadline$.getValue() && !type.typesAreEmpty)
+        "
+        [value]="i"
+        class="form-row matrix-row"
+      >
+        <ion-item
+          slot="header"
+          *ngIf="type.title"
+          color="white"
+          class="sub-title ion-no-padding"
+          lines="none"
+        >
+          <ion-label>{{ type.title }}</ion-label>
+        </ion-item>
+
+        <ng-container
+          [ngTemplateOutlet]="horseMatrixItem"
+          [ngTemplateOutletContext]="{
+            matrixItems: matrixItems,
+            horseMatrixType: type
+          }"
+        ></ng-container>
+      </ion-accordion>
+    </div>
+  </ion-accordion-group>
+</ng-template>
+
+<!-- items template -->
+<ng-template
+  #horseMatrixItem
+  let-matrixItems="matrixItems"
+  let-horseMatrixType="horseMatrixType"
+>
+  <div
+    *ngFor="let matrixItem of horseMatrixType.types; index as i"
+    slot="content"
+  >
+    <!-- normal matrix field -->
+    <div
+      *ngIf="
+        (!matrixItems[matrixItem].isCustom &&
+          !isPastEditEvaluationDeadline$.getValue()) ||
+        (!matrixItems[matrixItem].isCustom &&
+          matrixItems[matrixItem].rating &&
+          isPastEditEvaluationDeadline$.getValue())
+      "
+      (click)="goToHorseMatrixModal(matrixItem)"
+      class="large-round end spinner"
+    >
+      <div class="title title-row">
+        {{ HorseMatrixType.toString(matrixItem) || matrixItem }}
+      </div>
+
+      <!-- show ratings bar -->
+      <div
+        class="image"
+        *ngIf="
+          matrixItems[matrixItem].rating === null ||
+            matrixItems[matrixItem].rating === undefined;
+          else elseBlockShow
+        "
+      >
+        <ng-container
+          *ngTemplateOutlet="matrixImage; context: { type: evaluationType }"
+        ></ng-container>
+
+        <!-- asterisk when documents/notes are attached -->
+        <div
+          class="asterisk"
+          *ngIf="
+            matrixItems[matrixItem].documents?.length ||
+            matrixItems[matrixItem].newDocuments?.length ||
+            matrixItems[matrixItem].notes?.trim().length
+          "
+        >
+          *
+        </div>
+
+        <!-- delete icon for the custom fields -->
+        <mat-icon
+          [ngStyle]="{
+            right:
+              matrixItems[matrixItem].documents?.length ||
+              matrixItems[matrixItem].newDocuments?.length ||
+              matrixItems[matrixItem].notes?.trim().length
+                ? '-22px'
+                : '-32px'
+          }"
+          *ngIf="!HorseMatrixType.toString(matrixItem)"
+          (click)="
+            onDeleteCustomMatrix($event, horseMatrixType.title, matrixItem)
+          "
+          >delete_forever
+        </mat-icon>
+      </div>
+
+      <!-- show updated ratings with black bar -->
+      <ng-template #elseBlockShow>
+        <div class="image">
+          <ng-container
+            *ngTemplateOutlet="matrixImage; context: { type: evaluationType }"
+          ></ng-container>
+          <div
+            class="black-bar"
+            [ngStyle]="{
+              left: 14 * (matrixItems[matrixItem].rating || 0) + 4 + 'px'
+            }"
+          ></div>
+
+          <!-- asterisk when documents/notes are attached -->
+          <div
+            class="asterisk"
+            *ngIf="
+              matrixItems[matrixItem].documents?.length ||
+              matrixItems[matrixItem].newDocuments?.length ||
+              matrixItems[matrixItem].notes?.trim().length
+            "
+          >
+            *
+          </div>
+
+          <!-- delete icon for the custom fields -->
+          <mat-icon
+            [ngStyle]="{
+              right:
+                matrixItems[matrixItem].documents?.length ||
+                matrixItems[matrixItem].newDocuments?.length ||
+                matrixItems[matrixItem].notes?.trim().length
+                  ? '-22px'
+                  : '-32px'
+            }"
+            class="trash trash-matrix"
+            *ngIf="!HorseMatrixType.toString(matrixItem) && !(isLocked$ | async)"
+            (click)="
+              onDeleteCustomMatrix($event, horseMatrixType.title, matrixItem)
+            "
+            >delete_forever
+          </mat-icon>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- custom matrix field -->
+    <div
+      *ngIf="
+        (matrixItems[matrixItem].isCustom &&
+          !isPastEditEvaluationDeadline$.getValue()) ||
+        (matrixItems[matrixItem].isCustom &&
+          matrixItems[matrixItem].rating &&
+          isPastEditEvaluationDeadline$.getValue())
+      "
+    >
+      <ion-item class="ion-no-padding" style="width: 100%">
+        <ion-label position="stacked">Custom</ion-label>
+        <ion-input
+            (ionChange)="showHideSubMenu()"
+          [formControl]="horseEvaluationCustomMatrixControl"
+          placeholder=""
+        ></ion-input>
+
+        <ion-icon
+          src="../../../../../assets/icons/addButton.svg"
+          [ngStyle]="
+            !horseEvaluationCustomMatrixControl.value.trim().length && {
+              filter: 'grayscale(100%)'
+            }
+          "
+          (click)="onAddCustomHorseHealthType(horseMatrixType.title)"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
+
+      <div class="error-container" style="width: 100%">
+        <ng-container *ngFor="let validation of validations.custom">
+          <div
+            class="error-message"
+            *ngIf="
+              horseEvaluationCustomMatrixControl.hasError(validation.type) &&
+              horseEvaluationCustomMatrixControl.touched &&
+              horseEvaluationCustomMatrixControl.dirty
+            "
+          >
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span class="error-text">{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Matrix image template -->
+<ng-template #matrixImage let-type="type">
+  <img
+    class="tab-image"
+    src="../../../../../assets/icons/conformation-evaluation.png"
+    *ngIf="type === HorseEvaluationType.Conformation"
+  />
+
+  <img
+    class="tab-image"
+    src="../../../../../assets/icons/performance-evaluation.png"
+    *ngIf="type === HorseEvaluationType.Performance"
+  />
+</ng-template>

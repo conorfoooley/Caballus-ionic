@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 1000 1000">
+    <g transform="matrix(-1 0 0 1 500 500)">
+		<g transform="matrix(45.4545 0 0 45.4545 0.0004 0.0004)">
+<circle style="stroke: none;   fill: rgb(237,177,4);  opacity: 1;" cx="0" cy="0" r="10"/>
+<path style="stroke: none; fill: rgb(255,255,255);  opacity: 1;" transform=" translate(-9.5, -10.5)" d="M 9.5 3 L 8.1875 4.3125 L 13.4375 9.5625 H 2 V 11.4375 H 13.4375 L 8.1875 16.6875 L 9.5 18 L 17 10.5 L 9.5 3 Z"/>
+</g>
+</g>
+</svg>
+

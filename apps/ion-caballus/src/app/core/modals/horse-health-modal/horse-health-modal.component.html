@@ -1,0 +1,166 @@
+<div class="modal">
+  <div class="content-strip">
+    <div class="modal-header">
+      <h3 class="title">
+        <span class="bold">Category: </span>
+        <span>{{ HorseHealthType.toString(horseHealthType) }}</span>
+      </h3>
+      <mat-icon class="trash" *ngIf="horseHealth?._id" (click)="deleteHorseHealth()"
+      >delete_forever
+      </mat-icon
+      >
+    </div>
+    <form
+      class="form-section form-section-health"
+      #horseHealthFormEl
+      [formGroup]="horseHealthForm"
+    >
+      <div class="form-row date">
+        <ion-item lines class="ion-no-padding">
+          <ion-label position="stacked" class="bold">Date</ion-label>
+
+          <mat-form-field style="width:0;height:0;visibility:hidden;">
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <ion-input readonly="true" value="{{ horseHealthForm.get('date').value | date: 'MM/dd/yyyy' }}"
+                     (ionFocus)="picker.open()" (click)="picker.open()"></ion-input>
+        </ion-item>
+
+        <div class="error-container">
+          <ng-container *ngFor="let validation of validations.date">
+            <div
+              class="error-message"
+              *ngIf="
+                                horseHealthForm.get('date').hasError(validation.type) &&
+                                (horseHealthForm.get('date').dirty ||
+                                    horseHealthForm.get('date').touched)
+                            "
+            >
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span class="error-text">{{ validation.message }}</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="form-row notes">
+        <ion-item lines class="ion-no-padding">
+          <ion-label position="stacked">
+            Notes
+            <span>
+                            {{ horseHealthForm.get('notes').value.length }}/{{ notesLength }}
+                        </span>
+          </ion-label>
+
+          <ion-textarea cols="50" rows="5" formControlName="notes" required>
+          </ion-textarea>
+        </ion-item>
+
+        <div class="error-container">
+          <ng-container *ngFor="let validation of validations.date">
+            <div
+              class="error-message"
+              *ngIf="
+                                horseHealthForm.get('notes').hasError(validation.type) &&
+                                (horseHealthForm.get('notes').dirty ||
+                                    horseHealthForm.get('notes').touched)
+                            "
+            >
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span class="error-text">{{ validation.message }}</span>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- <mat-form-field
+            class="notes"
+            appearance="outline"
+            class="large"
+            floatLabel="always"
+        >
+            <mat-label>Notes</mat-label>
+            <textarea matInput required></textarea>
+            <mat-error [rfxError]="horseHealthForm.get('notes')"></mat-error>
+        </mat-form-field> -->
+      </div>
+
+      <div class="form-row">
+        <div class="upload">
+          <div class="upload-title">
+            <label class="bold">
+              Attachments:
+            </label>
+            <input
+              class="upload-input"
+              #fileElement
+              type="file"
+              name="documents"
+              multiple="true"
+              hidden
+              (change)="onFilesAdded($event)"
+            />
+            <mat-icon class="trash" (click)="fileElement.click()">upload</mat-icon>
+          </div>
+          <div
+            class="previous-upload"
+            *ngFor="let doc of newDocuments$ | async as docs; index as i"
+          >
+            <div class="docs">
+              <div>
+                {{ displayFileName(doc.name) }}
+              </div>
+              <div class="doc-icons">
+                <mat-icon class="trash" (click)="previewSelectedFile(doc)"
+                >remove_red_eye
+                </mat-icon
+                >
+                <mat-icon class="trash" (click)="deleteNewDocument(i)"
+                >delete_forever
+                </mat-icon
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="previous-upload"
+            *ngFor="let doc of existingDocuments$ | async as docs; index as i"
+          >
+            <div class="docs">
+              <div>
+                {{ doc.latest?.name }}
+              </div>
+              <div class="doc-icons">
+                <a [href]="doc.latest.url" target="_blank"
+                >
+                  <mat-icon class="trash">remove_red_eye</mat-icon>
+                </a
+                >
+                <mat-icon class="trash" (click)="deleteExistingDocument(doc._id)"
+                >delete_forever
+                </mat-icon
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <ion-button [disabled]="isLoading$ | async" shape="round" type="submit" (click)="onSave()"
+        >Save
+          <mat-spinner [diameter]="20" *ngIf="isLoading$ | async"></mat-spinner>
+        </ion-button>
+        <ion-button
+          [disabled]="isLoading$ | async"
+          shape="round"
+          class="go-back"
+          (click)="goBack()"
+        >
+          Cancel
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<ion-content>
+    <app-horse-select-banner
+        #horseSelectBanner
+        [control]="horseControl"
+        [startingRide$]="startingRide$"
+        [horsesForRide]="horsesForRide$ | async"
+    >
+    </app-horse-select-banner>
+
+    <caballus-map
+        [centerPosition]="centerPosition$ | async"
+        [myLivePosition]="myLivePosition$ | async"
+        [ride]="ride$ | async"
+        [showGpsStrengthControl]="true"
+        [showChangeMapParamsControl]="true"
+        [fitBounds]="false"
+    ></caballus-map>
+
+    <app-time-and-distance class="time-distance-wrap"></app-time-and-distance>
+
+    <div class="center-content">
+        <div *ngIf="user$ | async as user">
+            <img
+                src="../../../../../assets/icons/questionmarkBtn.svg"
+                class="tour-button"
+                (click)="openTourModal()"
+                *ngIf="!user.settings.completedOneRide"
+            />
+        </div>
+
+        <div
+            *ngIf="(startingRide$ | async) === false && (ride$ | async); else startRideButton"
+            class="pause-end"
+        >
+            <button
+                *ngIf="
+                    (ride$ | async)?.appRideStatus === '[AppRideStatus] Riding';
+                    else ResumeRideButton
+                "
+                mat-raised-button
+                class="large-round resume"
+                (click)="pauseRideButton()"
+            >
+                Pause Ride
+            </button>
+            <ng-template #ResumeRideButton>
+                <button mat-raised-button class="large-round pause" (click)="resumeRideButton()">
+                    Resume Ride
+                </button>
+            </ng-template>
+
+            <button mat-raised-button class="large-round end" (click)="endRideButton()">
+                End Ride
+            </button>
+        </div>
+
+        <ng-template #startRideButton>
+            <button
+                mat-raised-button
+                class="large-round spinner start-ride"
+                (click)="startNewRide()"
+                [disabled]="startingRide$ | async"
+            >
+                Start Ride
+                <mat-spinner *ngIf="startingRide$ | async"></mat-spinner>
+            </button>
+        </ng-template>
+    </div>
+</ion-content>

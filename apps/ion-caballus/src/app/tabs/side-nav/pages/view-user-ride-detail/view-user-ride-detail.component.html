@@ -1,0 +1,6 @@
+<ion-content>
+    <app-ride-detail *ngIf="entryType !== rideEntryType" [horseId$]="horseId$" [rideId$]="rideId$" [ride]="ride"
+        [viaShare]="false"></app-ride-detail>
+    <app-ride-entry-detail *ngIf="entryType === rideEntryType" [horseId]="horseId$" [ride]="ride">
+    </app-ride-entry-detail>
+</ion-content>

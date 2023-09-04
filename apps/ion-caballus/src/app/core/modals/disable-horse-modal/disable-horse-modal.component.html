@@ -1,0 +1,30 @@
+<div class="modal">
+    <div class="content-strip">
+        <h1>{{profileStatus === HorseProfileStatus.Disabled ? 'Enable' : 'Disable'}} Horse</h1>
+        <p *ngIf="profileStatus === HorseProfileStatus.Disabled">
+            Selecting this will make this horse available to ride.
+        </p>
+        <p *ngIf="profileStatus === HorseProfileStatus.Active">
+            Disabling this horse will make it unavailable to ride.
+        </p>
+        <div class="button-container">
+            <button
+                mat-raised-button
+                class="large-round go-back"
+                (click)="goBack()"
+                [disabled]="isDisabling$ | async"
+            >
+                No, Go Back
+            </button>
+            <button
+                mat-raised-button
+                class="large-round end spinner"
+                (click)="disableHorse()"
+                [disabled]="isDisabling$ | async"
+            >
+                Yes, {{profileStatus === HorseProfileStatus.Disabled ? 'Enable' : 'Disable'}}
+                <mat-spinner *ngIf="isDisabling$ | async"></mat-spinner>
+            </button>
+        </div>
+    </div>
+</div>

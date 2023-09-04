@@ -1,0 +1,45 @@
+::ng-deep.quick-add-horse-modal {
+  &::part(content) {
+    height: 70%;
+    width: 90% !important;
+    border-radius: 16px !important;
+  }
+}
+
+div.modal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  form.content-strip {
+    width: 400px;
+
+    div.cancel {
+      display: flex;
+      justify-content: flex-end;
+
+      fa-icon {
+        padding: 18px;
+        font-size: 30px;
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 24px;
+  }
+
+  div.form-elements {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+
+    mat-mdc-form-field,
+    button {
+      width: 240px;
+      margin: 12px auto
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="backToPublicPermissions()">arrow_back</mat-icon>
+        <div>Permissions for Public</div>
+        <div></div>
+    </div>
+    <div *ngIf="horse$ | async as horse">
+        <div>
+            <h1 class="ion-text-center">
+                Horse: {{horse?.profile?.commonName}}
+            </h1>
+        </div>
+        <form [formGroup]="form">
+            <div class="option-group">
+                <ion-radio-group name="auto" formControlName="overallPrivacy">
+                    <div class="radio-item" *ngFor="let privacyOption of privacyOptions">
+                        <ion-radio [value]="privacyOption.value"></ion-radio>
+                        <ion-label>{{privacyOption.text}}</ion-label>
+                    </div>
+                </ion-radio-group>
+            </div>
+            <div class="privacy-group">
+                <div class="privacy-container">
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="bio"></ion-checkbox>
+                        <ion-label>Bio</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="media"></ion-checkbox>
+                        <ion-label>Media</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="rideHistory"></ion-checkbox>
+                        <ion-label>Ride History</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="studentsAndTrainers"></ion-checkbox>
+                        <ion-label>Students/Trainers</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="ownerDetails"></ion-checkbox>
+                        <ion-label>Owner Details</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="gaitTotals"></ion-checkbox>
+                        <ion-label>Gait Totals</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="gaitSettings"></ion-checkbox>
+                        <ion-label>Gait Settings</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="medicalHistory"></ion-checkbox>
+                        <ion-label>Medical History</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="performanceEvaluations"></ion-checkbox>
+                        <ion-label>Evaluations</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-checkbox slot="start" formControlName="competitions"></ion-checkbox>
+                        <ion-label>Competitions</ion-label>
+                    </ion-item>
+                </div>
+            </div>
+        </form>
+        <div class="btn-group">
+            <ion-button expand="block" shape="round" size="large" class="action-btn" (click)="restoreDefaultPrivacy()">
+                Restore Defaults
+            </ion-button>
+            <ion-button expand="block" shape="round" size="large" class="action-btn" (click)="savePrivacy(horse._id)">
+                Save
+            </ion-button>
+        </div>
+    </div>
+</ion-content>

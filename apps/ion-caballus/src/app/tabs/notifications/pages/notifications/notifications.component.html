@@ -1,0 +1,110 @@
+<ion-content class="notifications">
+  <!--matched coding style-->
+  <div class="header-bar">
+    <div></div>
+    <div>Notifications</div>
+    <div>
+      <button
+        class="nav-button nav-menu"
+        mat-icon-button
+        routerLinkActive="selected"
+        routerDirection="root"
+        routerLink="/tabs/notification-setting"
+      >
+        <fa-icon
+          class="notification"
+          [icon]="['fas', 'cog']"
+          size="2x"
+        ></fa-icon>
+        <div class="selected-indicator"></div>
+      </button>
+    </div>
+  </div>
+
+  <!--matched coding style-->
+  <ion-refresher slot="fixed" (ionRefresh)="reload($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list
+    class="ion-padding"
+    lines="none"
+    *ngIf="(noNotifications$ | async) === false"
+  >
+    <ion-item>
+      <ion-label>
+        <ion-text>
+          <h1>New</h1>
+        </ion-text>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="dark" (click)="markAllAsRead()">
+          <ion-icon name="checkmark" color="secondary"></ion-icon>
+          Mark all as read
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+    <ion-item
+      *ngFor="let notification of notifications$ | async"
+      [detail]="false"
+      [routerLink]="parseNotificationUrl(notification)"
+      (click)="markAsRead(notification)"
+    >
+      <ion-thumbnail slot="start" class="notifications-thumbnail">
+        <ion-img [src]="parseProfilePictureUrl(notification)"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <p class="notifications-message ion-text-wrap">
+          <span
+            class="notifications-user-display-name"
+            *ngIf="
+              notification.riderIdentity &&
+              !isRequested(notification.notificationType)
+            "
+          >
+            {{ notification.riderIdentity.displayName }}
+          </span>
+          <span
+            class="notifications-user-display-name"
+            *ngIf="
+              notification.userIdentity &&
+              isRequested(notification.notificationType)
+            "
+          >
+            {{
+              notification.userIdentity._id === userId
+                ? notification.friendIdentity?.displayName
+                : notification.userIdentity?.displayName
+            }}
+          </span>
+          {{ notification.message }}
+        </p>
+        <p>
+          {{ timeSince(notification.lastReactionDate) }}
+        </p>
+      </ion-label>
+      <!-- <img *ngIf="isInviteLink(notification)" src="/assets/icons/friend requested.svg" alt=""> -->
+      <ng-container *ngIf="notification.readStatus !== readStatus.Read">
+        <div slot="end">
+          <div class="notifications-pending"></div>
+        </div>
+      </ng-container>
+    </ion-item>
+  </ion-list>
+  <ng-container
+    *ngIf="(noNotifications$ | async) === true && (loading$ | async) === false"
+  >
+    <ion-text style="text-align: center">
+      <p>There are no notifications at this moment.</p>
+    </ion-text>
+  </ng-container>
+  <ng-container *ngIf="loading$ | async">
+    <ion-spinner class="notifications-loading" name="bubbles"></ion-spinner>
+  </ng-container>
+  <ion-infinite-scroll
+    *ngIf="hasMoreFeed$ | async"
+    threshold="100px"
+    (ionInfinite)="loadMore($event)"
+  >
+    &nbsp;
+  </ion-infinite-scroll>
+</ion-content>

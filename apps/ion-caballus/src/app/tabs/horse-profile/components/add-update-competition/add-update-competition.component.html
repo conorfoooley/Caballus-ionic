@@ -1,0 +1,236 @@
+<ion-content>
+    <app-profile-header
+        title="View Competition"
+        [parentBack]="true"
+        (goBack)="goBackToCompetition()"
+    >
+    </app-profile-header>
+    <div class="competition-form-content">
+        <form
+            class="form-section"
+            #horseCompetitionFormEl
+            [formGroup]="horseCompetitionForm"
+            (ngSubmit)="onSave()"
+        >
+            <div class="form-row">
+                <ion-item>
+                    <ion-label position="stacked">Name</ion-label>
+                    <ion-input required formControlName="name" placeholder=""></ion-input>
+                </ion-item>
+                <div class="error-container">
+                    <ng-container *ngFor="let validation of validations.name">
+                        <div
+                            class="error-message"
+                            *ngIf="
+                                horseCompetitionForm.get('name').hasError(validation.type) &&
+                                (horseCompetitionForm.get('name').dirty ||
+                                    horseCompetitionForm.get('name').touched)
+                            "
+                        >
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            <span class="error-text">{{ validation.message }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- <mat-error class="ion-error" [rfxError]="horseCompetitionForm.get('name')"></mat-error>
+                 <mat-form-field appearance="outline" class="large" floatLabel="always">
+                    <mat-label>Name</mat-label>
+                    <input matInput required formControlName="name" />
+                    <mat-error [rfxError]=""></mat-error>
+                </mat-form-field> -->
+            </div>
+            <div class="form-row date">
+                <ion-item lines>
+                    <ion-label position="stacked" class="bold">Date</ion-label>
+                    <ion-datetime
+                        presentation="date"
+                        formControlName="date"
+                        required
+                    ></ion-datetime>
+                </ion-item>
+                <div class="error-container">
+                    <ng-container *ngFor="let validation of validations.date">
+                        <div
+                            class="error-message"
+                            *ngIf="
+                                horseCompetitionForm.get('date').hasError(validation.type) &&
+                                (horseCompetitionForm.get('date').dirty ||
+                                    horseCompetitionForm.get('date').touched)
+                            "
+                        >
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            <span class="error-text">{{ validation.message }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <!--   <mat-form-field appearance="outline" class="large" floatLabel="always">
+                    <mat-label>Date</mat-label>
+                    <input matInput required formControlName="date" [matDatepicker]="date" />
+                    <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                    <mat-datepicker #date></mat-datepicker>
+                    <mat-error [rfxError]="horseCompetitionForm.get('date')"></mat-error>
+                </mat-form-field> -->
+            </div>
+            <div class="form-row">
+                <ion-item>
+                    <ion-label position="stacked">Location</ion-label>
+                    <ion-input required formControlName="location" placeholder=""></ion-input>
+                </ion-item>
+                <div class="error-container">
+                    <ng-container *ngFor="let validation of validations.location">
+                        <div
+                            class="error-message"
+                            *ngIf="
+                                horseCompetitionForm.get('location').hasError(validation.type) &&
+                                (horseCompetitionForm.get('location').dirty ||
+                                    horseCompetitionForm.get('location').touched)
+                            "
+                        >
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            <span class="error-text">{{ validation.message }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <!--
+                <mat-error
+                    class="ion-error"
+                    [rfxError]="horseCompetitionForm.get('location')"
+                ></mat-error>
+
+                 <mat-form-field appearance="outline" class="large" floatLabel="always">
+                    <mat-label>Location</mat-label>
+                    <input matInput required formControlName="location" />
+                    <mat-error [rfxError]="horseCompetitionForm.get('location')"></mat-error>
+                </mat-form-field> -->
+            </div>
+            <div class="form-row">
+                <ion-item lines>
+                    <ion-label position="stacked">Results</ion-label>
+
+                    <ion-textarea cols="50" rows="5" formControlName="results" required>
+                    </ion-textarea>
+                </ion-item>
+                <div class="error-container">
+                    <ng-container *ngFor="let validation of validations.date">
+                        <div
+                            class="error-message"
+                            *ngIf="
+                                horseCompetitionForm.get('results').hasError(validation.type) &&
+                                (horseCompetitionForm.get('results').dirty ||
+                                    horseCompetitionForm.get('results').touched)
+                            "
+                        >
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            <span class="error-text">{{ validation.message }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <!--  <mat-form-field appearance="outline" class="large" floatLabel="always">
+                    <mat-label>Results</mat-label>
+                    <textarea matInput required formControlName="results" rows="4"></textarea>
+                    <mat-error [rfxError]="horseCompetitionForm.get('results')"></mat-error>
+                </mat-form-field> -->
+            </div>
+            <div class="form-row">
+                <ion-item lines>
+                    <ion-label position="stacked">Notes</ion-label>
+
+                    <ion-textarea cols="50" rows="5" formControlName="notes" required>
+                    </ion-textarea>
+                </ion-item>
+                <div class="error-container">
+                    <ng-container *ngFor="let validation of validations.date">
+                        <div
+                            class="error-message"
+                            *ngIf="
+                                horseCompetitionForm.get('notes').hasError(validation.type) &&
+                                (horseCompetitionForm.get('notes').dirty ||
+                                    horseCompetitionForm.get('notes').touched)
+                            "
+                        >
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                            <span class="error-text">{{ validation.message }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- <mat-form-field appearance="outline" class="large" floatLabel="always">
+                    <mat-label>Notes</mat-label>
+                    <textarea matInput required formControlName="notes" rows="4"></textarea>
+                    <mat-error [rfxError]="horseCompetitionForm.get('notes')"></mat-error>
+                </mat-form-field> -->
+            </div>
+
+            <div class="upload">
+                <div class="upload-title">
+                    <label class="bold">
+                        Add image:
+                    </label>
+                    <input
+                        class="upload-input"
+                        #fileElement
+                        type="file"
+                        name="imageInput"
+                        multiple="true"
+                        hidden
+                        (change)="onFilesAdded($event)"
+                        [disabled]="attachedImage || horseCompetitionImageName"
+                    />
+                    <mat-icon
+                        class="trash"
+                        *ngIf="!attachedImage || !horseCompetitionImageName"
+                        (click)="fileElement.click()"
+                        style="cursor: pointer;"
+                        >upload</mat-icon
+                    >
+                </div>
+                <div class="previous-upload" *ngIf="attachedImage">
+                    <div class="docs">
+                        <div>
+                            {{ displayFileName(attachedImage.name) }}
+                        </div>
+                        <div class="doc-icons">
+                            <mat-icon class="trash" (click)="deleteImage()"
+                                >delete_forever</mat-icon
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="previous-upload" *ngIf="horseCompetitionImageName">
+                    <div class="docs">
+                        <div>
+                            {{ horseCompetitionImageName }}
+                        </div>
+                        <div class="doc-icons">
+                            <mat-icon class="trash" (click)="deleteImageName()"
+                                >delete_forever</mat-icon
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button
+                    mat-raised-button
+                    class="large-round end spinner"
+                    type="submit"
+                    [disabled]="(isLoading$ | async) || (isDeleting$ | async)"
+                >
+                    Save
+                    <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+                </button>
+                <button
+                    *ngIf="competitionId$ | async"
+                    mat-raised-button
+                    type="button"
+                    class="large-round end spinner"
+                    (click)="deleteHorseCompetition()"
+                    [disabled]="(isLoading$ | async) || (isDeleting$ | async)"
+                >
+                    <mat-spinner *ngIf="isDeleting$ | async"></mat-spinner>
+                    Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</ion-content>

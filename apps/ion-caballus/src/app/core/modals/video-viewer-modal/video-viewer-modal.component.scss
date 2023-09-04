@@ -1,0 +1,56 @@
+//.preview-wrapper {
+//    display: block;
+//    position: relative;
+//    height: calc(100% - 66px);
+//    border: 1px solid black;
+//    min-height: 360px;
+//}
+
+::ng-deep .jwplayer.jw-flag-aspect-mode {
+  min-height: 100%;
+  max-height: 100%;
+}
+
+ion-img {
+    display: block;
+    position: relative;
+    height: 100%;
+
+    &::part(image) {
+        background-color: gainsboro;
+        object-position: center;
+        object-fit: contain;
+    }
+}
+
+.fullscreen-show {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.actions-container {
+    button {
+        display: block;
+        margin: 16px auto 0 auto;
+        &.large-round {
+            width: 90%;
+        }
+    }
+}
+
+::ng-deep .modal-wrapper {
+    border-radius: 24px !important;
+    height: 80% !important;
+    max-width: 360px !important;
+    max-height: 720px !important;
+}
+
+ion-content::part(scroll) {
+    &::before,
+    &::after {
+        height: 0px !important;
+    }
+}

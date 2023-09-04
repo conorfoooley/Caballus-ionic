@@ -1,0 +1,54 @@
+<ion-content>
+    <app-profile-header [parentBack]="true" (goBack)="goBack()"></app-profile-header>
+    <div class="tab-header">
+        <img class="tab-image header-img" src="../../../../../assets/icons/evaluations-b.svg" />
+        <h1>Evaluations</h1>
+    </div>
+    <div class="info">
+        All evaluations will become locked after 72 hours.
+    </div>
+    <div class="tab-header add-btn" *ngIf="canEdit$ | async">
+        <button mat-raised-button class="large-round end spinner" type="button" (click)="addEditHorseEvaluationModal(HorseEvaluationType.Conformation)">
+            <img src="../../../../../assets/icons/add-blue.svg" />
+            Conformation
+        </button>
+        <button mat-raised-button class="large-round end spinner" type="button" (click)="addEditHorseEvaluationModal(HorseEvaluationType.Performance)">
+            <img src="../../../../../assets/icons/add-green.svg" />
+            Performance
+        </button>
+    </div>
+    <div class="tab-header">
+        <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+    </div>
+    <mat-card appearance="outlined" class="card" *ngIf="!(horseEvaluations$ | async).length && !(isLoading$ | async)">
+        <mat-card-content class="no-card-content">
+            <div class="detail">
+                <div class="content-large">
+                    No Evaluations Found
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined" class="card" *ngFor="let e of horseEvaluations$ | async">
+        <mat-card-content class="card-content">
+            <div class="evaluation-content">
+                <div class="evaluation-indicator">
+                    <img *ngIf="e.evaluationType === HorseEvaluationType.Conformation" class="tab-image" src="../../../../../assets/icons/circle-blue-conformation.svg" />
+                    <img *ngIf="e.evaluationType === HorseEvaluationType.Performance" class="tab-image" src="../../../../../assets/icons/circle-green-performance.svg" />
+                </div>
+                <div class="detail">
+                    <div class="content-large">
+                        <span [innerText]="e.date | date: 'MM/dd/yyyy'"></span>&nbsp;
+                        <span [innerText]="e.evaluationType === HorseEvaluationType.Conformation ? ' - Conformation' : ' - Performance'"></span>
+                    </div>
+                    <div class="content-medium" [innerText]="e.evaluator"></div>
+                    <div class="content-medium" [innerText]="e.location"></div>
+                </div>
+            </div>
+            <div class="view-btn">
+                <img class="tab-image" src="../../../../../assets/icons/ArrowRightBtn.svg"
+                    (click)="addEditHorseEvaluationModal(e.evaluationType ,e)" />
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ion-content>

@@ -1,0 +1,24 @@
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar>
+    <h1 class="ion-text-center ion-margin-vertical">Profile Image</h1>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" [disabled]="isLoading$ | async">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="image-container" *ngIf="profilePictureUrl$ | async as url">
+    <img [src]="url" alt="" (click)="isEdit()" />
+  </div>
+
+  <div class="actions-container">
+    <button mat-raised-button class="large-round end spinner" (click)="attachImage()" [disabled]="isLoading$ | async">
+      <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+      Change Image
+    </button>
+  </div>
+  <input hidden type="file" #attachmentInput accept="image/*" />
+</ion-content>

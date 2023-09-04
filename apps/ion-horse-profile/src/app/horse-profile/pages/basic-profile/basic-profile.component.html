@@ -1,0 +1,46 @@
+<ion-toolbar>
+    <ion-title>Horse: {{(horse$ | async )?.registeredName}}</ion-title>
+</ion-toolbar>
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Bio</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <div class="profile-img">
+                <ion-avatar>
+                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                </ion-avatar>
+            </div>
+            <div class="profile-content">
+                <div class="detail">
+                    <div class="label big-label">Barn Name: </div>
+                    <div class="value">{{(horse$ | async)?.commonName}}</div>
+                </div>
+                <div class="detail">
+                    <div class="label big-label">Registered: </div>
+                    <div class="value">{{(horse$ | async)?.registeredName}}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Breed: </div>
+                    <div class="value">{{HorseBreed.toString((horse$ | async)?.breed)}}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Reg #: </div>
+                    <div class="value">{{(horse$ | async)?.registrationNumber}}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Weight (lbs): </div>
+                    <div class="value">{{kgToLbs((horse$ | async)?.weightKilograms) | number
+                        : '1.0-0'}}</div>
+                </div>
+                <div class="detail">
+                    <div class="label">Height (hands): </div>
+                    <div class="value">{{meterToHands((horse$ | async)?.heightMeters) | number
+                        : '1.0-1'}}</div>
+                </div>
+            </div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

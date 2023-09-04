@@ -1,0 +1,23 @@
+.row {
+    display: flex;
+
+    .card-title {
+        margin-top: auto;
+        margin-bottom: auto;        
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .text-length {
+        margin-left: auto;
+        font-size: 14px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+textarea {
+    width: 100%;
+    border: none;
+    min-height: 70px;
+}

@@ -1,0 +1,213 @@
+::ng-deep app-add-update-competition {
+    ion-content {
+        padding: 20px;
+
+        .tab-image {
+            height: 60px;
+
+            .header-img {
+                margin-right: 10px;
+            }
+
+            h1 {
+                padding-left: 10px;
+            }
+        }
+
+        .card {
+            box-shadow: -4px 0px 4px rgb(0 0 0 / 25%), 4px 4px 4px rgb(0 0 0 / 25%);
+            border-radius: 20px !important;
+            padding: 5px !important;
+            margin: 10px 20px;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+            .detail {
+                display: flex !important;
+                align-items: flex-start !important;
+                flex-direction: column;
+            }
+            /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+            mat-card-content {
+                padding: 10px;
+            }
+
+            .no-card-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .card-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .view-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .images {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+        }
+
+        .tab-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            padding: 0px 15px;
+
+            h1 {
+                margin: 0;
+                margin-bottom: 10px;
+                padding-left: 10px;
+            }
+        }
+
+        .header-bar {
+            background: #f87f31;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .competition-form-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+
+            form {
+                width: 90%;
+
+                mat-mdc-form-field {
+                    width: 100%;
+                }
+
+                .button-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    padding-bottom: 30px !important;
+                    .large-round {
+                        min-width: 100px !important;
+                    }
+
+                    .mt-10 {
+                        margin-top: 10px !important;
+                    }
+                }
+            }
+        }
+        .matrix-row {
+            .large-round {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 17px;
+                font-weight: bold;
+            }
+            .image {
+                position: relative;
+                width: 154px !important;
+                .tab-image {
+                    height: 60px !important;
+                    width: 154px !important;
+                    max-width: 154px !important;
+                }
+            }
+            button {
+                background: transparent !important;
+                box-shadow: none !important;
+                color: black !important;
+                height: fit-content !important;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                width: 100%;
+                .title {
+                    font-size: 17px;
+                    font-weight: bold;
+                }
+                /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
+                .mat-button-wrapper {
+                    width: 100%;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                }
+            }
+            .black-bar {
+                height: 53px;
+                background: black;
+                width: 5px;
+                position: absolute;
+                top: 3.4px;
+                left: 4px;
+            }
+        }
+        .form-section {
+            mat-error {
+                margin-top: 12px;
+                // margin-left: 0px !important;
+                // padding-left: 0px !important;
+            }
+
+            .delete-document {
+                margin-right: 3px;
+                .mat-mdc-progress-spinner {
+                    width: 20px !important;
+                    height: 20px !important;
+
+                    svg {
+                        width: 20px !important;
+                        height: 20px !important;
+
+                        circle {
+                            stroke: #f78131;
+                        }
+                    }
+                }
+            }
+            .previous-upload {
+                font-size: small !important;
+                padding: 0px 10px !important;
+            }
+
+            .docs {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .upload-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                margin: 10px 0px;
+            }
+
+            .trash {
+                color: #000000;
+            }
+
+        }
+    }
+}

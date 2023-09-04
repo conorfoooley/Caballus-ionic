@@ -1,0 +1,26 @@
+<h1 class="close-button" (click)="cancel()">
+  <ion-icon slot="icon-only" name="close"></ion-icon>
+</h1>
+
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <p>{{description}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <ion-button *ngIf="!!buttonOneLabel" expand="block" shape="round" size="large" class="action-btn"
+              (click)="assent('Button1')">
+    {{buttonOneLabel}}
+  </ion-button>
+  <ion-button *ngIf="!!buttonTwoLabel" expand="block" shape="round" size="large" class="action-btn"
+              (click)="assent('Button2')">
+    {{buttonTwoLabel}}
+  </ion-button>
+  <ion-button *ngIf="!!buttonThreeLabel" expand="block" shape="round" size="large" class="action-btn"
+              (click)="assent('Button3')">
+    {{buttonThreeLabel}}
+  </ion-button>
+  <ion-button *ngIf="!!buttonFourLabel" expand="block" shape="round" size="large" class="action-btn"
+              (click)="assent('Button4')">
+    {{buttonFourLabel}}
+  </ion-button>
+</mat-dialog-actions>

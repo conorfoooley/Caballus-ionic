@@ -1,0 +1,125 @@
+<ion-content>
+    <div class="header-bar">
+        <mat-icon matPrefix (click)="goBack()">arrow_back</mat-icon>
+        <div>Manual Ride-Entry</div>
+        <mat-icon style="color: #f87f31;">add</mat-icon>
+    </div>
+    <mat-card appearance="outlined" class="card">
+        <mat-card-content>
+            <ion-list lines="none">
+                <ion-item>
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Date of ride</mat-label>
+                        <input matInput type="datetime-local" [defaultValue]="startDate | date: 'yyyy-MM-dd hh:mm'" placeholder="Date of ride" (change)="onChangeDate($event.target)"/>
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 5px;">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Horses on this ride</mat-label>
+                        <mat-select multiple [(value)]="horseIds" (selectionChange)="onChangeHorses($event.value)">
+                            <mat-option *ngFor="let horse of horsesDatas$ | async" [value]="horse._id">
+                                {{horse?.profile?.commonName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 5px;">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Category</mat-label>
+                        <mat-select [(value)]="rideCategory" (selectionChange)="onChangeCategory($event.value)">
+                            <mat-option *ngFor="let m of RideCategory.members" [value]="m">
+                                {{ RideCategory.toString(m) }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 5px;">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Location</mat-label>
+                        <input matInput [defaultValue]="location" placeholder="Location" (change)="onChangeLocation($event.target)" />
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 5px;">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput [defaultValue]="notes" placeholder="Notes" rows="3" (change)="onChangeNotes($event.target)"></textarea>
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 10px;">
+                    <!-- <div style="display: flex; flex-direction: column; width: 100%;">
+                        <label>Photos and Videos</label>
+                        <div style="margin-top: 5px; display: flex; flex-direction: row; width: 100%; justify-content: center; align-content: center;">
+                            <input #fileElement1 type="file" name="image1" hidden
+                                    (change)="selectedImage1($event)" />
+                            <ion-avatar class="thumbnail" (click)="fileElement1.click()">
+                                <img *ngIf="imageUrl1 !== ''; else add" [src]="imageUrl1" />
+                                <ng-template #add>+</ng-template>
+                            </ion-avatar>
+                            <input #fileElement2 type="file" name="image2" hidden
+                                    (change)="selectedImage2($event)" />
+                            <ion-avatar class="thumbnail" (click)="fileElement2.click()">
+                                <img *ngIf="imageUrl2 !== ''; else add" [src]="imageUrl2" />
+                                <ng-template #add>+</ng-template>
+                            </ion-avatar>
+                        </div>
+                    </div> -->
+                    <app-ride-media-upload [ride]='ride$ | async' [rideMedia]='currentRideMedia$ | async' [isCurrentRide]="false"
+                    (media)='handleAttachedMedia($event)' [addingFromManualRideEntryPage]="true"></app-ride-media-upload>
+                </ion-item>
+                <ion-item style="margin-top: 20px;">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Distance(Miles)</mat-label>
+                        <input matInput type="number" [defaultValue]="distance" placeholder="Distance (miles)" (input)="onChangeDistance($event.target)" />
+                    </mat-form-field>
+                </ion-item>
+                <ion-item style="margin-top: 5px;">
+                    <div style="width: 100%;">
+                        <mat-label>Duration(hh:mm:ss)</mat-label>
+                        <div class="duration-input">
+                            <input
+                                type="number"
+                                min="0"
+                                max="23"
+                                maxLength="2"
+                                placeholder="00"
+                                [defaultValue]="durationHours"
+                                (change)="onChangeDurationHours($event.target)"
+                            />
+                            <span>:</span>
+                            <input
+                                type="number"
+                                min="0"
+                                max="59"
+                                maxlength="2"
+                                placeholder="00"
+                                [defaultValue]="durationMin"
+                                (change)="onChangeDurationMin($event.target)"
+                            />
+                            <span>:</span>
+                            <input
+                                type="number"
+                                min="0"
+                                max="59"
+                                maxlength="2"
+                                placeholder="00"
+                                [defaultValue]="durationSec"
+                                (change)="onChangeDurationSec($event.target)"
+                            />
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </mat-card-content>
+    </mat-card>
+    <div class='button-wrapper'>
+        <button mat-raised-button class='medium-round alt' (click)='returnRide()'>
+            Return
+        </button>
+        <button mat-raised-button class='medium-round' (click)='saveRide()' [disabled]="isDisable">
+            Save&Return
+        </button>
+    </div>
+    <div class="loading" *ngIf="isLoading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+</ion-content>

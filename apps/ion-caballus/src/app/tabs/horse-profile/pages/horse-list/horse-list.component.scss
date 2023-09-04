@@ -1,0 +1,73 @@
+ion-content {
+	padding: 20px;
+	.header-bar {
+		background: #f87f31;
+		color: white;
+		text-align: center;
+		padding: 15px;
+		font-weight: bold;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+	.d-flex {
+		display: flex;
+	}
+
+	.horse-profile-block {
+		padding: 10px 10px;
+		margin: 10px 20px;
+		border: 1px solid #80808066;
+		border-radius: 15px;
+		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
+		p {
+			margin: 0;
+			margin-bottom: 5px;
+		}
+	}
+	.horse-image {
+		height: 60px;
+		width: 60px;
+		background: #80808059;
+		border-radius: 30px;
+		margin-right: 10px;
+	}
+
+	.horse-name {
+		font-weight: 600;
+	}
+
+	.light-text {
+		color: gray;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	div.search::ng-deep {
+		display: flex;
+		justify-content: center;
+		mat-mdc-form-field {
+			width: 380px;
+		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+		.mat-focused,
+		.mat-mdc-form-field-label,
+		.mat-mdc-form-field-outline,
+		.mat-mdc-form-field-appearance-outline,
+		.mat-mdc-form-field-ripple,
+		input.mat-input-element {
+			color: #f87f31;
+		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+		.mat-mdc-form-field-wrapper {
+			padding-bottom: 10px;
+		}
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+		.mat-mdc-form-field-prefix {
+			padding-right: 4px;
+		}
+	}
+}

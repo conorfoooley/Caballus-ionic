@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "caballus",
+  "private_key_id": "fdf9c91281b04abd260d46d499c8f6028d5a4afa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtO+tw1T8RCMw4\n0T0GPLAJDVMC6WVXqYFpBSnOSIbZ+WvbHOxYTKlX18464+Zu8o1f0nCVVZsodGZC\nXRWS+8x/agJJH8Q8Evh70J1FypTgCSEzo3HrOnzeXBewm2ziZpUHXJDw7vVafbIK\nlh9g95gz23OpKxbRwWtxXaX47ZJNIBCOhaZKZs8ZRO0DhzmumK8zMS6f8gTRQdCT\nOWAfW4ZdW9mg8WjkWLax83orrCofQN6JZ3D7opDmhgI5pAimfs09JE+pqvia+hYt\n9UE/FEDgGnYkc1gYr3NT5u/0Qp/f0c2PlhphVJwxx7genBWV8IzqvWgaVDinoJuZ\n3YsT+fHNAgMBAAECggEACSIPa8pKV2cRK+5YGx6S91SKVlfLaH+UG4nSpkCrn2Kn\nfYynpztvcs/6sZ8h9HfO3UjrzOu6UOaGHPnpsRnxB5ylVIlGCsFt8/UlKDCh1bKV\nhgftccXfycdYK7meAsz+uWh3bxm3ZMHGDl8oy1odCPWJF6z2YzD2gv+5ctzE6aeb\nPvjgK63OnNUL3fr8VI/cZKraWwBAUhHguatJhsS/JLAYWcIZ4wZScMl/8iT1YO/x\nQDlHB0GoYgvmdcuZAyfjIvK+3P/xysjkFeO2MC6NXruGzNzpw3YpYuK7oKDvqwcO\nP+1olEGkGTj4yvdfcTZZ13YPMeBxyCLEjkSIz99tEQKBgQDtreAlZerUwXsZgVC4\nZkX51MP14nXS60LQPeFGxUujUffPJWIQGcPX421ofc7iWjfwpsFYCabHIbbK8uFa\nP6HAe/ZzOH+qe6eaR4oLkHT+DCCO9iPzUqTv7Nz2k1j8G+JsMbCReJLpMH7EBbUV\nVIwFaZ0CjN468RI1zyu0Jg1yCQKBgQC6llkUVNirhgKNsx/fIPdRwzK5b7SUarq9\nooKNM+i/iNwz74R0+Ve/P3G51R2Q1QCqmPmBnCWHVIoGogZtikyZKJ7HYbw4P40N\nCaoeztWUNZNFXCUXEqIK5pqmZ+W0BNXcHRqVisE0JSC+wXMBJoy4Xp6QTvESG23C\nHrujdGhipQKBgDm1Bb8Ox71wXJsMsrSS4FqQNiP1H/Zd+JLm81Njg8HbnPdGdFDE\ncLByH5ZHNXvvu7VKR5dAgKXIocEUx3JKENPTRTskdJrH+yGSTQoRwNYNy7nqOUBS\nyIkYUW3syKYtfwQV7HDlfYXwqFafrB/Jr1WBFwYPfcWB0pIOAuZydsFBAoGALWy6\n5RM+6IsohfzMzpKFA3fFGpYSXWuaaN5ucBfqGu8jxNUT5zJo5Vt5wWcb2o2wqtex\nLpeoH0k6jSDW9cYMneDgvuORYhQ+r6ThsLxkDL/6SZGEShi0MHkxvz9eEbR3qC3B\nshRksuAzF52a9PXAnoYSjklZsTHSR8cZoVKOsy0CgYEA5vtjk+rO4fiIjhleaAIN\nkMlUiGDhpZeSY1AUquwOHFddnMP3k5WNYZ77voV80HIt5wIZVvELsU3SEXguPHv1\nDEzTSS+icNQe0XW8Qdg24jRxAyqHJ50kjd4aYwP43038IDGJcxkTyqthPd2h9FMQ\n2rpLpGBYHpcZ/mhGzbXdNrw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dev-environment@caballus.iam.gserviceaccount.com",
+  "client_id": "106497926437659271689",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dev-environment%40caballus.iam.gserviceaccount.com"
+}

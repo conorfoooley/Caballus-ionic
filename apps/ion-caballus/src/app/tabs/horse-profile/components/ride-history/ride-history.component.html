@@ -1,0 +1,67 @@
+<ion-content>
+  <!-- <app-profile-header title="View Horse" [parentBack]="true" (goBack)="goBack()"></app-profile-header> -->
+  <div class="header-bar">
+    <mat-icon matPrefix (click)="goBack()">arrow_back</mat-icon>
+    <div>View Horse</div>
+    <mat-icon (click)="addRideEvent()">add</mat-icon>
+  </div>
+  <div class="tab-header">
+    <img class="tab-image" src="/assets/icons/RideHistory-b.svg" />
+    <h1>Ride History</h1>
+  </div>
+  <div class="tab-header loading" *ngIf="isLoading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="main-header">
+    <div class="rides">
+      Rides
+    </div>
+    <div>
+      <button mat-button>
+        <span class="btn-label">Filter</span>
+        <fa-icon class="notification" [icon]="['fas', 'filter']"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <ion-list style="padding: 15px;margin: 0 20px">
+    <mat-card
+      appearance="outlined"
+      *ngFor="let ride of (horseRides$ | async).rides as horseRides"
+      (click)="goToRideDetail(ride)"
+      class="ride-history-card"
+    >
+      <mat-card-content>
+        <div class="card-container">
+          <div class="image-container" (click)="mapClicked($event)" *ngIf="ride.ridePicture as thumbnail">
+            <caballus-map [ride]="ride" [showRestButton]="false" [fitBounds]="true"></caballus-map>
+          </div>
+          <div class="details-container">
+            <div class="basic-details-container">
+              <h3>
+                {{ kilometersToMiles(ride.distanceKilometers) | number: '1.0-2' }}
+                mi.
+              </h3>
+
+              <span>
+                                {{ ride.startDateTime | date: 'MM/dd/yy' }}
+                {{ ride.startDateTime | date: 'shortTime' }}</span
+              >
+            </div>
+
+            <div class="extra-details-container">
+              <h3>{{ RideCategory.toString(ride.category) || 'Ride' }}</h3>
+              <fa-icon
+                [icon]="['fas', 'chevron-right']"
+              ></fa-icon>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadRideHistory($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

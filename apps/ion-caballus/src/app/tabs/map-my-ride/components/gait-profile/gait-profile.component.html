@@ -1,0 +1,39 @@
+<mat-card appearance="outlined" class="form-group card-wrapper">
+    <form [formGroup]="form">
+        <mat-card-header>
+            <mat-card-title class="form-group-header title-border">
+                Update Gait Speed:
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="table-row header-border">
+                <div class="table-col" *ngFor="let column of displayedColumns">
+                    {{ column }}
+                </div>
+            </div>
+            <div class="table-row" *ngFor="let gait of (gaitNewData$ | async) | keyvalue; index as i">
+                
+                <div class="table-col">
+                    {{ Gait.toString(Gait[gait.key]) }}
+                </div>
+                <div class="table-col">
+                    <input matInput type="number" [formControlName]="gait.key" (focusout)="notifyUser()" />
+                </div>
+            
+                <!-- <div class="table-col">
+                    <input matInput (focusout)="notifyUser()" placeholder="00.00" />
+                </div> -->
+            </div>
+
+        </mat-card-content>
+
+        <mat-card-footer>
+            <div class="ion-text-center">
+                <button mat-raised-button (click)="resetDuration()" class="small-round" color="primary">
+                    Reset
+                </button>
+            </div>
+        </mat-card-footer>
+    </form>
+</mat-card>

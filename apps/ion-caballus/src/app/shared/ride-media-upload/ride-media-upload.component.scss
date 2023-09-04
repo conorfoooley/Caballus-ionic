@@ -1,0 +1,82 @@
+.end-ride-upload-media-wrapper {
+  mat-card {
+    margin: 16px;
+    border-radius: 20px;
+
+    .mat-mdc-card-content {
+      padding-top: 16px;
+
+      .row {
+        display: flex;
+
+        .card-title {
+          margin-top: auto;
+          margin-bottom: auto;
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+        .upload-icon {
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
+
+          .file-icon {
+            font-size: 1.8rem;
+          }
+        }
+
+        .thumbnail-list {
+          width: 100%;
+          display: flex;
+          justify-content: space-evenly;
+
+          .thumbnail {
+            color: white;
+            height: 64px;
+            width: 64px;
+            background-color: gainsboro;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ride-history-media-upload-wrapper {
+  .row {
+    display: flex;
+
+    .card-title {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 1.3rem;
+    }
+  }
+
+  .thumbnail-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .thumbnail {
+      margin: 2px 2px;
+      color: white;
+      height: 50px;
+      width: 50px;
+      background-color: gainsboro;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 32px;
+    }
+  }
+}

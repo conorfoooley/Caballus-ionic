@@ -1,0 +1,7 @@
+import { PostPictureInterceptor } from './post-picture.interceptor';
+
+describe('PostPictureInterceptor', () => {
+  it('should be defined', () => {
+    expect(new PostPictureInterceptor()).toBeDefined();
+  });
+});

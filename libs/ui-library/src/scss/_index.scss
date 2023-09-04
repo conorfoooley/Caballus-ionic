@@ -1,0 +1,105 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+@import 'variables';
+
+//$caballus-app-primary: mat.define-palette($caballus-tangerine-orange, 900);
+//$caballus-app-accent: mat.define-palette(mat.$indigo-palette, 500);
+
+// The warn palette is optional (defaults to red).
+//$caballus-app-warn: mat.define-palette(mat.$red-palette);
+
+
+$caballus-app-primary: mat.define-palette($caballus-tangerine-orange, 900);
+$caballus-app-accent: mat.define-palette(mat.$blue-palette, A400);
+$caballus-app-warn: mat.define-palette(mat.$red-palette);
+
+$caballus-app-theme: mat.define-light-theme((
+  color: (
+    primary: $caballus-app-primary,
+    accent: $caballus-app-accent,
+    warn: $caballus-app-warn,
+  ),
+  typography: mat.define-typography-config(),
+));
+
+// Emit theme-dependent styles for common features used across multiple components.
+@include mat.all-component-themes($caballus-app-theme);
+
+// Emit styles for MatButton based on `$my-theme`. Because the configuration
+// passed to `define-light-theme` omits typography, `button-theme` will not
+// emit any typography styles.
+//@include mat.button-theme($caballus-app-theme);
+
+
+.caballus-dark-theme {
+    // Future dark theme support?
+}
+
+//@include angular-material-theme($caballus-app-theme);
+
+.mat-nav-list .mat-list-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.flex-spacer {
+    flex: 1;
+}
+
+.inline-spinner circle {
+    stroke: white;
+}
+
+// caballus Grid Specific Styles
+[rfxgriddetailviewheader] {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -16px;
+    padding: 0 16px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    .detail-view {
+        &__button {
+            min-width: 100px;
+        }
+    }
+}
+
+[rfxgriddetailviewcontent] {
+    padding: 12px 0;
+
+    .detail-view {
+        &__title {
+            margin: 0;
+        }
+
+        &__group {
+            padding-left: 12px;
+            padding-bottom: 4px;
+
+            label {
+                font-weight: bold;
+                padding-right: 4px;
+            }
+        }
+    }
+}
+
+[rfxgriddetailviewfooter] {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -16px;
+    padding: 20px 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+    .detail-view {
+        &__button {
+            min-width: 100px;
+        }
+    }
+}
+
+.modal-shadow.sc-ion-modal-ios {
+    background: #00000066!important;
+}

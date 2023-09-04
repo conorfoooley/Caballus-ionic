@@ -1,0 +1,62 @@
+<ion-content>
+  <div class="header-bar">
+    <mat-icon matPrefix (click)="goBack()">arrow_back</mat-icon>
+    <div>Ride History</div>
+    <mat-icon (click)="addRideEvent()">add</mat-icon>
+  </div>
+  <div class="tab-header">
+    <h1
+      *ngIf="user$ | async as user"
+    >
+      {{ user.firstName || '' }} {{ user.lastName || ''}}
+    </h1>
+  </div>
+  <div class="tab-header loading" *ngIf="isLoading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="main-header">
+    <div class="rides">
+      Rides
+    </div>
+    <div>
+      <button mat-button>
+        <span class="btn-label">Filter</span>
+        <fa-icon class="notification" [icon]="['fas', 'filter']"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <ion-list>
+    <ion-item button
+              *ngFor="let ride of (horseRides$ | async).rides as horseRides"
+              (click)="goToRideDetail(ride)">
+      <ion-thumbnail slot="start">
+        <img *ngIf="ride.ridePicture as thumbnail" [src]="thumbnail.url" />
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <b>{{ ride.startDateTime | date: 'MM/dd/yy' }}</b>
+          {{ ride.startDateTime | date: 'shortTime' }}
+        </h3>
+        <h3>
+                    <span *ngFor="let horse of ride.horseIdentities; let i = index">
+                        <span>{{ horse.label }}</span>
+                        <span *ngIf="i + 1 < ride.horseIdentities.length">, </span>
+                    </span>
+        </h3>
+        <h3>{{ RideCategory.toString(ride.category) || 'Ride' }}</h3>
+        <p>{{ride.name || 'Unknown location'}}</p>
+      </ion-label>
+      <ion-note slot="end">
+        {{ride.distanceKilometers.toFixed(2)}} mi.
+      </ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadRideHistory($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

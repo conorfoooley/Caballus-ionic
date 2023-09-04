@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="img-container">
+    <img #image [src]="imageSource" crossorigin />
+  </div>
+
+  <div class="img-preview-container">
+    <img [src]="imageDestination" class="img-preview" />
+  </div>
+
+  <div class="submit">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="rotateImageLeft()"
+      class="button-full-width"
+    >
+      Rotate Left
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="rotateImageRight()"
+      class="button-full-width"
+    >
+      Rotate Right
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="dismiss(imageDestination)"
+      class="button-full-width"
+    >
+      Submit
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="closeCropper()"
+      class="button-full-width"
+    >
+      Close
+    </button>
+  </div>
+</div>

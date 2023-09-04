@@ -1,0 +1,15 @@
+::ng-deep app-profile-header {
+    .header-bar {
+		background: #f87f31;
+		color: white;
+		text-align: center;
+		padding: 15px;
+		font-weight: bold;
+        font-size: 26px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+}
+
